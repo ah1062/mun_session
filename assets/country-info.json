@@ -267,7 +267,7 @@
       "votingObserver": false
     },
     "Congo": {
-      "img": "assets/un_country_flags/congo.jpg",
+      "img": "assets/un_country_flags/republicofthecongo.jpg",
       "shortName": "Congo",
       "longName": "Republic of the Congo",
       "votingStatus": "Absent",
@@ -841,7 +841,7 @@
       "votingObserver": false
     },
     "Nepal": {
-      "img": "assets/un_country_flags/nepal.jpg",
+      "img": "assets/un_country_flags/nepal.png",
       "shortName": "Nepal",
       "longName": "Federal Democratic Republic of Nepal",
       "votingStatus": "Absent",
@@ -1149,7 +1149,7 @@
       "votingObserver": false
     },
     "Palestine": {
-      "img": "assets/un_country_flags/stateofpalestine.jpg",
+      "img": "assets/un_country_flags/palestine.jpg",
       "shortName": "Palestine",
       "longName": "State of Palestine",
       "votingStatus": "Absent",

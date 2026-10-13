@@ -6,7 +6,6 @@ async function loadSession(sessionId) {
     console.log(`TODO: load session ${sessionId}`);
 }
 
-
 function createCountryListItemDiv(countryKey, data, showVoting) {
     const item = document.createElement("div");
     item.className = "list-item";
@@ -79,26 +78,43 @@ function createCountryListItemDiv(countryKey, data, showVoting) {
     return item;
 }
 
-function renderAvailableCountryList(countries) {
+/* 
+* Session Configuration Template page functions 
+*/
+function sessionConfigRenderAvailableCountryList(countries) {
     const listbox = document.getElementById("availableCountryList");
     listbox.replaceChildren();
 
+    const searchBox = document.getElementById("availableCountrySearch");
+    searchBox.addEventListener("keydown", (e) => {
+        let value = searchBox.value;
+        // enter or backspace
+        if (e.key === "Enter") {
+            sessionConfigRenderAvailableCountryList(availableCountries);
+        }
+    });
+
     for (const countryKey of Object.keys(countries).sort()) {
         const data = nations[countryKey];
+        
+        let searchValue = searchBox.value;
+        if (searchValue && countryKey.slice(0, searchValue.length).toLowerCase() !== searchValue.toLowerCase()) {
+            continue;
+        }
 
         const item = createCountryListItemDiv(countryKey, data, false);
         item.addEventListener("click", () => {
             selectedCountries[countryKey] = availableCountries[countryKey];
             delete availableCountries[countryKey];
 
-            renderAvailableCountryList(availableCountries);
-            renderSelectedCountryList(selectedCountries);
+            sessionConfigRenderAvailableCountryList(availableCountries);
+            sessionConfigRenderSelectedCountryList(selectedCountries);
         });
 
         listbox.appendChild(item);
     }
 }
-function renderSelectedCountryList(countries) {
+function sessionConfigRenderSelectedCountryList(countries) {
     const clearSelectionButton = document.getElementById("clearSelection");
     clearSelectionButton.addEventListener("click", () => {
         for (const name of Object.keys(selectedCountries)) {
@@ -106,8 +122,8 @@ function renderSelectedCountryList(countries) {
             delete selectedCountries[name];
         }
 
-        renderAvailableCountryList(availableCountries);
-        renderSelectedCountryList(selectedCountries);
+        sessionConfigRenderAvailableCountryList(availableCountries);
+        sessionConfigRenderSelectedCountryList(selectedCountries);
     });
 
     const listbox = document.getElementById("selectedCountryList");
@@ -121,14 +137,14 @@ function renderSelectedCountryList(countries) {
             availableCountries[countryKey] = structuredClone(nations[countryKey]);
             delete selectedCountries[countryKey];
 
-            renderAvailableCountryList(availableCountries);
-            renderSelectedCountryList(selectedCountries);
+            sessionConfigRenderAvailableCountryList(availableCountries);
+            sessionConfigRenderSelectedCountryList(selectedCountries);
         });
 
         listbox.appendChild(item);
     }
 }
-function renderCountrySelectionPresets(presets) {
+function sessionConfigRenderCountrySelectionPresets(presets) {
     const container = document.getElementById("countrySelectionPresets");
 
     for (const name of Object.keys(presets).sort()) {
@@ -154,8 +170,8 @@ function renderCountrySelectionPresets(presets) {
                 }
             };
 
-            renderAvailableCountryList(availableCountries);
-            renderSelectedCountryList(selectedCountries);
+            sessionConfigRenderAvailableCountryList(availableCountries);
+            sessionConfigRenderSelectedCountryList(selectedCountries);
         });
         container.appendChild(item);
     }
@@ -171,9 +187,9 @@ function renderSessionConfig(
     const configBoard = template.content.cloneNode(true);
     main.replaceChildren(configBoard);
 
-    renderAvailableCountryList(availableCountries);
-    renderSelectedCountryList(selectedCountries);
-    renderCountrySelectionPresets(committeePresets);
+    sessionConfigRenderAvailableCountryList(availableCountries);
+    sessionConfigRenderSelectedCountryList(selectedCountries);
+    sessionConfigRenderCountrySelectionPresets(committeePresets);
 
     const createSessionButton = document.getElementById("createSession");
     createSessionButton.addEventListener("click", () => {
@@ -181,10 +197,82 @@ function renderSessionConfig(
     });
 }
 
-let nations;
-let committeePresets;
-let availableCountries;
-let selectedCountries;
+/*
+* Session page functions
+*/
+let caucusTimeRemaining = 900;
+let caucusTimeCapacity = 900;
+let speakerTimeRemaining = 15;
+let speakerTimeCapacity = 60;
+
+function secondsToTime(secondsAmount) {
+    const hours = Math.floor(secondsAmount / 3600);
+    const minutes = Math.floor(secondsAmount / 60);
+    const seconds = secondsAmount % 60;
+
+    let comps = [];
+    if (hours) {
+        let text = String(hours).padEnd(2, '0');
+        comps.push(text);
+    }
+    if (minutes) {
+        let text = String(minutes);
+        if (minutes >= 10) {
+            text = text.padEnd(2, '0');
+        }
+        comps.push(text);
+    } else {
+        if (hours) {
+            comps.push('00');
+        } else {
+            comps.push('0');
+        }
+    }
+    if (seconds) {
+        let text = String(seconds);
+        if (seconds < 10) {
+            text = text.padStart(2, '0');
+        }
+        comps.push(text);
+    } else {
+        comps.push('00');
+    }
+
+    let string = comps.join(':');
+    return `${string}`;
+}
+
+function countdownTimer() {
+    caucusTimeRemaining -= 1;
+    speakerTimeRemaining -= 1;
+
+    const caucusTimeLeft = document.getElementById("caucusTimeRemaining");
+    caucusTimeLeft.innerText = 
+        `${secondsToTime(caucusTimeRemaining)} / ${secondsToTime(caucusTimeCapacity)}`;
+
+    const speakerTimeLeft = document.getElementById("speakerTimeRemaining");
+    speakerTimeLeft.innerText = 
+        `${secondsToTime(speakerTimeRemaining)} / ${secondsToTime(speakerTimeCapacity)}`;
+
+    if (speakerTimeRemaining !== 0) {
+        setTimeout(countdownTimer, 1000);
+    }
+}
+
+function renderSessionApp(selectedCountries) {
+    const main = document.getElementById("mainContent");
+    const template = document.getElementById("sessionAppTemplate");
+
+    const appBoard = template.content.cloneNode(true);
+    main.replaceChildren(appBoard);
+    countdownTimer();
+}
+
+
+var nations;
+var committeePresets;
+var availableCountries;
+var selectedCountries;
 function initSession() {
     fetch('assets/country-info.json')
         .then(response => response.json())
@@ -194,14 +282,16 @@ function initSession() {
 
             availableCountries = structuredClone(nations);
             selectedCountries = {};
-            renderSessionConfig(
-                availableCountries,
-                selectedCountries,
-                committeePresets
-            );
         })
         .catch(error => console.error("Failed to load JSON:", error));
+
+    renderSessionConfig(
+        availableCountries,
+        selectedCountries,
+        committeePresets
+    );
 }
+
 
 function cleanParams(value) {
     if (!value) { return null; }
@@ -225,6 +315,7 @@ switch (mode) {
         break;
     case "load":
         loadSession(sessionId);
+        renderSessionApp(selectedCountries);
         break;
     default:
         console.error(`Can't handle session mode ${mode}`);
