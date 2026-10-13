@@ -1,0 +1,249 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LIMUN Sessions App</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        /* background photo with a dark tint so the text stays readable -
+               change .7 to make the tint lighter (0) or darker (1) */
+        body {
+            background-image:
+                linear-gradient(rgba(14, 10, 32, .7), rgba(14, 10, 32, .7)),
+                url('assets/houses-of-parliament.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        a {
+            color: var(--gold-1);
+            font-weight: bold;
+        }
+
+        .topbar {
+            grid-template-columns: 1fr;
+        }
+
+        /* no avatar here, so the brand can use the full width */
+        .topbar-item {
+            margin-left: 1px;
+            white-space: nowrap;
+        }
+
+        .layout {
+            max-width: 1000;
+            padding: 48px 28px 40px;
+        }
+
+        .home-hero {
+            text-align: center;
+            padding: 8px 0 4px;
+        }
+
+        .home-hero img {
+            height: 76px;
+            width: auto;
+            margin-bottom: 18px;
+        }
+
+        .home-hero h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .home-hero .subtitle {
+            max-width: 520px;
+            margin: 0 auto;
+            font-size: .95rem;
+            line-height: 1.5;
+        }
+
+        .paths {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .path-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 24px;
+        }
+
+        .path-card .k {
+            margin-bottom: 0;
+        }
+
+        .path-card h2 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 1.3rem;
+        }
+
+        .path-card p {
+            font-size: .85rem;
+            color: var(--muted);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .path-card .submit-btn {
+            margin-top: 8px;
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                padding: 32px 16px;
+            }
+
+            .paths {
+                grid-template-columns: 1fr;
+            }
+
+            .home-hero h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        .country-preset {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px;
+
+            box-shadow: 0px 0px 0px 1px;
+            border: black;
+            border-width: 1px;
+            border-radius: 1px;
+
+            cursor: pointer;
+        }
+
+        .listbox {
+            height: 200px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border: 1px solid #888;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .list-item {
+            padding: 4px 8px;
+            margin-bottom: 2px;
+            height: 24px;
+            box-sizing: border-box;
+
+            cursor: pointer;
+            user-select: none;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item img {
+            width: 32px;
+            height: 24px;
+        }
+
+        .list-item:hover {
+            background-color: var(--hair);
+        }
+
+        .list-item.selected {
+            background-color: var(--circle);
+        }
+
+        .voting button {
+            filter: brightness(0.4);
+            box-shadow: none;
+            cursor: pointer;
+
+            color: black;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            margin-right: 1px;
+        }
+
+        .voting button.selected {
+            filter: brightness(1.0);
+        }
+    </style>
+</head>
+
+<body class="topbar-only">
+    <header>
+        <div class="topbar" style="display: flex;">
+            <div class="brand" style="width:100%; float: left;">
+                <a href="index.html">
+                    <img class="brand-logo" src="assets/logo.png">
+                </a>
+                LIMUN Sessions App
+            </div>
+            <div class="topbar-item">
+                <a href="https://www.limun.org.uk">LIMUN Home</a>
+            </div>
+            <div class="topbar-item">
+                <a href="https://www.limunportal.org.uk">Portal Home</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent" class="layout">
+    </main>
+
+    <footer></footer>
+
+    <template id="sessionConfigTemplate">
+        <section class="home-hero">
+            <img src="assets/logo.png">
+            <h1>Configure your Session</h1>
+        </section>
+        <section class="card path-card">
+            <div style="display: flex; align-items: center;">
+                <h1 style="white-space: nowrap;">Committee:</h1>
+                <select style="margin-left: 10px;">
+                    <option>(GA) United Nations General Assembly</option>
+                    <option>(DISEC) Disarmament & International Security</option>
+                    <option>(ECOFIN) Economic & Financial</option>
+                    <option>(SOCHUM) Social, Humanitarian & Cultural</option>
+                    <option>(SPECPOL) Special, Political & Decolonisation</option>
+                    <option>(ABC) Administrative and Budgetary</option>
+                    <option>(LEGAL) Legal</option>
+                </select>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <h1 style="white-space: nowrap;">Committee Title:</h1>
+                <input style="margin-left: 10px;" placeholder="United Nations General Assembly">
+            </div>
+        </section>
+        <section id="countrySelectionPresetCard" class="card path-card">
+            <div class="k">Preset Country Groups</div>
+            <div id="countrySelectionPresets" style="display: flex; gap: 16px; align-items: center;"></div>
+        </section>
+        <section id="countrySelectionCard" class="paths">
+            <div class="card path-card">
+                <div class="k">Available Countries</div>
+                <div id="availableCountryList" class="listbox"></div>
+            </div>
+            <div class="card path-card">
+                <div style="align-items: center; display: flex;">
+                    <div class="k" style="width: 100%;">Selected Countries</div>
+                    <button id="clearSelection" style="white-space: nowrap;">Clear Selection</button>
+                </div>
+                <div id="selectedCountryList" class="listbox"></div>
+            </div>
+        </section>
+        <button id="createSession" class="submit-btn">Create session</button>
+    </template>
+
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1529 @@
+{
+  "nations": {
+    "Afghanistan": {
+      "img": "assets/un_country_flags/afghanistan.jpg",
+      "shortName": "Afghanistan",
+      "longName": "Islamic Republic of Afghanistan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Albania": {
+      "img": "assets/un_country_flags/albania.jpg",
+      "shortName": "Albania",
+      "longName": "Republic of Albania",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Algeria": {
+      "img": "assets/un_country_flags/algeria.jpg",
+      "shortName": "Algeria",
+      "longName": "People's Democratic Republic of Algeria",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Andorra": {
+      "img": "assets/un_country_flags/andorra.jpg",
+      "shortName": "Andorra",
+      "longName": "Principality of Andorra",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Angola": {
+      "img": "assets/un_country_flags/angola.jpg",
+      "shortName": "Angola",
+      "longName": "Republic of Angola",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Antigua and Barbuda": {
+      "img": "assets/un_country_flags/antiguaandbarbuda.jpg",
+      "shortName": "Antigua and Barbuda",
+      "longName": "Antigua and Barbuda",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Argentina": {
+      "img": "assets/un_country_flags/argentina.jpg",
+      "shortName": "Argentina",
+      "longName": "Argentine Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Armenia": {
+      "img": "assets/un_country_flags/armenia.jpg",
+      "shortName": "Armenia",
+      "longName": "Republic of Armenia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Australia": {
+      "img": "assets/un_country_flags/australia.jpg",
+      "shortName": "Australia",
+      "longName": "Commonwealth of Australia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Austria": {
+      "img": "assets/un_country_flags/austria.jpg",
+      "shortName": "Austria",
+      "longName": "Republic of Austria",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Azerbaijan": {
+      "img": "assets/un_country_flags/azerbaijan.jpg",
+      "shortName": "Azerbaijan",
+      "longName": "Republic of Azerbaijan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bahamas": {
+      "img": "assets/un_country_flags/bahamas.jpg",
+      "shortName": "Bahamas",
+      "longName": "Commonwealth of The Bahamas",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bahrain": {
+      "img": "assets/un_country_flags/bahrain.jpg",
+      "shortName": "Bahrain",
+      "longName": "Kingdom of Bahrain",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bangladesh": {
+      "img": "assets/un_country_flags/bangladesh.jpg",
+      "shortName": "Bangladesh",
+      "longName": "People's Republic of Bangladesh",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Barbados": {
+      "img": "assets/un_country_flags/barbados.jpg",
+      "shortName": "Barbados",
+      "longName": "Barbados",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Belarus": {
+      "img": "assets/un_country_flags/belarus.jpg",
+      "shortName": "Belarus",
+      "longName": "Republic of Belarus",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Belgium": {
+      "img": "assets/un_country_flags/belgium.jpg",
+      "shortName": "Belgium",
+      "longName": "Kingdom of Belgium",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Belize": {
+      "img": "assets/un_country_flags/belize.jpg",
+      "shortName": "Belize",
+      "longName": "Belize",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Benin": {
+      "img": "assets/un_country_flags/benin.jpg",
+      "shortName": "Benin",
+      "longName": "Republic of Benin",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bhutan": {
+      "img": "assets/un_country_flags/bhutan.jpg",
+      "shortName": "Bhutan",
+      "longName": "Kingdom of Bhutan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bolivia": {
+      "img": "assets/un_country_flags/bolivia.jpg",
+      "shortName": "Bolivia",
+      "longName": "Plurinational State of Bolivia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bosnia and Herzegovina": {
+      "img": "assets/un_country_flags/bosniaandherzegovina.jpg",
+      "shortName": "Bosnia and Herzegovina",
+      "longName": "Bosnia and Herzegovina",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Botswana": {
+      "img": "assets/un_country_flags/botswana.jpg",
+      "shortName": "Botswana",
+      "longName": "Republic of Botswana",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Brazil": {
+      "img": "assets/un_country_flags/brazil.jpg",
+      "shortName": "Brazil",
+      "longName": "Federative Republic of Brazil",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Brunei": {
+      "img": "assets/un_country_flags/brunei.jpg",
+      "shortName": "Brunei",
+      "longName": "Brunei Darussalam",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Bulgaria": {
+      "img": "assets/un_country_flags/bulgaria.jpg",
+      "shortName": "Bulgaria",
+      "longName": "Republic of Bulgaria",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Burkina Faso": {
+      "img": "assets/un_country_flags/burkinafaso.jpg",
+      "shortName": "Burkina Faso",
+      "longName": "Burkina Faso",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Burundi": {
+      "img": "assets/un_country_flags/burundi.jpg",
+      "shortName": "Burundi",
+      "longName": "Republic of Burundi",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Cabo Verde": {
+      "img": "assets/un_country_flags/caboverde.jpg",
+      "shortName": "Cabo Verde",
+      "longName": "Republic of Cabo Verde",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Cambodia": {
+      "img": "assets/un_country_flags/cambodia.jpg",
+      "shortName": "Cambodia",
+      "longName": "Kingdom of Cambodia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Cameroon": {
+      "img": "assets/un_country_flags/cameroon.jpg",
+      "shortName": "Cameroon",
+      "longName": "Republic of Cameroon",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Canada": {
+      "img": "assets/un_country_flags/canada.jpg",
+      "shortName": "Canada",
+      "longName": "Canada",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Central African Republic": {
+      "img": "assets/un_country_flags/centralafricanrepublic.jpg",
+      "shortName": "Central African Republic",
+      "longName": "Central African Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Chad": {
+      "img": "assets/un_country_flags/chad.jpg",
+      "shortName": "Chad",
+      "longName": "Republic of Chad",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Chile": {
+      "img": "assets/un_country_flags/chile.jpg",
+      "shortName": "Chile",
+      "longName": "Republic of Chile",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "China": {
+      "img": "assets/un_country_flags/china.jpg",
+      "shortName": "China",
+      "longName": "People's Republic of China",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Colombia": {
+      "img": "assets/un_country_flags/colombia.jpg",
+      "shortName": "Colombia",
+      "longName": "Republic of Colombia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Comoros": {
+      "img": "assets/un_country_flags/comoros.jpg",
+      "shortName": "Comoros",
+      "longName": "Union of the Comoros",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Congo": {
+      "img": "assets/un_country_flags/congo.jpg",
+      "shortName": "Congo",
+      "longName": "Republic of the Congo",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Costa Rica": {
+      "img": "assets/un_country_flags/costarica.jpg",
+      "shortName": "Costa Rica",
+      "longName": "Republic of Costa Rica",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Côte d’Ivoire": {
+      "img": "assets/un_country_flags/cotedivoire.jpg",
+      "shortName": "Côte d’Ivoire",
+      "longName": "Republic of Côte d’Ivoire",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Croatia": {
+      "img": "assets/un_country_flags/croatia.jpg",
+      "shortName": "Croatia",
+      "longName": "Republic of Croatia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Cuba": {
+      "img": "assets/un_country_flags/cuba.jpg",
+      "shortName": "Cuba",
+      "longName": "Republic of Cuba",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Cyprus": {
+      "img": "assets/un_country_flags/cyprus.jpg",
+      "shortName": "Cyprus",
+      "longName": "Republic of Cyprus",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Czechia": {
+      "img": "assets/un_country_flags/czechia.jpg",
+      "shortName": "Czechia",
+      "longName": "Czech Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Democratic People's Republic of Korea": {
+      "img": "assets/un_country_flags/northkorea.jpg",
+      "shortName": "Democratic People's Republic of Korea",
+      "longName": "Democratic People's Republic of Korea",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Democratic Republic of the Congo": {
+      "img": "assets/un_country_flags/democraticrepublicofthecongo.jpg",
+      "shortName": "Democratic Republic of the Congo",
+      "longName": "Democratic Republic of the Congo",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Denmark": {
+      "img": "assets/un_country_flags/denmark.jpg",
+      "shortName": "Denmark",
+      "longName": "Kingdom of Denmark",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Djibouti": {
+      "img": "assets/un_country_flags/djibouti.jpg",
+      "shortName": "Djibouti",
+      "longName": "Republic of Djibouti",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Dominica": {
+      "img": "assets/un_country_flags/dominica.jpg",
+      "shortName": "Dominica",
+      "longName": "Commonwealth of Dominica",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Dominican Republic": {
+      "img": "assets/un_country_flags/dominicanrepublic.jpg",
+      "shortName": "Dominican Republic",
+      "longName": "Dominican Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Ecuador": {
+      "img": "assets/un_country_flags/ecuador.jpg",
+      "shortName": "Ecuador",
+      "longName": "Republic of Ecuador",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Egypt": {
+      "img": "assets/un_country_flags/egypt.jpg",
+      "shortName": "Egypt",
+      "longName": "Arab Republic of Egypt",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "El Salvador": {
+      "img": "assets/un_country_flags/elsalvador.jpg",
+      "shortName": "El Salvador",
+      "longName": "Republic of El Salvador",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Equatorial Guinea": {
+      "img": "assets/un_country_flags/equatorialguinea.jpg",
+      "shortName": "Equatorial Guinea",
+      "longName": "Republic of Equatorial Guinea",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Eritrea": {
+      "img": "assets/un_country_flags/eritrea.jpg",
+      "shortName": "Eritrea",
+      "longName": "State of Eritrea",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Estonia": {
+      "img": "assets/un_country_flags/estonia.jpg",
+      "shortName": "Estonia",
+      "longName": "Republic of Estonia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Eswatini": {
+      "img": "assets/un_country_flags/eswatini.jpg",
+      "shortName": "Eswatini",
+      "longName": "Kingdom of Eswatini",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Ethiopia": {
+      "img": "assets/un_country_flags/ethiopia.jpg",
+      "shortName": "Ethiopia",
+      "longName": "Federal Democratic Republic of Ethiopia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Fiji": {
+      "img": "assets/un_country_flags/fiji.jpg",
+      "shortName": "Fiji",
+      "longName": "Republic of Fiji",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Finland": {
+      "img": "assets/un_country_flags/finland.jpg",
+      "shortName": "Finland",
+      "longName": "Republic of Finland",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "France": {
+      "img": "assets/un_country_flags/france.jpg",
+      "shortName": "France",
+      "longName": "French Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Gabon": {
+      "img": "assets/un_country_flags/gabon.jpg",
+      "shortName": "Gabon",
+      "longName": "Gabonese Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Gambia": {
+      "img": "assets/un_country_flags/gambia.jpg",
+      "shortName": "Gambia",
+      "longName": "Republic of The Gambia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Georgia": {
+      "img": "assets/un_country_flags/georgia.jpg",
+      "shortName": "Georgia",
+      "longName": "Georgia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Germany": {
+      "img": "assets/un_country_flags/germany.jpg",
+      "shortName": "Germany",
+      "longName": "Federal Republic of Germany",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Ghana": {
+      "img": "assets/un_country_flags/ghana.jpg",
+      "shortName": "Ghana",
+      "longName": "Republic of Ghana",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Greece": {
+      "img": "assets/un_country_flags/greece.jpg",
+      "shortName": "Greece",
+      "longName": "Hellenic Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Grenada": {
+      "img": "assets/un_country_flags/grenada.jpg",
+      "shortName": "Grenada",
+      "longName": "Grenada",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Guatemala": {
+      "img": "assets/un_country_flags/guatemala.jpg",
+      "shortName": "Guatemala",
+      "longName": "Republic of Guatemala",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Guinea": {
+      "img": "assets/un_country_flags/guinea.jpg",
+      "shortName": "Guinea",
+      "longName": "Republic of Guinea",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Guinea-Bissau": {
+      "img": "assets/un_country_flags/guinea-bissau.jpg",
+      "shortName": "Guinea-Bissau",
+      "longName": "Republic of Guinea-Bissau",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Guyana": {
+      "img": "assets/un_country_flags/guyana.jpg",
+      "shortName": "Guyana",
+      "longName": "Co-operative Republic of Guyana",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Haiti": {
+      "img": "assets/un_country_flags/haiti.jpg",
+      "shortName": "Haiti",
+      "longName": "Republic of Haiti",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Honduras": {
+      "img": "assets/un_country_flags/honduras.jpg",
+      "shortName": "Honduras",
+      "longName": "Republic of Honduras",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Hungary": {
+      "img": "assets/un_country_flags/hungary.jpg",
+      "shortName": "Hungary",
+      "longName": "Hungary",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Iceland": {
+      "img": "assets/un_country_flags/iceland.jpg",
+      "shortName": "Iceland",
+      "longName": "Republic of Iceland",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "India": {
+      "img": "assets/un_country_flags/india.jpg",
+      "shortName": "India",
+      "longName": "Republic of India",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Indonesia": {
+      "img": "assets/un_country_flags/indonesia.jpg",
+      "shortName": "Indonesia",
+      "longName": "Republic of Indonesia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Iran": {
+      "img": "assets/un_country_flags/iran.jpg",
+      "shortName": "Iran",
+      "longName": "Islamic Republic of Iran",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Iraq": {
+      "img": "assets/un_country_flags/iraq.jpg",
+      "shortName": "Iraq",
+      "longName": "Republic of Iraq",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Ireland": {
+      "img": "assets/un_country_flags/ireland.jpg",
+      "shortName": "Ireland",
+      "longName": "Ireland",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Israel": {
+      "img": "assets/un_country_flags/israel.jpg",
+      "shortName": "Israel",
+      "longName": "State of Israel",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Italy": {
+      "img": "assets/un_country_flags/italy.jpg",
+      "shortName": "Italy",
+      "longName": "Italian Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Jamaica": {
+      "img": "assets/un_country_flags/jamaica.jpg",
+      "shortName": "Jamaica",
+      "longName": "Jamaica",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Japan": {
+      "img": "assets/un_country_flags/japan.jpg",
+      "shortName": "Japan",
+      "longName": "Japan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Jordan": {
+      "img": "assets/un_country_flags/jordan.jpg",
+      "shortName": "Jordan",
+      "longName": "Hashemite Kingdom of Jordan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Kazakhstan": {
+      "img": "assets/un_country_flags/kazakhstan.jpg",
+      "shortName": "Kazakhstan",
+      "longName": "Republic of Kazakhstan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Kenya": {
+      "img": "assets/un_country_flags/kenya.jpg",
+      "shortName": "Kenya",
+      "longName": "Republic of Kenya",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Kiribati": {
+      "img": "assets/un_country_flags/kiribati.jpg",
+      "shortName": "Kiribati",
+      "longName": "Republic of Kiribati",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Kuwait": {
+      "img": "assets/un_country_flags/kuwait.jpg",
+      "shortName": "Kuwait",
+      "longName": "State of Kuwait",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Kyrgyzstan": {
+      "img": "assets/un_country_flags/kyrgyzstan.jpg",
+      "shortName": "Kyrgyzstan",
+      "longName": "Kyrgyz Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Laos": {
+      "img": "assets/un_country_flags/laos.jpg",
+      "shortName": "Laos",
+      "longName": "Lao People's Democratic Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Latvia": {
+      "img": "assets/un_country_flags/latvia.jpg",
+      "shortName": "Latvia",
+      "longName": "Republic of Latvia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Lebanon": {
+      "img": "assets/un_country_flags/lebanon.jpg",
+      "shortName": "Lebanon",
+      "longName": "Lebanese Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Lesotho": {
+      "img": "assets/un_country_flags/lesotho.jpg",
+      "shortName": "Lesotho",
+      "longName": "Kingdom of Lesotho",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Liberia": {
+      "img": "assets/un_country_flags/liberia.jpg",
+      "shortName": "Liberia",
+      "longName": "Republic of Liberia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Libya": {
+      "img": "assets/un_country_flags/libya.jpg",
+      "shortName": "Libya",
+      "longName": "State of Libya",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Liechtenstein": {
+      "img": "assets/un_country_flags/liechtenstein.jpg",
+      "shortName": "Liechtenstein",
+      "longName": "Principality of Liechtenstein",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Lithuania": {
+      "img": "assets/un_country_flags/lithuania.jpg",
+      "shortName": "Lithuania",
+      "longName": "Republic of Lithuania",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Luxembourg": {
+      "img": "assets/un_country_flags/luxembourg.jpg",
+      "shortName": "Luxembourg",
+      "longName": "Grand Duchy of Luxembourg",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Madagascar": {
+      "img": "assets/un_country_flags/madagascar.jpg",
+      "shortName": "Madagascar",
+      "longName": "Republic of Madagascar",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Malawi": {
+      "img": "assets/un_country_flags/malawi.jpg",
+      "shortName": "Malawi",
+      "longName": "Republic of Malawi",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Malaysia": {
+      "img": "assets/un_country_flags/malaysia.jpg",
+      "shortName": "Malaysia",
+      "longName": "Malaysia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Maldives": {
+      "img": "assets/un_country_flags/maldives.jpg",
+      "shortName": "Maldives",
+      "longName": "Republic of Maldives",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Mali": {
+      "img": "assets/un_country_flags/mali.jpg",
+      "shortName": "Mali",
+      "longName": "Republic of Mali",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Malta": {
+      "img": "assets/un_country_flags/malta.jpg",
+      "shortName": "Malta",
+      "longName": "Republic of Malta",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Marshall Islands": {
+      "img": "assets/un_country_flags/marshallislands.jpg",
+      "shortName": "Marshall Islands",
+      "longName": "Republic of the Marshall Islands",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Mauritania": {
+      "img": "assets/un_country_flags/mauritania.jpg",
+      "shortName": "Mauritania",
+      "longName": "Islamic Republic of Mauritania",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Mauritius": {
+      "img": "assets/un_country_flags/mauritius.jpg",
+      "shortName": "Mauritius",
+      "longName": "Republic of Mauritius",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Mexico": {
+      "img": "assets/un_country_flags/mexico.jpg",
+      "shortName": "Mexico",
+      "longName": "United Mexican States",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Micronesia": {
+      "img": "assets/un_country_flags/micronesia.jpg",
+      "shortName": "Micronesia",
+      "longName": "Federated States of Micronesia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Monaco": {
+      "img": "assets/un_country_flags/monaco.jpg",
+      "shortName": "Monaco",
+      "longName": "Principality of Monaco",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Mongolia": {
+      "img": "assets/un_country_flags/mongolia.jpg",
+      "shortName": "Mongolia",
+      "longName": "Mongolia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Montenegro": {
+      "img": "assets/un_country_flags/montenegro.jpg",
+      "shortName": "Montenegro",
+      "longName": "Montenegro",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Morocco": {
+      "img": "assets/un_country_flags/morocco.jpg",
+      "shortName": "Morocco",
+      "longName": "Kingdom of Morocco",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Mozambique": {
+      "img": "assets/un_country_flags/mozambique.jpg",
+      "shortName": "Mozambique",
+      "longName": "Republic of Mozambique",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Myanmar": {
+      "img": "assets/un_country_flags/myanmar.jpg",
+      "shortName": "Myanmar",
+      "longName": "Republic of the Union of Myanmar",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Namibia": {
+      "img": "assets/un_country_flags/namibia.jpg",
+      "shortName": "Namibia",
+      "longName": "Republic of Namibia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Nauru": {
+      "img": "assets/un_country_flags/nauru.jpg",
+      "shortName": "Nauru",
+      "longName": "Republic of Nauru",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Nepal": {
+      "img": "assets/un_country_flags/nepal.jpg",
+      "shortName": "Nepal",
+      "longName": "Federal Democratic Republic of Nepal",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Netherlands": {
+      "img": "assets/un_country_flags/netherlands.jpg",
+      "shortName": "Netherlands",
+      "longName": "Kingdom of the Netherlands",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "New Zealand": {
+      "img": "assets/un_country_flags/newzealand.jpg",
+      "shortName": "New Zealand",
+      "longName": "New Zealand",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Nicaragua": {
+      "img": "assets/un_country_flags/nicaragua.jpg",
+      "shortName": "Nicaragua",
+      "longName": "Republic of Nicaragua",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Niger": {
+      "img": "assets/un_country_flags/niger.jpg",
+      "shortName": "Niger",
+      "longName": "Republic of the Niger",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Nigeria": {
+      "img": "assets/un_country_flags/nigeria.jpg",
+      "shortName": "Nigeria",
+      "longName": "Federal Republic of Nigeria",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "North Macedonia": {
+      "img": "assets/un_country_flags/northmacedonia.jpg",
+      "shortName": "North Macedonia",
+      "longName": "Republic of North Macedonia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Norway": {
+      "img": "assets/un_country_flags/norway.jpg",
+      "shortName": "Norway",
+      "longName": "Kingdom of Norway",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Oman": {
+      "img": "assets/un_country_flags/oman.jpg",
+      "shortName": "Oman",
+      "longName": "Sultanate of Oman",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Pakistan": {
+      "img": "assets/un_country_flags/pakistan.jpg",
+      "shortName": "Pakistan",
+      "longName": "Islamic Republic of Pakistan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Palau": {
+      "img": "assets/un_country_flags/palau.jpg",
+      "shortName": "Palau",
+      "longName": "Republic of Palau",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Panama": {
+      "img": "assets/un_country_flags/panama.jpg",
+      "shortName": "Panama",
+      "longName": "Republic of Panama",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Papua New Guinea": {
+      "img": "assets/un_country_flags/papuanewguinea.jpg",
+      "shortName": "Papua New Guinea",
+      "longName": "Independent State of Papua New Guinea",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Paraguay": {
+      "img": "assets/un_country_flags/paraguay.jpg",
+      "shortName": "Paraguay",
+      "longName": "Republic of Paraguay",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Peru": {
+      "img": "assets/un_country_flags/peru.jpg",
+      "shortName": "Peru",
+      "longName": "Republic of Peru",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Philippines": {
+      "img": "assets/un_country_flags/philippines.jpg",
+      "shortName": "Philippines",
+      "longName": "Republic of the Philippines",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Poland": {
+      "img": "assets/un_country_flags/poland.jpg",
+      "shortName": "Poland",
+      "longName": "Republic of Poland",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Portugal": {
+      "img": "assets/un_country_flags/portugal.jpg",
+      "shortName": "Portugal",
+      "longName": "Portuguese Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Qatar": {
+      "img": "assets/un_country_flags/qatar.jpg",
+      "shortName": "Qatar",
+      "longName": "State of Qatar",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Republic of Korea": {
+      "img": "assets/un_country_flags/southkorea.jpg",
+      "shortName": "Republic of Korea",
+      "longName": "Republic of Korea",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Moldova": {
+      "img": "assets/un_country_flags/moldova.jpg",
+      "shortName": "Republic of Moldova",
+      "longName": "Republic of Moldova",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Romania": {
+      "img": "assets/un_country_flags/romania.jpg",
+      "shortName": "Romania",
+      "longName": "Romania",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Russia": {
+      "img": "assets/un_country_flags/russia.jpg",
+      "shortName": "Russian Federation",
+      "longName": "Russian Federation",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Rwanda": {
+      "img": "assets/un_country_flags/rwanda.jpg",
+      "shortName": "Rwanda",
+      "longName": "Republic of Rwanda",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Saint Kitts and Nevis": {
+      "img": "assets/un_country_flags/saintkittsandnevis.jpg",
+      "shortName": "Saint Kitts and Nevis",
+      "longName": "Federation of Saint Christopher and Nevis",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Saint Lucia": {
+      "img": "assets/un_country_flags/saintlucia.jpg",
+      "shortName": "Saint Lucia",
+      "longName": "Saint Lucia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Saint Vincent and the Grenadines": {
+      "img": "assets/un_country_flags/saintvincentandthegrenadines.jpg",
+      "shortName": "Saint Vincent and the Grenadines",
+      "longName": "Saint Vincent and the Grenadines",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Samoa": {
+      "img": "assets/un_country_flags/samoa.jpg",
+      "shortName": "Samoa",
+      "longName": "Independent State of Samoa",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "San Marino": {
+      "img": "assets/un_country_flags/sanmarino.jpg",
+      "shortName": "San Marino",
+      "longName": "Republic of San Marino",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Sao Tome and Principe": {
+      "img": "assets/un_country_flags/saotomeandprincipe.jpg",
+      "shortName": "Sao Tome and Principe",
+      "longName": "Democratic Republic of Sao Tome and Principe",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Saudi Arabia": {
+      "img": "assets/un_country_flags/saudiarabia.jpg",
+      "shortName": "Saudi Arabia",
+      "longName": "Kingdom of Saudi Arabia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Senegal": {
+      "img": "assets/un_country_flags/senegal.jpg",
+      "shortName": "Senegal",
+      "longName": "Republic of Senegal",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Serbia": {
+      "img": "assets/un_country_flags/serbia.jpg",
+      "shortName": "Serbia",
+      "longName": "Republic of Serbia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Seychelles": {
+      "img": "assets/un_country_flags/seychelles.jpg",
+      "shortName": "Seychelles",
+      "longName": "Republic of Seychelles",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Sierra Leone": {
+      "img": "assets/un_country_flags/sierraleone.jpg",
+      "shortName": "Sierra Leone",
+      "longName": "Republic of Sierra Leone",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Singapore": {
+      "img": "assets/un_country_flags/singapore.jpg",
+      "shortName": "Singapore",
+      "longName": "Republic of Singapore",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Slovakia": {
+      "img": "assets/un_country_flags/slovakia.jpg",
+      "shortName": "Slovakia",
+      "longName": "Slovak Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Slovenia": {
+      "img": "assets/un_country_flags/slovenia.jpg",
+      "shortName": "Slovenia",
+      "longName": "Republic of Slovenia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Solomon Islands": {
+      "img": "assets/un_country_flags/solomonislands.jpg",
+      "shortName": "Solomon Islands",
+      "longName": "Solomon Islands",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Somalia": {
+      "img": "assets/un_country_flags/somalia.jpg",
+      "shortName": "Somalia",
+      "longName": "Federal Republic of Somalia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "South Africa": {
+      "img": "assets/un_country_flags/southafrica.jpg",
+      "shortName": "South Africa",
+      "longName": "Republic of South Africa",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "South Sudan": {
+      "img": "assets/un_country_flags/southsudan.jpg",
+      "shortName": "South Sudan",
+      "longName": "Republic of South Sudan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Spain": {
+      "img": "assets/un_country_flags/spain.jpg",
+      "shortName": "Spain",
+      "longName": "Kingdom of Spain",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Sri Lanka": {
+      "img": "assets/un_country_flags/srilanka.jpg",
+      "shortName": "Sri Lanka",
+      "longName": "Democratic Socialist Republic of Sri Lanka",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Palestine": {
+      "img": "assets/un_country_flags/stateofpalestine.jpg",
+      "shortName": "Palestine",
+      "longName": "State of Palestine",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Sudan": {
+      "img": "assets/un_country_flags/sudan.jpg",
+      "shortName": "Sudan",
+      "longName": "Republic of the Sudan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Suriname": {
+      "img": "assets/un_country_flags/suriname.jpg",
+      "shortName": "Suriname",
+      "longName": "Republic of Suriname",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Sweden": {
+      "img": "assets/un_country_flags/sweden.jpg",
+      "shortName": "Sweden",
+      "longName": "Kingdom of Sweden",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Switzerland": {
+      "img": "assets/un_country_flags/switzerland.jpg",
+      "shortName": "Switzerland",
+      "longName": "Swiss Confederation",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Syria": {
+      "img": "assets/un_country_flags/syria.jpg",
+      "shortName": "Syria",
+      "longName": "Syrian Arab Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Tajikistan": {
+      "img": "assets/un_country_flags/tajikistan.jpg",
+      "shortName": "Tajikistan",
+      "longName": "Republic of Tajikistan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Thailand": {
+      "img": "assets/un_country_flags/thailand.jpg",
+      "shortName": "Thailand",
+      "longName": "Kingdom of Thailand",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Timor-Leste": {
+      "img": "assets/un_country_flags/timor-leste.jpg",
+      "shortName": "Timor-Leste",
+      "longName": "Democratic Republic of Timor-Leste",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Togo": {
+      "img": "assets/un_country_flags/togo.jpg",
+      "shortName": "Togo",
+      "longName": "Togolese Republic",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Tonga": {
+      "img": "assets/un_country_flags/tonga.jpg",
+      "shortName": "Tonga",
+      "longName": "Kingdom of Tonga",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Trinidad and Tobago": {
+      "img": "assets/un_country_flags/trinidadandtobago.jpg",
+      "shortName": "Trinidad and Tobago",
+      "longName": "Republic of Trinidad and Tobago",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Tunisia": {
+      "img": "assets/un_country_flags/tunisia.jpg",
+      "shortName": "Tunisia",
+      "longName": "Republic of Tunisia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Türkiye": {
+      "img": "assets/un_country_flags/turkiye.jpg",
+      "shortName": "Türkiye",
+      "longName": "Republic of Türkiye",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Turkmenistan": {
+      "img": "assets/un_country_flags/turkmenistan.jpg",
+      "shortName": "Turkmenistan",
+      "longName": "Turkmenistan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Tuvalu": {
+      "img": "assets/un_country_flags/tuvalu.jpg",
+      "shortName": "Tuvalu",
+      "longName": "Tuvalu",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Uganda": {
+      "img": "assets/un_country_flags/uganda.jpg",
+      "shortName": "Uganda",
+      "longName": "Republic of Uganda",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Ukraine": {
+      "img": "assets/un_country_flags/ukraine.jpg",
+      "shortName": "Ukraine",
+      "longName": "Ukraine",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "United Arab Emirates": {
+      "img": "assets/un_country_flags/unitedarabemirates.jpg",
+      "shortName": "United Arab Emirates",
+      "longName": "United Arab Emirates",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "United Kingdom": {
+      "img": "assets/un_country_flags/unitedkingdom.jpg",
+      "shortName": "United Kingdom",
+      "longName": "United Kingdom of Great Britain and Northern Ireland",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Tanzania": {
+      "img": "assets/un_country_flags/tanzania.jpg",
+      "shortName": "Tanzania",
+      "longName": "United Republic of Tanzania",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "United States": {
+      "img": "assets/un_country_flags/unitedstates.jpg",
+      "shortName": "United States",
+      "longName": "United States of America",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Uruguay": {
+      "img": "assets/un_country_flags/uruguay.jpg",
+      "shortName": "Uruguay",
+      "longName": "Oriental Republic of Uruguay",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Uzbekistan": {
+      "img": "assets/un_country_flags/uzbekistan.jpg",
+      "shortName": "Uzbekistan",
+      "longName": "Republic of Uzbekistan",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Vanuatu": {
+      "img": "assets/un_country_flags/vanuatu.jpg",
+      "shortName": "Vanuatu",
+      "longName": "Republic of Vanuatu",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Venezuela": {
+      "img": "assets/un_country_flags/venezuela.jpg",
+      "shortName": "Venezuela",
+      "longName": "Bolivarian Republic of Venezuela",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Viet Nam": {
+      "img": "assets/un_country_flags/vietnam.jpg",
+      "shortName": "Viet Nam",
+      "longName": "Socialist Republic of Viet Nam",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Yemen": {
+      "img": "assets/un_country_flags/yemen.jpg",
+      "shortName": "Yemen",
+      "longName": "Republic of Yemen",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Zambia": {
+      "img": "assets/un_country_flags/zambia.jpg",
+      "shortName": "Zambia",
+      "longName": "Republic of Zambia",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Zimbabwe": {
+      "img": "assets/un_country_flags/zimbabwe.jpg",
+      "shortName": "Zimbabwe",
+      "longName": "Republic of Zimbabwe",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    },
+    "Holy See": {
+      "img": "assets/un_country_flags/holysee.jpg",
+      "shortName": "Holy See",
+      "longName": "Holy See",
+      "votingStatus": "Absent",
+      "votingObserver": false
+    }
+  },
+  "committeePresets": {
+    "Arab League": {
+      "img": "assets/logo.png",
+      "countries": [
+        "Algeria",
+        "Bahrain",
+        "Comoros",
+        "Djibouti",
+        "Egypt",
+        "Iraq",
+        "Jordan",
+        "Kuwait",
+        "Lebanon",
+        "Libya",
+        "Mauritania",
+        "Morocco",
+        "Oman",
+        "Palestine",
+        "Qatar",
+        "Saudi Arabia",
+        "Somalia",
+        "Sudan",
+        "Syria",
+        "Tunisia",
+        "United Arab Emirates",
+        "Yemen"
+      ]
+    },
+    "ASEAN": {
+      "img": "assets/logo.png",
+      "countries": [
+        "Brunei",
+        "Cambodia",
+        "Indonesia",
+        "Laos",
+        "Malaysia",
+        "Myanmar",
+        "Philippines",
+        "Singapore",
+        "Thailand",
+        "Timor-Leste",
+        "Viet Nam"
+      ]
+    },
+    "European Union": {
+      "img": "assets/logo.png",
+      "countries": [
+        "Austria",
+        "Belgium",
+        "Bulgaria",
+        "Croatia",
+        "Cyprus",
+        "Czechia",
+        "Denmark",
+        "Estonia",
+        "Finland",
+        "France",
+        "Germany",
+        "Greece",
+        "Hungary",
+        "Ireland",
+        "Italy",
+        "Latvia",
+        "Lithuania",
+        "Luxembourg",
+        "Malta",
+        "Netherlands",
+        "Poland",
+        "Portugal",
+        "Romania",
+        "Slovakia",
+        "Slovenia",
+        "Spain",
+        "Sweden"
+      ]
+    },
+    "G7": {
+      "img": "assets/logo.png",
+      "countries": [
+        "Canada",
+        "France",
+        "Germany",
+        "Italy",
+        "Japan",
+        "United Kingdom",
+        "United States"
+      ]
+    },
+    "NATO": {
+      "img": "assets/logo.png",
+      "countries": [
+        "Albania",
+        "Belgium",
+        "Bulgaria",
+        "Canada",
+        "Croatia",
+        "Czechia",
+        "Denmark",
+        "Estonia",
+        "Finland",
+        "France",
+        "Germany",
+        "Greece",
+        "Hungary",
+        "Iceland",
+        "Italy",
+        "Latvia",
+        "Lithuania",
+        "Luxembourg",
+        "Montenegro",
+        "Netherlands",
+        "North Macedonia",
+        "Norway",
+        "Poland",
+        "Portugal",
+        "Romania",
+        "Slovakia",
+        "Slovenia",
+        "Spain",
+        "Sweden",
+        "Türkiye",
+        "United Kingdom",
+        "United States"
+      ]
+    },
+    "Nordic Countries": {
+      "img": "assets/logo.png",
+      "countries": ["Denmark", "Finland", "Iceland", "Norway", "Sweden"]
+    },
+    "P5": {
+      "img": "assets/logo.png",
+      "countries": [
+        "China",
+        "France",
+        "Russia",
+        "United Kingdom",
+        "United States"
+      ]
+    },
+    "UNSC": {
+      "img": "assets/logo.png",
+      "countries": [
+        "Bahrain",
+        "China",
+        "Colombia",
+        "Democratic Republic of the Congo",
+        "Denmark",
+        "France",
+        "Greece",
+        "Latvia",
+        "Liberia",
+        "Pakistan",
+        "Panama",
+        "Russia",
+        "Somalia",
+        "United Kingdom",
+        "United States"
+      ]
+    }
+  }
+}

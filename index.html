@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LIMUN Sessions App</title>
+
+        <link rel="icon" type="image/png" href="assets/logo.png">
+        <link rel="stylesheet" href="assets/style.css">
+        <!-- Page-specific overrides only: shared colours, fonts, buttons and
+       cards all live in assets/style.css. -->
+        <style>
+            /* background photo with a dark tint so the text stays readable -
+               change .7 to make the tint lighter (0) or darker (1) */
+            body {
+              background-image:
+                linear-gradient(rgba(14,10,32,.7), rgba(14,10,32,.7)),
+                url('assets/houses-of-parliament.jpg');
+              background-size: cover;
+              background-position: center;
+              background-attachment: fixed;
+            }
+            a {
+                color: var(--gold-1);
+                font-weight: bold;
+            }
+
+            .topbar { grid-template-columns: 1fr; }   /* no avatar here, so the brand can use the full width */
+            .topbar-item { margin-left: 1px; white-space: nowrap; }
+            .layout { max-width: 820px; padding: 48px 28px 40px; }
+            .home-hero { text-align: center; padding: 8px 0 4px; }
+            .home-hero img { height: 76px; width: auto; margin-bottom: 18px; }
+            .home-hero h1 { font-family: var(--serif); font-weight: 400; font-size: 2rem; margin-bottom: 10px; }
+            .home-hero .subtitle { max-width: 520px; margin: 0 auto; font-size: .95rem; line-height: 1.5; }
+
+            .paths { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .path-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; }
+            .path-card .k { margin-bottom: 0; }
+            .path-card h2 { font-family: var(--serif); font-weight: 400; font-size: 1.3rem; }
+            .path-card p { font-size: .85rem; color: var(--muted); line-height: 1.5; flex: 1; }
+            .path-card .submit-btn { margin-top: 8px; }
+
+            @media (max-width: 700px) {
+              .layout { padding: 32px 16px; }
+              .paths { grid-template-columns: 1fr; }
+              .home-hero h1 { font-size: 1.6rem; }
+            }
+
+            #errorMessage {
+                color: red;
+            }
+        </style>
+    </head>
+    <body class="topbar-only">
+        <div class="topbar" style="display: flex;">
+            <div class="brand" style="width:100%; float: left;">
+                <a href="https://www.limunportal.org.uk">
+                    <img class="brand-logo" src="assets/logo.png">
+                </a>
+                LIMUN Sessions App
+            </div>
+            <div class="topbar-item">
+                <a href="https://www.limun.org.uk">LIMUN Home</a>
+            </div>
+            <div class="topbar-item">
+                <a href="https://www.limunportal.org.uk">Portal Home</a>
+            </div>
+        </div>
+
+        <main class="layout">
+            <section class="home-hero">
+                <img src="assets/logo.png" alt="LIMUN 2027 Logo">
+                <h1>Welcome to the LIMUN 2027 Sessions App</h1>
+                <p class="subtitle">
+                    wefio
+                </p>
+            </section>
+            <div class="paths">
+                <div class="card path-card">
+                    <div class="k">Session Creation</div>
+                    <h2>Start your Session</h2>
+                    <p>ADD DESCRIPTION HERE PLEASE THANK YOU</p>
+                    <button id="startSession" class="submit-btn" style="user-select: none;">Start a Session</button>
+                </div>
+                <div class="card path-card">
+                    <div class="k">Session Restoration</div>
+                    <h2>Return to your Session</h2>
+                    <p>
+                        Needed to take a break or pick up from where you left off? Get back into your session!
+                    </p>
+                    <input id="sessionCode" placeholder="Enter your LIMUN Session Code">
+                    <button id="loadSession" class="submit-btn" style="user-select: none;">Load Session</button>
+                    <p id="errorMessage" role="alert"></p>
+                </div>
+            </div>
+            <div class="card returning">
+                <footer class="contact-footer">
+                    If you experience any technical issues, please contact
+                    <a href=""mailto:limunportal@limun.org.uk>limunportal@limun.org.uk</a>
+                </footer>
+            </div>
+        </main>
+        
+        <script>
+            const startSessionButton = document.getElementById("startSession");
+            const loadSessionButton = document.getElementById("loadSession");
+            const sessionCodeInput = document.getElementById("sessionCode");
+            const loadErrorMessage = document.getElementById("errorMessage");
+
+            startSessionButton.addEventListener("click", () => {
+                const sessionId = crypto.randomUUID().slice(0, 8).toUpperCase();
+                window.location.href = 
+                    `session.html?sessionId=?${encodeURIComponent(sessionId)}&mode=new`;
+            });
+
+            loadSessionButton.addEventListener("click", () => {
+                const sessionId = sessionCodeInput.value.trim();
+
+                if (!sessionId) {
+                    loadErrorMessage.textContent = "Please enter a session code.";
+                    return;
+                }
+
+                loadErrorMessage.textContent = "";
+                window.location.href = 
+                    `session.html?sessionId=?${encodeURIComponent(sessionId)}&mode=load`;
+            })
+
+        </script>
+    </body>
+</html>
