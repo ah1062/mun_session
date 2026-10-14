@@ -6,6 +6,45 @@ async function loadSession(sessionId) {
     console.log(`TODO: load session ${sessionId}`);
 }
 
+class CountrySelection {
+    constructor(nations, committeePresets) {
+        this.nations = nations;
+        this.presets = committeePresets;
+
+        this.availableCountries = structuredClone(this.nations);
+        this.selectedCountries = {};
+    }
+
+    selectCountry(name) {
+        const country = this.availableCountries[name];
+        if (!country) return;
+
+        this.selectedCountries[name] = country;
+        delete this.availableCountries[name];
+    }
+    deselectCountry(name) {
+        const country = this.availableCountries[name];
+        if (!country) return;
+
+        this.availableCountries[name] = structuredClone(this.nations[name]);
+        delete this.selectedCountries[name];
+    }
+    clearSelection() {
+        for (const countryKey of Object.keys(this.selectedCountries)) {
+            this.deselectCountry(countryKey);
+        }
+    }
+
+    applyPreset(name) {
+        const preset = this.presets[name];
+        if (!preset) return;
+
+        for (const countryKey of preset.countries ?? []) {
+            this.selectCountry(countryKey);
+        }
+    }
+}
+
 function createCountryListItemDiv(countryKey, data, showVoting) {
     const item = document.createElement("div");
     item.className = "list-item";
@@ -97,8 +136,8 @@ function sessionConfigRenderAvailableCountryList(countries) {
     for (const countryKey of Object.keys(countries).sort()) {
         const data = nations[countryKey];
         
-        let searchValue = searchBox.value;
-        if (searchValue && countryKey.slice(0, searchValue.length).toLowerCase() !== searchValue.toLowerCase()) {
+        let searchValue = searchBox.value.trim().toLowerCase();
+        if (searchValue && !countryKey.toLowerCase().startsWithsearchValue) {
             continue;
         }
 
@@ -119,8 +158,8 @@ function sessionConfigRenderSelectedCountryList(countries) {
     clearSelectionButton.addEventListener("click", () => {
         for (const name of Object.keys(selectedCountries)) {
             availableCountries[name] = structuredClone(nations[name]);
-            delete selectedCountries[name];
         }
+        selectedCountries = {};
 
         sessionConfigRenderAvailableCountryList(availableCountries);
         sessionConfigRenderSelectedCountryList(selectedCountries);
@@ -134,8 +173,11 @@ function sessionConfigRenderSelectedCountryList(countries) {
 
         const item = createCountryListItemDiv(countryKey, data, true);
         item.addEventListener("click", () => {
-            availableCountries[countryKey] = structuredClone(nations[countryKey]);
             delete selectedCountries[countryKey];
+
+            if (countryKey in Object.keys(nations)) {
+                availableCountries[countryKey] = structuredClone(nations[countryKey]);
+            }
 
             sessionConfigRenderAvailableCountryList(availableCountries);
             sessionConfigRenderSelectedCountryList(selectedCountries);
@@ -191,9 +233,29 @@ function renderSessionConfig(
     sessionConfigRenderSelectedCountryList(selectedCountries);
     sessionConfigRenderCountrySelectionPresets(committeePresets);
 
+    const createCustomCountryButton = document.getElementById("avaiableCountryCreateCustom");
+    createCustomCountryButton.addEventListener("click", () => {
+        const customCountryInput = document.getElementById("avaiableCountryCustom");
+        const name = customCountryInput.value;
+        if (!name) {
+            return;
+        }
+
+        selectedCountries[name] = {
+            img: "assets/logo.png",
+            shortName: name,
+            longName: name,
+            votingStatus: "Absent",
+            votingObserver: false
+        }
+        sessionConfigRenderSelectedCountryList(selectedCountries);
+        customCountryInput.value = "";
+    });
+
     const createSessionButton = document.getElementById("createSession");
     createSessionButton.addEventListener("click", () => {
         console.log(selectedCountries);
+        renderSessionApp(selectedCountries);
     });
 }
 
@@ -205,58 +267,43 @@ let caucusTimeCapacity = 900;
 let speakerTimeRemaining = 15;
 let speakerTimeCapacity = 60;
 
-function secondsToTime(secondsAmount) {
-    const hours = Math.floor(secondsAmount / 3600);
-    const minutes = Math.floor(secondsAmount / 60);
-    const seconds = secondsAmount % 60;
+function secondsToTime(totalSeconds) {
+    const seconds = Math.max(0, totalSeconds);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainder = seconds % 60;
 
-    let comps = [];
-    if (hours) {
-        let text = String(hours).padEnd(2, '0');
-        comps.push(text);
-    }
-    if (minutes) {
-        let text = String(minutes);
-        if (minutes >= 10) {
-            text = text.padEnd(2, '0');
-        }
-        comps.push(text);
-    } else {
-        if (hours) {
-            comps.push('00');
-        } else {
-            comps.push('0');
-        }
-    }
-    if (seconds) {
-        let text = String(seconds);
-        if (seconds < 10) {
-            text = text.padStart(2, '0');
-        }
-        comps.push(text);
-    } else {
-        comps.push('00');
+    if (hours > 0) {
+        return `${hours}:${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
     }
 
-    let string = comps.join(':');
-    return `${string}`;
+    return `${minutes}:${String(remainder).padStart(2, "0")}`;
 }
 
+let countdownInterval;
 function countdownTimer() {
-    caucusTimeRemaining -= 1;
-    speakerTimeRemaining -= 1;
+    clearInterval(countdownInterval);
 
-    const caucusTimeLeft = document.getElementById("caucusTimeRemaining");
-    caucusTimeLeft.innerText = 
-        `${secondsToTime(caucusTimeRemaining)} / ${secondsToTime(caucusTimeCapacity)}`;
+    function updateDisplay() {
+        document.getElementById("caucusTimeRemaining").textContent =
+            `${secondsToTime(caucusTimeRemaining)} / ${secondsToTime(caucusTimeCapacity)}`;
 
-    const speakerTimeLeft = document.getElementById("speakerTimeRemaining");
-    speakerTimeLeft.innerText = 
-        `${secondsToTime(speakerTimeRemaining)} / ${secondsToTime(speakerTimeCapacity)}`;
-
-    if (speakerTimeRemaining !== 0) {
-        setTimeout(countdownTimer, 1000);
+        document.getElementById("speakerTimeRemaining").textContent =
+            `${secondsToTime(speakerTimeRemaining)} / ${secondsToTime(speakerTimeCapacity)}`;
     }
+
+    updateDisplay();
+
+    countdownInterval = setInterval(() => {
+        if (caucusTimeRemaining > 0) caucusTimeRemaining--;
+        if (speakerTimeRemaining > 0) speakerTimeRemaining--;
+
+        updateDisplay();
+
+        if (caucusTimeRemaining === 0 && speakerTimeRemaining === 0) {
+            clearInterval(countdownInterval);
+        }
+    }, 1000);
 }
 
 function renderSessionApp(selectedCountries) {
@@ -266,32 +313,40 @@ function renderSessionApp(selectedCountries) {
     const appBoard = template.content.cloneNode(true);
     main.replaceChildren(appBoard);
     countdownTimer();
+    sessionConfigRenderAvailableCountryList(selectedCountries);
 }
 
+let countrySelection;
 
-var nations;
-var committeePresets;
-var availableCountries;
-var selectedCountries;
-function initSession() {
-    fetch('assets/country-info.json')
-        .then(response => response.json())
-        .then(data => {
-            nations = data.nations;
-            committeePresets = data.committeePresets;
+let nations;
+let committeePresets;
+let availableCountries;
+let selectedCountries;
+async function initSession() {
+    try {
+        const response = await fetch("assets/country-info.json");
 
-            availableCountries = structuredClone(nations);
-            selectedCountries = {};
-        })
-        .catch(error => console.error("Failed to load JSON:", error));
+        if (!response.ok) {
+            throw new Error(`Failed to load country data: ${response.status}`);
+        }
 
-    renderSessionConfig(
-        availableCountries,
-        selectedCountries,
-        committeePresets
-    );
+        const data = await response.json();
+        countrySelection = CountrySelection(data.nations, data.committeePresets);
+
+        nations = data.nations;
+        committeePresets = data.committeePresets;
+        availableCountries = structuredClone(nations);
+        selectedCountries = {};
+
+        renderSessionConfig(
+            availableCountries,
+            selectedCountries,
+            committeePresets
+        );
+    } catch (error) {
+        console.error("Failed to initialize session:", error);
+    }
 }
-
 
 function cleanParams(value) {
     if (!value) { return null; }
@@ -303,11 +358,13 @@ function cleanParams(value) {
 }
 const params = new URLSearchParams(window.location.search);
 const sessionId = cleanParams(params.get("sessionId"));
-if (!sessionId) { console.error(`No session ID provided to create / load`) }
-
+if (!sessionId) { 
+    console.error(`No session ID provided to create / load`);
+    window.location.href = "index.html"
+}
 
 const mode = cleanParams(params.get("mode"));
-if (!mode) { console.error(`No session ID provided to create / load`) }
+if (!mode) { console.error(`No session ID provided to create / load`); }
 switch (mode) {
     case "new":
         createSession(sessionId);
