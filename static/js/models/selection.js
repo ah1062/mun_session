@@ -1,4 +1,4 @@
-class CountrySelection {
+export class CountrySelection {
     constructor(nations, committeePresets) {
         this.nations = nations;
         this.presets = committeePresets;

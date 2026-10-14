@@ -1,4 +1,4 @@
-import { CountrySelection } from 'models/selection.js';
+import { CountrySelection } from './models/selection.js';
 
 async function createSession(sessionId) {
     const time = performance.now();
