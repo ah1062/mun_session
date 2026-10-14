@@ -1,48 +1,11 @@
+import { CountrySelection } from 'models/selection.js';
+
 async function createSession(sessionId) {
     const time = performance.now();
     console.log(`TODO: create session ${sessionId}`);
 }
 async function loadSession(sessionId) {
     console.log(`TODO: load session ${sessionId}`);
-}
-
-class CountrySelection {
-    constructor(nations, committeePresets) {
-        this.nations = nations;
-        this.presets = committeePresets;
-
-        this.availableCountries = structuredClone(this.nations);
-        this.selectedCountries = {};
-    }
-
-    selectCountry(name) {
-        const country = this.availableCountries[name];
-        if (!country) return;
-
-        this.selectedCountries[name] = country;
-        delete this.availableCountries[name];
-    }
-    deselectCountry(name) {
-        const country = this.availableCountries[name];
-        if (!country) return;
-
-        this.availableCountries[name] = structuredClone(this.nations[name]);
-        delete this.selectedCountries[name];
-    }
-    clearSelection() {
-        for (const countryKey of Object.keys(this.selectedCountries)) {
-            this.deselectCountry(countryKey);
-        }
-    }
-
-    applyPreset(name) {
-        const preset = this.presets[name];
-        if (!preset) return;
-
-        for (const countryKey of preset.countries ?? []) {
-            this.selectCountry(countryKey);
-        }
-    }
 }
 
 function createCountryListItemDiv(countryKey, data, showVoting) {
@@ -178,7 +141,7 @@ function sessionConfigRenderSelectedCountryList(countries) {
         item.addEventListener("click", () => {
             delete selectedCountries[countryKey];
 
-            if (countryKey in Object.keys(nations)) {
+            if (countryKey in nations) {
                 availableCountries[countryKey] = structuredClone(
                     nations[countryKey],
                 );
@@ -340,7 +303,7 @@ async function initSession() {
         }
 
         const data = await response.json();
-        countrySelection = CountrySelection(
+        countrySelection = new CountrySelection(
             data.nations,
             data.committeePresets,
         );
