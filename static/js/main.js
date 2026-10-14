@@ -77,7 +77,7 @@ function createCountryListItemDiv(countryKey, data, showVoting) {
     observerButton.style.width = "auto";
     observerButton.style.whiteSpace = "nowrap";
 
-    observerButton.addEventListener("click", event => {
+    observerButton.addEventListener("click", (event) => {
         event.stopPropagation();
         data.votingObserver = !data.votingObserver;
         observerButton.classList.toggle("selected", data.votingObserver);
@@ -87,7 +87,7 @@ function createCountryListItemDiv(countryKey, data, showVoting) {
     const buttons = [
         { label: "A", color: "#c66" },
         { label: "P", color: "#c86" },
-        { label: "PV", color: "#99f" }
+        { label: "PV", color: "#99f" },
     ];
 
     for (const buttonData of buttons) {
@@ -95,16 +95,19 @@ function createCountryListItemDiv(countryKey, data, showVoting) {
         button.textContent = buttonData.label;
         button.style.backgroundColor = buttonData.color;
 
-        button.classList.toggle("selected", data.votingStatus === buttonData.label);
-        button.addEventListener("click", event => {
+        button.classList.toggle(
+            "selected",
+            data.votingStatus === buttonData.label,
+        );
+        button.addEventListener("click", (event) => {
             event.stopPropagation();
 
             data.votingStatus = buttonData.label;
-            voting.querySelectorAll("button").forEach(btn => {
+            voting.querySelectorAll("button").forEach((btn) => {
                 if (btn.textContent !== "Observer") {
                     btn.classList.toggle(
                         "selected",
-                        btn.textContent === data.votingStatus
+                        btn.textContent === data.votingStatus,
                     );
                 }
             });
@@ -117,9 +120,9 @@ function createCountryListItemDiv(countryKey, data, showVoting) {
     return item;
 }
 
-/* 
-* Session Configuration Template page functions 
-*/
+/*
+ * Session Configuration Template page functions
+ */
 function sessionConfigRenderAvailableCountryList(countries) {
     const listbox = document.getElementById("availableCountryList");
     listbox.replaceChildren();
@@ -135,7 +138,7 @@ function sessionConfigRenderAvailableCountryList(countries) {
 
     for (const countryKey of Object.keys(countries).sort()) {
         const data = nations[countryKey];
-        
+
         let searchValue = searchBox.value.trim().toLowerCase();
         if (searchValue && !countryKey.toLowerCase().startsWithsearchValue) {
             continue;
@@ -176,7 +179,9 @@ function sessionConfigRenderSelectedCountryList(countries) {
             delete selectedCountries[countryKey];
 
             if (countryKey in Object.keys(nations)) {
-                availableCountries[countryKey] = structuredClone(nations[countryKey]);
+                availableCountries[countryKey] = structuredClone(
+                    nations[countryKey],
+                );
             }
 
             sessionConfigRenderAvailableCountryList(availableCountries);
@@ -210,7 +215,7 @@ function sessionConfigRenderCountrySelectionPresets(presets) {
                     selectedCountries[party] = availableCountries[party];
                     delete availableCountries[party];
                 }
-            };
+            }
 
             sessionConfigRenderAvailableCountryList(availableCountries);
             sessionConfigRenderSelectedCountryList(selectedCountries);
@@ -221,7 +226,7 @@ function sessionConfigRenderCountrySelectionPresets(presets) {
 function renderSessionConfig(
     availableCountries,
     selectedCountries,
-    committeePresets
+    committeePresets,
 ) {
     const main = document.getElementById("mainContent");
     const template = document.getElementById("sessionConfigTemplate");
@@ -233,9 +238,13 @@ function renderSessionConfig(
     sessionConfigRenderSelectedCountryList(selectedCountries);
     sessionConfigRenderCountrySelectionPresets(committeePresets);
 
-    const createCustomCountryButton = document.getElementById("avaiableCountryCreateCustom");
+    const createCustomCountryButton = document.getElementById(
+        "avaiableCountryCreateCustom",
+    );
     createCustomCountryButton.addEventListener("click", () => {
-        const customCountryInput = document.getElementById("avaiableCountryCustom");
+        const customCountryInput = document.getElementById(
+            "avaiableCountryCustom",
+        );
         const name = customCountryInput.value;
         if (!name) {
             return;
@@ -246,8 +255,8 @@ function renderSessionConfig(
             shortName: name,
             longName: name,
             votingStatus: "Absent",
-            votingObserver: false
-        }
+            votingObserver: false,
+        };
         sessionConfigRenderSelectedCountryList(selectedCountries);
         customCountryInput.value = "";
     });
@@ -260,8 +269,8 @@ function renderSessionConfig(
 }
 
 /*
-* Session page functions
-*/
+ * Session page functions
+ */
 let caucusTimeRemaining = 900;
 let caucusTimeCapacity = 900;
 let speakerTimeRemaining = 15;
@@ -331,7 +340,10 @@ async function initSession() {
         }
 
         const data = await response.json();
-        countrySelection = CountrySelection(data.nations, data.committeePresets);
+        countrySelection = CountrySelection(
+            data.nations,
+            data.committeePresets,
+        );
 
         nations = data.nations;
         committeePresets = data.committeePresets;
@@ -341,7 +353,7 @@ async function initSession() {
         renderSessionConfig(
             availableCountries,
             selectedCountries,
-            committeePresets
+            committeePresets,
         );
     } catch (error) {
         console.error("Failed to initialize session:", error);
@@ -349,22 +361,26 @@ async function initSession() {
 }
 
 function cleanParams(value) {
-    if (!value) { return null; }
+    if (!value) {
+        return null;
+    }
 
     if (value.startsWith("?")) {
-        value = value.slice(1)
+        value = value.slice(1);
     }
-    return value
+    return value;
 }
 const params = new URLSearchParams(window.location.search);
 const sessionId = cleanParams(params.get("sessionId"));
-if (!sessionId) { 
+if (!sessionId) {
     console.error(`No session ID provided to create / load`);
-    window.location.href = "index.html"
+    window.location.href = "index.html";
 }
 
 const mode = cleanParams(params.get("mode"));
-if (!mode) { console.error(`No session ID provided to create / load`); }
+if (!mode) {
+    console.error(`No session ID provided to create / load`);
+}
 switch (mode) {
     case "new":
         createSession(sessionId);
