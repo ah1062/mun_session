@@ -1,5 +1,31 @@
+import { CountrySelection } from './selection.js';
+
 // TODO: create client
 const supabase = null;
+
+export async function createSession(sessionId) {
+    try {
+        const response = await fetch("assets/country-info.json");
+
+        if (!response.ok) {
+            throw new Error(`Failed to load country data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const selection = new CountrySelection(
+            data.nations,
+            data.committeePresets,
+        );
+
+        const main = document.getElementById("mainContent");
+        const session = new Session(sessionId, main, selection);
+        return session;
+
+    } catch (error) {
+        console.error("Failed to initialize session:", error);
+        return null;
+    }
+}
 
 export async function saveSession(session) {
         if (!supabase) {

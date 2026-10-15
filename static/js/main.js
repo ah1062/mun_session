@@ -1,12 +1,17 @@
-import { CountrySelection } from './models/selection.js';
-import { Session, saveSession, loadSession} from './models/session.js';
+import { createSession, saveSession, loadSession} from './models/session.js';
 import { CaucusTimer, Timer } from './models/timer.js';
 
+const url = new URL(window.location.href);
+const cookies = new Map(
+  document.cookie.split('; ').filter(Boolean).map(cookie => {
+    const [name, ...value] = cookie.split('=');
+    return [name, decodeURIComponent(value.join('='))];
+  })
+);
 const urlString = window.location.search;
-const paramString = urlString.split('?')[1];
+const paramString = urlString.split("?")[1];
 
-const cookie = document.cookie;
-const params = new URLSearchParams(paramString);
+const params = url.searchParams;
 const sessionId = params.get("sessionId");
 if (!sessionId) {
     console.error(`No session ID provided to create / load`);
@@ -16,43 +21,19 @@ if (!sessionId) {
 var mode = params.get("mode");
 if (!mode) {
     console.error(`No session ID provided to create / load`);
-} else if (cookie.lastSession === session.sessionId) {
+} else if (cookies.get('lastSession') === sessionId) {
+    url.searchParams.set('mode', 'load');
+    window.history.pushState({}, '', url);
     mode = "load";
 }
 
-async function createSession(sessionId) {
-    try {
-        const response = await fetch("assets/country-info.json");
-
-        if (!response.ok) {
-            throw new Error(`Failed to load country data: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const selection = new CountrySelection(
-            data.nations,
-            data.committeePresets,
-        );
-
-        const main = document.getElementById("mainContent");
-        const session = new Session(sessionId, main, selection);
-        return session;
-
-    } catch (error) {
-        console.error("Failed to initialize session:", error);
-        return null;
-    }
-}
-
 const session = await createSession(sessionId);
-if (!session) {
-    console.error(`Unable to create session`);   
-} 
+if (!session) console.error(`Unable to create session`); 
 
 switch (mode) {
     case "new": 
         await saveSession(session);
-        cookie.lastSession = session.sessionId;
+        document.cookie = `lastSession=${sessionId}`;
         break;
     case "load":
         await loadSession(session);

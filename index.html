@@ -109,7 +109,7 @@
             startSessionButton.addEventListener("click", () => {
                 const sessionId = crypto.randomUUID().slice(0, 8).toUpperCase();
                 window.location.href = 
-                    `session.html?sessionId=?${encodeURIComponent(sessionId)}&mode=new`;
+                    `session.html?sessionId=${encodeURIComponent(sessionId)}&mode=new`;
             });
 
             loadSessionButton.addEventListener("click", () => {
