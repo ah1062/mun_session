@@ -1,19 +1,76 @@
 import { CountrySelection } from './models/selection.js';
+import { Session, saveSession, loadSession} from './models/session.js';
+import { CaucusTimer, Timer } from './models/timer.js';
+
+const urlString = window.location.search;
+const paramString = urlString.split('?')[1];
+
+const cookie = document.cookie;
+const params = new URLSearchParams(paramString);
+const sessionId = params.get("sessionId");
+if (!sessionId) {
+    console.error(`No session ID provided to create / load`);
+    window.location.href = "index.html";
+}
+
+var mode = params.get("mode");
+if (!mode) {
+    console.error(`No session ID provided to create / load`);
+} else if (cookie.lastSession === session.sessionId) {
+    mode = "load";
+}
 
 async function createSession(sessionId) {
-    const time = performance.now();
-    console.log(`TODO: create session ${sessionId}`);
+    try {
+        const response = await fetch("assets/country-info.json");
+
+        if (!response.ok) {
+            throw new Error(`Failed to load country data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const selection = new CountrySelection(
+            data.nations,
+            data.committeePresets,
+        );
+
+        const main = document.getElementById("mainContent");
+        const session = new Session(sessionId, main, selection);
+        return session;
+
+    } catch (error) {
+        console.error("Failed to initialize session:", error);
+        return null;
+    }
 }
-async function loadSession(sessionId) {
-    console.log(`TODO: load session ${sessionId}`);
+
+const session = await createSession(sessionId);
+if (!session) {
+    console.error(`Unable to create session`);   
+} 
+
+switch (mode) {
+    case "new": 
+        await saveSession(session);
+        cookie.lastSession = session.sessionId;
+        break;
+    case "load":
+        await loadSession(session);
 }
+
+session.showStage("config");
+await renderSessionConfig(
+    session.countries.availableCountries,
+    session.countries.selectedCountries,
+    session.countries.presets
+)
 
 function createCountryListItemDiv(countryKey, data, showVoting) {
     const item = document.createElement("div");
     item.className = "list-item";
 
     const img = document.createElement("img");
-    img.src = data.img;
+    img.src = data.img ?? "../assets/logo.png";
     img.alt = data.shortName;
     img.style.marginRight = "5px";
     item.appendChild(img);
@@ -86,7 +143,7 @@ function createCountryListItemDiv(countryKey, data, showVoting) {
 /*
  * Session Configuration Template page functions
  */
-function sessionConfigRenderAvailableCountryList(countries) {
+function sessionConfigRenderAvailableCountryList() {
     const listbox = document.getElementById("availableCountryList");
     listbox.replaceChildren();
 
@@ -95,70 +152,66 @@ function sessionConfigRenderAvailableCountryList(countries) {
         let value = searchBox.value;
         // enter or backspace
         if (e.key === "Enter") {
-            sessionConfigRenderAvailableCountryList(availableCountries);
+            sessionConfigRenderAvailableCountryList();
         }
     });
 
+    const countries = session.countries.availableCountries;
     for (const countryKey of Object.keys(countries).sort()) {
-        const data = nations[countryKey];
+        const data = countries[countryKey];
 
         let searchValue = searchBox.value.trim().toLowerCase();
-        if (searchValue && !countryKey.toLowerCase().startsWithsearchValue) {
+        if (searchValue && !countryKey.toLowerCase().startsWith(searchValue)) {
             continue;
         }
 
         const item = createCountryListItemDiv(countryKey, data, false);
         item.addEventListener("click", () => {
-            selectedCountries[countryKey] = availableCountries[countryKey];
-            delete availableCountries[countryKey];
+            session.countries.selectCountry(countryKey);
 
-            sessionConfigRenderAvailableCountryList(availableCountries);
-            sessionConfigRenderSelectedCountryList(selectedCountries);
+            sessionConfigRenderAvailableCountryList();
+            sessionConfigRenderSelectedCountryList();
         });
 
         listbox.appendChild(item);
     }
 }
-function sessionConfigRenderSelectedCountryList(countries) {
+function sessionConfigRenderSelectedCountryList() {
+    const label = document.getElementById("selectedCountries");
+    label.innerText = `(${session.countries.selectedCount}) Selected Countries`;
+
     const clearSelectionButton = document.getElementById("clearSelection");
     clearSelectionButton.addEventListener("click", () => {
-        for (const name of Object.keys(selectedCountries)) {
-            availableCountries[name] = structuredClone(nations[name]);
-        }
-        selectedCountries = {};
+        session.countries.clearSelection();
 
-        sessionConfigRenderAvailableCountryList(availableCountries);
-        sessionConfigRenderSelectedCountryList(selectedCountries);
+        sessionConfigRenderAvailableCountryList();
+        sessionConfigRenderSelectedCountryList();
     });
 
     const listbox = document.getElementById("selectedCountryList");
     listbox.replaceChildren();
 
+    const countries = session.countries.selectedCountries;
     for (const countryKey of Object.keys(countries).sort()) {
         const data = countries[countryKey];
 
         const item = createCountryListItemDiv(countryKey, data, true);
         item.addEventListener("click", () => {
-            delete selectedCountries[countryKey];
+            session.countries.deselectCountry(countryKey);
 
-            if (countryKey in nations) {
-                availableCountries[countryKey] = structuredClone(
-                    nations[countryKey],
-                );
-            }
-
-            sessionConfigRenderAvailableCountryList(availableCountries);
-            sessionConfigRenderSelectedCountryList(selectedCountries);
+            sessionConfigRenderAvailableCountryList();
+            sessionConfigRenderSelectedCountryList();
         });
 
         listbox.appendChild(item);
     }
 }
-function sessionConfigRenderCountrySelectionPresets(presets) {
+function sessionConfigRenderCountrySelectionPresets() {
+    const presets = session.countries.presets;
     const container = document.getElementById("countrySelectionPresets");
 
     for (const name of Object.keys(presets).sort()) {
-        const data = committeePresets[name];
+        const data = presets[name];
         const item = document.createElement("div");
         item.className = "country-preset";
 
@@ -174,32 +227,41 @@ function sessionConfigRenderCountrySelectionPresets(presets) {
 
         item.addEventListener("click", () => {
             for (const party of data.countries ?? []) {
-                if (!(party in selectedCountries)) {
-                    selectedCountries[party] = availableCountries[party];
-                    delete availableCountries[party];
-                }
+                session.countries.selectCountry(party);
             }
-
-            sessionConfigRenderAvailableCountryList(availableCountries);
-            sessionConfigRenderSelectedCountryList(selectedCountries);
+            
+            sessionConfigRenderAvailableCountryList();
+            sessionConfigRenderSelectedCountryList();
         });
         container.appendChild(item);
     }
 }
-function renderSessionConfig(
-    availableCountries,
-    selectedCountries,
-    committeePresets,
-) {
-    const main = document.getElementById("mainContent");
-    const template = document.getElementById("sessionConfigTemplate");
+async function renderSessionConfig() {
+    const committeeList = document.getElementById("committeeSelection");
+    const committees = await fetch('assets/committees.json');
+    const data = await committees.json();
 
-    const configBoard = template.content.cloneNode(true);
-    main.replaceChildren(configBoard);
+    for (const committee of data) {
+        const option = document.createElement('option');
+        option.innerText = committee.toString();
+        if (committee.startsWith("(GA)")) option.selected = "selected";
+        committeeList.appendChild(option)
+    }
+    
+    committeeList.addEventListener('change', (e) => {
+        const index = committeeList.selectedIndex;
+        const name = committeeList.options[index].textContent;
 
-    sessionConfigRenderAvailableCountryList(availableCountries);
-    sessionConfigRenderSelectedCountryList(selectedCountries);
-    sessionConfigRenderCountrySelectionPresets(committeePresets);
+        const re = /\((.*)\)\s*(.*)$/;
+        const matches = name.match(re);
+
+        session.committeeShortName = matches[1];
+        session.committeeLongName = matches[2];
+    })
+
+    sessionConfigRenderAvailableCountryList();
+    sessionConfigRenderSelectedCountryList();
+    sessionConfigRenderCountrySelectionPresets();
 
     const createCustomCountryButton = document.getElementById(
         "avaiableCountryCreateCustom",
@@ -213,21 +275,26 @@ function renderSessionConfig(
             return;
         }
 
-        selectedCountries[name] = {
-            img: "assets/logo.png",
+        session.countries.selectCustom(name, {
             shortName: name,
             longName: name,
             votingStatus: "Absent",
             votingObserver: false,
-        };
-        sessionConfigRenderSelectedCountryList(selectedCountries);
+        });
+        sessionConfigRenderSelectedCountryList();
         customCountryInput.value = "";
     });
 
     const createSessionButton = document.getElementById("createSession");
-    createSessionButton.addEventListener("click", () => {
-        console.log(selectedCountries);
-        renderSessionApp(selectedCountries);
+    createSessionButton.addEventListener("click", async () => {
+        if (session.countries.selectedCount === 0) {
+            console.error("Can't create a session with no selected members");
+            return;
+        }
+
+        session.showStage("session"); 
+        await session.save();
+        renderSessionApp();
     });
 }
 
@@ -278,81 +345,34 @@ function countdownTimer() {
     }, 1000);
 }
 
-function renderSessionApp(selectedCountries) {
-    const main = document.getElementById("mainContent");
-    const template = document.getElementById("sessionAppTemplate");
-
-    const appBoard = template.content.cloneNode(true);
-    main.replaceChildren(appBoard);
-    countdownTimer();
-    sessionConfigRenderAvailableCountryList(selectedCountries);
-}
-
-let countrySelection;
-
-let nations;
-let committeePresets;
-let availableCountries;
-let selectedCountries;
-async function initSession() {
-    try {
-        const response = await fetch("assets/country-info.json");
-
-        if (!response.ok) {
-            throw new Error(`Failed to load country data: ${response.status}`);
+function renderSessionApp() {
+    const caucus = new CaucusTimer(
+        15,
+        function() {
+            document.getElementById("caucusTimeRemaining").textContent =
+                `${caucus.formatCurrentTime()} / ${caucus.formatCapacityTime()}`
+        },
+        function() {
+            console.log("WOOOOOO");
         }
+    )
+    const timer = new Timer(
+        10, 
+        1000, 
+        function() {
+            caucus.tick(true);
+            document.getElementById("speakerTimeRemaining").textContent =
+                `${timer.formatCurrentTime()} / ${timer.formatCapacityTime()}`
+        },
+        function() {
+            console.log("AHHH");
+            timer.restart();
+            timer.start();
+        }
+    );
+    timer.start();
 
-        const data = await response.json();
-        countrySelection = new CountrySelection(
-            data.nations,
-            data.committeePresets,
-        );
-
-        nations = data.nations;
-        committeePresets = data.committeePresets;
-        availableCountries = structuredClone(nations);
-        selectedCountries = {};
-
-        renderSessionConfig(
-            availableCountries,
-            selectedCountries,
-            committeePresets,
-        );
-    } catch (error) {
-        console.error("Failed to initialize session:", error);
-    }
+    // countdownTimer();
+    sessionConfigRenderSelectedCountryList();
 }
 
-function cleanParams(value) {
-    if (!value) {
-        return null;
-    }
-
-    if (value.startsWith("?")) {
-        value = value.slice(1);
-    }
-    return value;
-}
-const params = new URLSearchParams(window.location.search);
-const sessionId = cleanParams(params.get("sessionId"));
-if (!sessionId) {
-    console.error(`No session ID provided to create / load`);
-    window.location.href = "index.html";
-}
-
-const mode = cleanParams(params.get("mode"));
-if (!mode) {
-    console.error(`No session ID provided to create / load`);
-}
-switch (mode) {
-    case "new":
-        createSession(sessionId);
-        initSession();
-        break;
-    case "load":
-        loadSession(sessionId);
-        renderSessionApp(selectedCountries);
-        break;
-    default:
-        console.error(`Can't handle session mode ${mode}`);
-}
