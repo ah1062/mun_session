@@ -1,4 +1,6 @@
 import { CountrySelection } from './selection.js';
+import { SessionConfigView } from '../ui/sessionConfigView.js';
+import { SessionAppView } from '../ui/sessionAppView.js';
 
 // TODO: create client
 const supabase = null;
@@ -69,22 +71,33 @@ export class Session {
 
         this.stage = stage;
         this.stages = {
-            "config": "sessionConfigTemplate",
-            "session": "sessionAppTemplate"
+            "config": new SessionConfigView(
+                this, {
+                    onCreateSession: async () => {
+                        await saveSession(this);
+                        await this.showStage("session");
+                    }
+                }
+            ),
+            "session": new SessionAppView(
+                this, {}      
+            )
         };
     }
 
     async showStage(name) {
-        if (!name in this.stages) {
-            console.error();
+        if (!(name in this.stages)) {
+            console.error(`Unknown session stage: ${name}`);
             return;
         }
 
-        const templateName = this.stages[name];
-        const templateElement = document.getElementById(templateName);
-        if (!templateElement) console.error(`Could not find stage template element ${templateName}`);
+        const view = this.stages[name];
+        const template = document.getElementById(view.templateName);
+        if (!template) {
+            throw new Error(`Template not found: #${view}`);
+        }
 
-        const template = templateElement.content.cloneNode(true);
-        this.stage.replaceChildren(template);
+        this.stage.replaceChildren(template.content.cloneNode(true));
+        await view.render();
     }
 }
