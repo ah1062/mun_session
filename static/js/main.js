@@ -1,6 +1,8 @@
 import { createSession, saveSession, loadSession } from "./models/session.js";
 import { CaucusTimer, Timer } from "./models/timer.js";
 
+const DEBUG_MODE = true;
+
 const url = new URL(window.location.href);
 const cookies = new Map(
   document.cookie
@@ -11,8 +13,6 @@ const cookies = new Map(
       return [name, decodeURIComponent(value.join("="))];
     }),
 );
-const urlString = window.location.search;
-const paramString = urlString.split("?")[1];
 
 const params = url.searchParams;
 const sessionId = params.get("sessionId");

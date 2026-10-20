@@ -30,31 +30,31 @@ export async function createSession(sessionId) {
 }
 
 export async function saveSession(session) {
-        if (!supabase) {
-            console.log("Can't save, no supabase client")
-            return;
-        }
-
-        const { data, error } = await supabase
-            .from("sessions")
-            .upsert({
-                sessionId: this.sessionId,
-                name: this.name,
-                committeeShortName: this.committeeShortName,
-                committeeLongName: this.committeeLongName,
-                selectedCountries: this.selectedCountries,
-            }, { onConflict: 'sessionId' }
-            )
-            .select()
-            .single();
-
-        if (error) {
-            console.error("Failed to insert session:", error.message);
-            throw error;
-        }
-
-        return data;
+    if (!supabase) {
+        console.log("Can't save, no supabase client")
+        return;
     }
+
+    const { data, error } = await supabase
+        .from("sessions")
+        .upsert({
+            sessionId: this.sessionId,
+            name: this.name,
+            committeeShortName: this.committeeShortName,
+            committeeLongName: this.committeeLongName,
+            selectedCountries: this.selectedCountries,
+        }, { onConflict: 'sessionId' }
+        )
+        .select()
+        .single();
+
+    if (error) {
+        console.error("Failed to insert session:", error.message);
+        throw error;
+    }
+
+    return data;
+}
 
 export async function loadSession(session) {
     console.log(`TODO: load session ${session.sessionId}`);
