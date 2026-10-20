@@ -224,6 +224,15 @@
           background: var(--hair); 
         }
 
+        .caucusTimer {
+            font-size: x-large;
+            font-weight: bolder;
+        }
+        .speakerTimer {
+            font-size: xx-large;
+            font-weight: bolder;
+        }
+
     </style>
 </head>
 
@@ -326,14 +335,13 @@
     </template>
     <template id="sessionAppTemplate">
         <div class="card path-card" style="align-items: center;">
-            <h5 id="caucusTimeRemaining">1:00 / 1:00</h1>
-            <h1 id="speakerTimeRemaining">1:00 / 1:00</h1>
-        </div>
-        <div class="card" style="display: flex; text-align: center;">
-            <button class="card" style="margin: 5px; width: 25%;">Start</button>
-            <button class="card" style="margin: 5px; width: 25%;">Stop</button>
-            <button class="card" style="margin: 5px; width: 25%;">Restart</button>
-            <button class="card" style="margin: 5px; width: 25%;">Edit</button>
+            <h1 class="caucusTimer" id="caucusTimeRemaining">1:00 / 1:00</h1>
+            <h1 class="speakerTimer" id="speakerTimeRemaining">1:00 / 1:00</h1>
+            <div>
+                <button id="startSpeaker" class="card">Start</button>
+                <button id="stopSpeaker" class="card">Stop</button>
+                <button id="restartSpeaker" class="card">Restart</button>
+            </div>
         </div>
         <div class="card path-card">
             <div style="align-items: center; display: flex;">

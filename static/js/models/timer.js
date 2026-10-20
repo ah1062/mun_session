@@ -13,6 +13,12 @@ export class Timer {
         this.timeoutId = null;
     }
 
+    render(obj) {
+        const symbol = this.active ? "[Run]" : "[Stop]";
+        obj.textContent =
+          `${symbol} ${this.formatCurrentTime()} / ${this.formatCapacityTime()}`;
+    }
+
     start() {
         if (this.active) return;
 

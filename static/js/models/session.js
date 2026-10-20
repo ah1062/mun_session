@@ -58,6 +58,38 @@ export async function saveSession(session) {
 
 export async function loadSession(session) {
     console.log(`TODO: load session ${session.sessionId}`);
+
+    // TODO: temporary state
+    try {
+        const response = await fetch("assets/country-info.json");
+
+        if (!response.ok) {
+            throw new Error(`Failed to load country data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const selection = new CountrySelection(
+            data.nations,
+            data.committeePresets,
+        );
+
+        const obj = selection.availableCountries;
+        
+        for (var i = 0; i < 5; i++) {
+            const randomKey = Object.keys(obj)[Math.floor(Math.random() * Object.keys(obj).length)];
+            const randomValue = obj[randomKey];
+        
+            randomValue.votingStatus = "P";
+            selection.selectCountry(randomKey);
+        }
+        
+        session.countries = selection;
+    }
+    catch (error) {
+        
+    }
+
+    return session;
 }
 
 export class Session {
@@ -80,7 +112,9 @@ export class Session {
                 }
             ),
             "session": new SessionAppView(
-                this, {}      
+                this, {
+
+                }      
             )
         };
     }

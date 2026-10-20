@@ -6,7 +6,6 @@ export class SessionConfigView {
         this.templateName = "sessionConfigTemplate";
 
         this.session = session;
-        this.countries = session.countries;
         this.onCreateSession = onCreateSession;
     }
 
@@ -25,7 +24,7 @@ export class SessionConfigView {
 
         const clearSelectionButton = document.getElementById("clearSelection");
         clearSelectionButton.addEventListener("click", () => {
-            this.countries.clearSelection();
+            this.session.countries.clearSelection();
             this.renderAvailableCountryList();
             this.renderSelectedCountryList();
         });
@@ -76,7 +75,7 @@ export class SessionConfigView {
 
         item.addEventListener("click", () => {
           for (const party of data.countries ?? []) {
-            this.countries.selectCountry(party);
+            this.session.countries.selectCountry(party);
           }
 
           this.renderAvailableCountryList();
@@ -92,7 +91,7 @@ export class SessionConfigView {
         const searchValue = document.getElementById("availableCountrySearch")
             .value.trim().toLowerCase();
 
-        const countries = this.countries.availableCountries;
+        const countries = this.session.countries.availableCountries;
         for (const countryKey of Object.keys(countries).sort()) {
             if (searchValue && !countryKey.toLowerCase().startsWith(searchValue)) {
                 continue;
@@ -101,7 +100,7 @@ export class SessionConfigView {
             const data = countries[countryKey];
             const item = createCountryListItem(countryKey, data, {
                 onClick: () => {
-                    this.countries.selectCountry(countryKey);
+                    this.session.countries.selectCountry(countryKey);
                     this.renderAvailableCountryList();
                     this.renderSelectedCountryList();
                 }
@@ -114,13 +113,13 @@ export class SessionConfigView {
         const listbox = document.getElementById("selectedCountryList");
         listbox.replaceChildren();
 
-        const countries = this.countries.selectedCountries;
+        const countries = this.session.countries.selectedCountries;
         for (const countryKey of Object.keys(countries).sort()) {
             const data = countries[countryKey];
             const item = createCountryListItem(countryKey, data, {
                 showVoting: true,
                 onClick: () => {
-                    this.countries.deselectCountry(countryKey);
+                    this.session.countries.deselectCountry(countryKey);
                     this.renderAvailableCountryList();
                     this.renderSelectedCountryList();
                 }
