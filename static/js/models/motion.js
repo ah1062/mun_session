@@ -1,7 +1,5 @@
-export class ModeratedCaucus {
-
-}
-
-export class UnmoderatedCaucus {
-    
+export class Motion {
+    constructor() {
+        this.id = crypto.randomUUID();
+    }
 }

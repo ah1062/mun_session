@@ -1,6 +1,8 @@
 import { CountrySelection } from './selection.js';
 import { SessionConfigView } from '../ui/sessionConfigView.js';
 import { SessionAppView } from '../ui/sessionAppView.js';
+import { SessionGSLView } from '../ui/sessionGSLView.js';
+import { SessionMotionsView } from '../ui/sessionMotionsView.js';
 
 // TODO: create client
 const supabase = null;
@@ -112,10 +114,10 @@ export class Session {
                 }
             ),
             "session": new SessionAppView(
-                this, {
-
-                }      
-            )
+                this, {}      
+            ),
+            "GSL": new SessionGSLView(this),
+            "motions": new SessionMotionsView(this)
         };
     }
 

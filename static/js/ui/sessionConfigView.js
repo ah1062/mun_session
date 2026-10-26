@@ -31,26 +31,36 @@ export class SessionConfigView {
     }
 
     async renderCommitteeNames() {
-      const committeeList = document.getElementById("committeeSelection");
+      const committeeListSelect = document.getElementById("committeeSelection");
+      const committeeTitleInput = document.getElementById("committeeTitle");
+
       const committees = await fetch("assets/committees.json");
       const data = await committees.json();
 
       for (const committee of data) {
+        const abbrev = committee.abbreviation;
+        const shortName = committee.shortName ?? committee.longName;
+        const longName = committee.longName;
+
         const option = document.createElement("option");
-        option.innerText = committee.toString();
-        if (committee.startsWith("(GA)")) option.selected = "selected";
-        committeeList.appendChild(option);
+        option.dataset.shortName = shortName;
+        option.dataset.longName = longName;
+        option.value = abbrev;
+        option.textContent = 
+            `${String(abbrev).padEnd(11, '\u00A0')} | ${shortName}`;
+
+        if (abbrev === "GA") option.selected = "selected";
+        committeeListSelect.appendChild(option);
       }
 
-      committeeList.addEventListener("change", (e) => {
-        const index = committeeList.selectedIndex;
-        const name = committeeList.options[index].textContent;
+      committeeListSelect.addEventListener("change", (e) => {
+        const selected = committeeListSelect.selectedOptions[0];
+        if (!selected) return;
 
-        const re = /\((.*)\)\s*(.*)$/;
-        const matches = name.match(re);
+        committeeTitleInput.placeholder = selected.dataset.longName;
 
-        session.committeeShortName = matches[1];
-        session.committeeLongName = matches[2];
+        this.session.committeeShortName = selected.dataset.shortName;
+        this.session.committeeLongName = selected.dataset.longName;
       });
     }
     renderCommitteePresets () {

@@ -1,26 +1,22 @@
-
 export class Timer {
-    constructor(capacity, stepms, onTick, onFinish) {
-        this.active = false;
-        this.stepms = stepms;
-
-        this.current = capacity;
+    constructor(capacity, {
+        onTick = () => {},
+        onFinish = () => {},
+        stepms = 1000,
+    } = {}) {
         this.capacity = capacity;
-
+        this.current = capacity;
         this.onTick = onTick;
         this.onFinish = onFinish;
+        this.stepms = stepms;
 
+        this.active = false;
+        this.finished = false;
         this.timeoutId = null;
     }
 
-    render(obj) {
-        const symbol = this.active ? "[Run]" : "[Stop]";
-        obj.textContent =
-          `${symbol} ${this.formatCurrentTime()} / ${this.formatCapacityTime()}`;
-    }
-
     start() {
-        if (this.active) return;
+        if (this.active || this.finished) return;
 
         this.active = true;
         this.onTick();
@@ -33,12 +29,6 @@ export class Timer {
         this.timeoutId = null;
     }
 
-    restart() {
-        this.stop();
-        this.current = this.capacity;
-        this.onTick();
-    }
-
     scheduleTick() {
         if (!this.active) return;
 
@@ -48,13 +38,15 @@ export class Timer {
     }
 
     tick() {
-        if (!this.active) return;
+        if (!this.active || this.finished) return;
 
         this.current = Math.max(0, this.current - 1);
         this.onTick();
 
         if (this.current === 0) {
-            this.stop();
+            this.active = false;
+            this.finished = true;
+            this.timeoutId = null;
             this.onFinish();
             return;
         }
@@ -62,46 +54,8 @@ export class Timer {
         this.scheduleTick();
     }
 
-    formatTime(count) {
-        const minutes = Math.floor(count / 60);
-        const seconds = (count % 60).toString().padStart(2, "0");
-
-        return `${minutes}:${seconds}`;
-    }
-
-    formatCurrentTime() {
-        return this.formatTime(this.current);
-    }
-
-    formatCapacityTime() {
-        return this.formatTime(this.capacity);
-    }
-}
-
-
-export class CaucusTimer {
-    constructor(capacity, onTick, onFinish) {
-        this.capacity = capacity;
-        this.current = capacity;
-        this.onTick = onTick;
-        this.onFinish = onFinish;
-        this.finished = false;
-    }
-
-    tick() {
-        if (this.finished || this.current <= 0) return;
-
-        this.current--;
-
-        this.onTick();
-
-        if (this.current === 0) {
-            this.finished = true;
-            this.onFinish();
-        }
-    }
-
     restart() {
+        this.stop();
         this.current = this.capacity;
         this.finished = false;
         this.onTick();
@@ -120,5 +74,10 @@ export class CaucusTimer {
 
     formatCapacityTime() {
         return this.formatTime(this.capacity);
+    }
+
+    render(element) {
+        element.textContent =
+            `${this.formatCurrentTime()} / ${this.formatCapacityTime()}`;
     }
 }

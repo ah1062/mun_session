@@ -26,6 +26,11 @@ export class SessionAppView {
     }
 
     bindEvents() {
+        const configButton = document.getElementById("setupSession");
+        configButton.addEventListener("click", async () => {
+            await this.session.showStage("config");
+        });
+
         const obj = document.getElementById("speakerTimeRemaining")
         const startSpeakerButton = document.getElementById("startSpeaker");
         startSpeakerButton.addEventListener("click", () => {

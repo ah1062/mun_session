@@ -1,59 +1,159 @@
 [
-    "(AU PSC) African Union Peace and Security Council",
-    "(AL) Arab League",
-    "(ASEAN) Association of Southeast Asian Nations",
-    "(BRICS+) BRICS+",
-    "(CCPCJ) Commission on Crime Prevention and Criminal Justice",
-    "(COP) Conference of the Parties",
-    "(COPUOS) Committee on the Peaceful Uses of Outer Space",
-    "(CPD) Commission on Population and Development",
-    "(CSW) Commission on the Status of Women",
-    "(DISEC) Disarmament and International Security Committee",
-    "(ECOFIN) Economic and Financial Committee",
-    "(ECOSOC) Economic and Social Council",
-    "(ECHR) European Court of Human Rights",
-    "(EC) European Council",
-    "(FAO) Food and Agriculture Organization",
-    "(FSC) Futuristic Security Council",
-    "(G20) Group of Twenty",
-    "(GA) General Assembly",
-    "(HN) Historical Negotiations",
-    "(HSC) Historical Security Council",
-    "(IAEA) International Atomic Energy Agency",
-    "(ICC) International Criminal Court",
-    "(ICJ) International Court of Justice",
-    "(ILO) International Labour Organization",
-    "(IMF) International Monetary Fund",
-    "(IMO) International Maritime Organization",
-    "(INTERPOL) International Criminal Police Organization",
-    "(ITLOS) International Tribunal for the Law of the Sea",
-    "(ITU) International Telecommunication Union",
-    "(JCC) Joint Crisis Committee",
-    "(LEGAL) Legal Committee",
-    "(NATO) North Atlantic Treaty Organization",
-    "(OAS) Organization of American States",
-    "(OSCE) Organization for Security and Co-operation in Europe",
-    "(Press Corps) International Press Corps",
-    "(SOCHUM) Social, Humanitarian and Cultural Committee",
-    "(SPECPOL) Special Political and Decolonization Committee",
-    "(UNCTAD) United Nations Conference on Trade and Development",
-    "(UNDC) United Nations Disarmament Commission",
-    "(UNDP) United Nations Development Programme",
-    "(UNEP) United Nations Environment Programme",
-    "(UNESCO) United Nations Educational, Scientific and Cultural Organization",
-    "(UNFCCC) United Nations Framework Convention on Climate Change",
-    "(UNHCR) United Nations High Commissioner for Refugees",
-    "(UNHRC) United Nations Human Rights Council",
-    "(UNICEF) United Nations Children's Fund",
-    "(UNIDO) United Nations Industrial Development Organization",
-    "(UNODC) United Nations Office on Drugs and Crime",
-    "(UNSC) United Nations Security Council",
-    "(UNRWA) United Nations Relief and Works Agency for Palestine Refugees in the Near East",
-    "(UNV) United Nations Volunteers",
-    "(UN Women) United Nations Entity for Gender Equality and the Empowerment of Women",
-    "(UN-Habitat) United Nations Human Settlements Programme",
-    "(WB) World Bank",
-    "(WHO) World Health Organization",
-    "(WTO) World Trade Organization",
-    "(Custom) Custom Committee"
+    {
+        "abbreviation": "AU PSC",
+        "shortName": "African Union",
+        "longName": "African Union Peace and Security Council"
+    },
+    {
+        "abbreviation": "AL",
+        "shortName": "Arab League",
+        "longName": "League of Arab States"
+    },
+    {
+        "abbreviation": "ASEAN",
+        "longName": "Association of Southeast Asian Nations"
+    },
+    { "abbreviation": "BRICS+", "longName": "BRICS+" },
+    {
+        "abbreviation": "CCPCJ",
+        "longName": "Commission on Crime Prevention and Criminal Justice"
+    },
+    { "abbreviation": "COP", "longName": "Conference of the Parties" },
+    {
+        "abbreviation": "COPUOS",
+        "longName": "Committee on the Peaceful Uses of Outer Space"
+    },
+    {
+        "abbreviation": "CPD",
+        "longName": "Commission on Population and Development"
+    },
+    { "abbreviation": "CSW", "longName": "Commission on the Status of Women" },
+    {
+        "abbreviation": "DISEC",
+        "longName": "Disarmament and International Security Committee"
+    },
+    {
+        "abbreviation": "ECOFIN",
+        "longName": "Economic and Financial Committee"
+    },
+    { "abbreviation": "ECOSOC", "longName": "Economic and Social Council" },
+    { "abbreviation": "ECHR", "longName": "European Court of Human Rights" },
+    { "abbreviation": "EC", "longName": "European Council" },
+    { "abbreviation": "EP", "longName": "European Parliament" },
+    { "abbreviation": "EPC", "longName": "European Political Community" },
+    { "abbreviation": "FAO", "longName": "Food and Agriculture Organization" },
+    { "abbreviation": "FSC", "longName": "Futuristic Security Council" },
+    { "abbreviation": "G20", "longName": "Group of Twenty" },
+    { "abbreviation": "GA", "longName": "General Assembly" },
+    { "abbreviation": "HN", "longName": "Historical Negotiations" },
+    { "abbreviation": "HOC", "longName": "House of Commons" },
+    { "abbreviation": "HSC", "longName": "Historical Security Council" },
+    {
+        "abbreviation": "IAEA",
+        "longName": "International Atomic Energy Agency"
+    },
+    { "abbreviation": "ICC", "longName": "International Criminal Court" },
+    { "abbreviation": "ICJ", "longName": "International Court of Justice" },
+    { "abbreviation": "ILO", "longName": "International Labour Organization" },
+    { "abbreviation": "IMF", "longName": "International Monetary Fund" },
+    {
+        "abbreviation": "IMO",
+        "longName": "International Maritime Organization"
+    },
+    {
+        "abbreviation": "INTERPOL",
+        "longName": "International Criminal Police Organization"
+    },
+    {
+        "abbreviation": "ITLOS",
+        "longName": "International Tribunal for the Law of the Sea"
+    },
+    {
+        "abbreviation": "ITU",
+        "longName": "International Telecommunication Union"
+    },
+    { "abbreviation": "JCC", "longName": "Joint Crisis Committee" },
+    { "abbreviation": "LEGAL", "longName": "Legal Committee" },
+    {
+        "abbreviation": "NATO",
+        "longName": "North Atlantic Treaty Organization"
+    },
+    { "abbreviation": "OAS", "longName": "Organization of American States" },
+    {
+        "abbreviation": "OSCE",
+        "longName": "Organization for Security and Co-operation in Europe"
+    },
+    { "abbreviation": "Press Corps", "longName": "International Press Corps" },
+    {
+        "abbreviation": "SOCHUM",
+        "longName": "Social, Humanitarian and Cultural Committee"
+    },
+    {
+        "abbreviation": "SPECPOL",
+        "longName": "Special Political and Decolonization Committee"
+    },
+    {
+        "abbreviation": "UNCTAD",
+        "shortName": "United Nations Trade and Development",
+        "longName": "United Nations Conference on Trade and Development"
+    },
+    {
+        "abbreviation": "UNDC",
+        "longName": "United Nations Disarmament Commission"
+    },
+    {
+        "abbreviation": "UNDP",
+        "longName": "United Nations Development Programme"
+    },
+    {
+        "abbreviation": "UNDRR",
+        "longName": "United Nations Office for Disaster Risk Reduction"
+    },
+    {
+        "abbreviation": "UNEP",
+        "longName": "United Nations Environment Programme"
+    },
+    {
+        "abbreviation": "UNESCO",
+        "longName": "United Nations Educational, Scientific and Cultural Organization"
+    },
+    {
+        "abbreviation": "UNFCCC",
+        "longName": "United Nations Framework Convention on Climate Change"
+    },
+    {
+        "abbreviation": "UNHCR",
+        "longName": "United Nations High Commissioner for Refugees"
+    },
+    {
+        "abbreviation": "UNHRC",
+        "longName": "United Nations Human Rights Council"
+    },
+    { "abbreviation": "UNICEF", "longName": "United Nations Children's Fund" },
+    {
+        "abbreviation": "UNIDO",
+        "longName": "United Nations Industrial Development Organization"
+    },
+    {
+        "abbreviation": "UNODC",
+        "longName": "United Nations Office on Drugs and Crime"
+    },
+    { "abbreviation": "UNSC", "longName": "United Nations Security Council" },
+    {
+        "abbreviation": "UNRWA",
+        "longName": "United Nations Relief and Works Agency for Palestine Refugees in the Near East"
+    },
+    { "abbreviation": "UNV", "longName": "United Nations Volunteers" },
+    {
+        "abbreviation": "UN Women",
+        "longName": "United Nations Entity for Gender Equality and the Empowerment of Women"
+    },
+    {
+        "abbreviation": "UN-Habitat",
+        "longName": "United Nations Human Settlements Programme"
+    },
+    { "abbreviation": "WB", "longName": "World Bank" },
+    { "abbreviation": "WHO", "longName": "World Health Organization" },
+    { "abbreviation": "WTO", "longName": "World Trade Organization" },
+    { "abbreviation": "Custom", "longName": "Custom Committee" }
 ]
