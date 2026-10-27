@@ -360,7 +360,7 @@
             });
         });
         
-        $("queue-list").addEventListener("click", function (event) {
+        $("queue-list").addEventListener("click", (event) => {
             const button = event.target.closest("button[data-action]");
             const option = event.target.closest(".listbox-option");
 
@@ -396,7 +396,13 @@
                     break;
             }
         });
-        
+        $("available-list").addEventListener("click", (e) => {
+            const option = e.target.closest(".listbox-option");
+            const optionName = option.children[0].textContent;
+
+            console.log(optionName);
+        });
+
         const speakers = [
             { name: "India", flag: "assets/un_country_flags/india.jpg" },
             { name: "France", flag: "assets/un_country_flags/france.jpg" },
@@ -509,13 +515,6 @@
 
         renderSpeaker();
         renderTimer();
-
-        var children = document.getElementById("queue-list").children;
-        for (var i = 0; i < children.length; i++) {
-            var tableChild = children[i];
-            var numSubChild = tableChild.children.length;
-            console.log(`${tableChild} ${numSubChild}`);
-        }
     </script>
 </body>
 </html>
