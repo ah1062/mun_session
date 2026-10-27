@@ -636,12 +636,22 @@ button {
     place-items: center;
     width: clamp(9rem, 20vw, 16rem);
     aspect-ratio: 1;
+
     border: 5px solid var(--indigo-deep);
     outline: 2px solid var(--gold-2);
     border-radius: 50%;
+
     background: var(--indigo-deep);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-    font-size: clamp(5rem, 12vw, 9rem);
+
+    overflow: hidden;
+}
+
+.speaker-flag img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .timer-main h1 {

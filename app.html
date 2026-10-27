@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="pragma" content="no-cache" />
+
     <title>LIMUN Session App</title>
     <link rel="stylesheet" href="static/css/app.css">
 </head>
@@ -122,15 +124,17 @@
                     </aside>
                 </div>
 
-                <div class="central-column">
-                    <section class="speaker-timer" aria-label="Current speaker">
+                <section class="central-column">
+                    <div class="speaker-timer" aria-label="Current speaker">
                         <div class="timer-queue-heading">
                             <span aria-hidden="true">☷</span>
                             <h2>General Speaker's List</h2>
                         </div>
 
                         <div class="timer-main">
-                            <div class="speaker-flag" id="speaker-flag">🇮🇳</div>
+                            <div class="speaker-flag" id="speaker-flag">
+                                <img src="assets/un_country_flags/india.jpg">
+                            </div>
                             <h1 id="speaker-name">India</h1>
                             <div class="timer-display" id="timer-display" role="timer"
                                  aria-live="off">1:30</div>
@@ -151,15 +155,17 @@
 
                             <div class="timer-controls">
                                 <button type="button" class="timer-icon-btn"
+                                        id="time-settings" title="Time settings">⚙</button>
+                                <button type="button" class="timer-icon-btn"
+                                        id="add-time" title="Add 15 seconds">+</button>
+                                <button type="button" class="timer-icon-btn"
                                         id="reset-timer" title="Reset timer">⮎</button>
                                 <button type="button" class="timer-btn start-btn"
-                                        id="start-timer">▷ <span>START</span></button>
+                                        id="start-timer">▶ <span>START</span></button>
                                 <button type="button" class="timer-btn stop-btn"
-                                        id="stop-timer">Ⅱ <span>STOP</span></button>
+                                        id="stop-timer">⏸︎ <span>STOP</span></button>
                                 <button type="button" class="timer-btn next-btn"
-                                        id="next-speaker">🠞 <span>NEXT</span></button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="add-time" title="Add 15 seconds">◷+</button>
+                                        id="next-speaker">⏭ <span>NEXT</span></button>
                                 <button type="button" class="timer-icon-btn yield-btn"
                                         id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
                             </div>
@@ -168,8 +174,8 @@
                                 Ready to begin
                             </p>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
 
                 <!-- Right column: three rows -->
                 <section class="session-panel">
@@ -241,7 +247,7 @@
                     <!-- ROW 3: Available speakers -->
                     <div class="box available-speakers">
                         <h3>Available Speakers</h3>
-                        <div id="item-list" class="listbox" role="listbox" aria-label="Upcoming Speakers">
+                        <div id="available-list" class="listbox" role="listbox" aria-label="Upcoming Speakers">
                             <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
                                 <span class="speaker-name">Speaker 1</span>
                             </div>
@@ -313,10 +319,10 @@
     </dialog>
     
     <script>
-        const themeToggle = document.getElementById("theme-toggle");
         const root = document.documentElement;
+        const $ = id => document.getElementById(id);
 
-        themeToggle.addEventListener("click", () => {
+        $("theme-toggle").addEventListener("click", () => {
             const isLight = root.dataset.theme !== "light";
 
             root.dataset.theme = isLight ? "light" : "dark";
@@ -354,8 +360,7 @@
             });
         });
         
-        const queueList = document.getElementById("queue-list");
-        queueList.addEventListener("click", function (event) {
+        $("queue-list").addEventListener("click", function (event) {
             const button = event.target.closest("button[data-action]");
             const option = event.target.closest(".listbox-option");
 
@@ -392,11 +397,10 @@
             }
         });
         
-        
         const speakers = [
-            { name: "India", flag: "🇮🇳" },
-            { name: "France", flag: "🇫🇷" },
-            { name: "Brazil", flag: "🇧🇷" }
+            { name: "India", flag: "assets/un_country_flags/india.jpg" },
+            { name: "France", flag: "assets/un_country_flags/france.jpg" },
+            { name: "Brazil", flag: "assets/un_country_flags/brazil.jpg" }
         ];
 
         const SPEAKING_TIME = 90;
@@ -405,8 +409,6 @@
         let remainingSeconds = SPEAKING_TIME;
         let timerInterval = null;
         let isRunning = false;
-
-        const $ = id => document.getElementById(id);
 
         function renderTimer() {
             const minutes = Math.floor(remainingSeconds / 60);
@@ -433,9 +435,7 @@
             const speaker = speakers[currentSpeakerIndex];
 
             $("speaker-name").textContent = speaker.name;
-            $("speaker-flag").textContent = speaker.flag;
-            $("mini-name").textContent = speaker.name;
-            $("mini-flag").textContent = speaker.flag;
+            $("speaker-flag").children[0].src = speaker.flag;
         }
 
         function stopTimer() {
@@ -507,13 +507,15 @@
                 "Speaker has yielded their remaining time";
         });
 
-        $("rtr-btn").addEventListener("click", () => {
-            $("timer-status").textContent =
-                "Right to reply requested";
-        });
-
         renderSpeaker();
         renderTimer();
+
+        var children = document.getElementById("queue-list").children;
+        for (var i = 0; i < children.length; i++) {
+            var tableChild = children[i];
+            var numSubChild = tableChild.children.length;
+            console.log(`${tableChild} ${numSubChild}`);
+        }
     </script>
 </body>
 </html>
