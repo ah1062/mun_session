@@ -6,7 +6,7 @@
     <meta http-equiv="pragma" content="no-cache" />
 
     <title>LIMUN Session App</title>
-    <link rel="stylesheet" href="static/css/app.css">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <div class="page">
@@ -132,8 +132,8 @@
                         </div>
 
                         <div class="timer-main">
-                            <div class="speaker-flag" id="speaker-flag">
-                                <img src="assets/un_country_flags/india.jpg">
+                            <div id="speaker-flag-container" class="speaker-flag">
+                                <img id="speaker-flag" src="assets/un_country_flags/india.jpg">
                             </div>
                             <h1 id="speaker-name">India</h1>
                             <div class="timer-display" id="timer-display" role="timer"
@@ -318,21 +318,11 @@
         <p>Some kind of open-source documentation here.</p>
     </dialog>
     
+    <script type="module" src="static/js/main.js"></script>
     <script>
         const root = document.documentElement;
         const $ = id => document.getElementById(id);
 
-        $("theme-toggle").addEventListener("click", () => {
-            const isLight = root.dataset.theme !== "light";
-
-            root.dataset.theme = isLight ? "light" : "dark";
-
-            themeToggle.textContent = isLight ? "Dark mode" : "Light mode";
-            themeToggle.setAttribute(
-                "aria-label",
-                isLight ? "Switch to dark mode" : "Switch to light mode"
-            );
-        });
         
         const infoLinks = {
             "about-link": "about-dialog",
@@ -396,12 +386,6 @@
                     break;
             }
         });
-        $("available-list").addEventListener("click", (e) => {
-            const option = e.target.closest(".listbox-option");
-            const optionName = option.children[0].textContent;
-
-            console.log(optionName);
-        });
 
         const speakers = [
             { name: "India", flag: "assets/un_country_flags/india.jpg" },
@@ -435,13 +419,6 @@
 
             $("timer-fill").classList.toggle("is-warning", warning);
             $("timer-display").classList.toggle("is-warning", warning);
-        }
-
-        function renderSpeaker() {
-            const speaker = speakers[currentSpeakerIndex];
-
-            $("speaker-name").textContent = speaker.name;
-            $("speaker-flag").children[0].src = speaker.flag;
         }
 
         function stopTimer() {
