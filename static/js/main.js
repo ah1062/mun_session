@@ -34,6 +34,12 @@ switch (mode) {
     break;
 }
 
+const randomEntries = Object.entries(session.availableCountries)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5);
+const randomElements = Object.fromEntries(randomEntries);
+session.selectedCountries = randomElements;
+
 const root = document.documentElement;
 const $ = id => document.getElementById(id);
 
@@ -49,23 +55,110 @@ $("theme-toggle").addEventListener("click", () => {
     );
 });
 
-function renderSpeaker(country) {
+function renderSpeakerQueueElement(data) {
+    const actions = [
+        { action: "top", text: "⮤", label: "Move to top" },
+        { action: "up", text: "⮝", label: "Move up" },
+        { action: "down", text: "⮟", label: "Move down" },
+        { action: "bottom", text: "⮧", label: "Move to bottom" },
+        { action: "remove", text: "⤬", label: "Remove from list" }
+    ];
+
+    const item = document.createElement('div');    
+    item.className = "listbox-option";
+    item.role = "option";
+    item.tabIndex = 0;
+
+    const img = document.createElement('img');
+    img.className = 'icon';
+    img.src = data.imgUrl;
+    img.style.maxHeight = '20px';
+    item.appendChild(img);
+
+    const name = document.createElement('span');
+    name.className = 'speaker-name';
+    name.textContent = data.shortName;
+    item.appendChild(name);
+
+    const controls = document.createElement("div");
+    controls.className = "queue-controls";
+    actions.forEach(({ action, text, label }) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.dataset.action = action;
+        button.setAttribute("aria-label", label);
+        button.title = label;
+        button.textContent = text;
+
+        controls.appendChild(button);
+    });
+
+    item.appendChild(name);
+    item.appendChild(controls);
+
+    return item;
+}
+function renderSpeakerQueue() {
+    $("queue-list").replaceChildren();
+    
+    for (const countryKey of session.speakerQueue) {
+        const data = session.selectedCountries[countryKey];
+        if (!data) continue;
+        
+        const element = renderSpeakerQueueElement(data);
+        $("queue-list").appendChild(element);
+    }
+}
+
+function renderAvailableCountries() {
+    $("available-list").replaceChildren();
+    
+    for (const [countryKey, data] of Object.entries(session.selectedCountries).sort()) {
+        console.log(`Rendering ${countryKey} success = ${session.speakerQueue.includes(countryKey)}`);
+        if (session.speakerQueue.includes(countryKey)) continue;
+
+        const item = document.createElement('div');    
+        item.className = "listbox-option";
+        item.role = "option";
+        item.tabIndex = 0;
+
+        const img = document.createElement('img');
+        img.className = 'icon';
+        img.src = data.imgUrl;
+        img.style.maxHeight = '20px';
+        item.appendChild(img);
+
+        const name = document.createElement('span');
+        name.className = 'speaker-name';
+        name.textContent = data.shortName;
+        item.appendChild(name);
+
+        $("available-list").appendChild(item);
+    }
+}
+
+function renderActiveSpeaker(country) {
     if (!country) {
-        $("speaker-flag-container").hidden = true;
+        $("timerMain").style.visibility = 'hidden';
         return;
     }
 
-    $("speaker-flag-container").hidden = false;
+    $("timerMain").style.visibility = 'auto';
     $("speaker-flag").src = country.imgUrl;
     $("speaker-name").textContent = country.shortName;
 }
 
 $("queue-list").addEventListener("click", (event) => {
+    const queueList = $("queue-list");
+
     const button = event.target.closest("button[data-action]");
     if (!button) return;
 
     const option = event.target.closest(".listbox-option");
     if (!option || !queueList.contains(option)) return;
+
+    const optionName = option.querySelector(".speaker-name").textContent;
 
     const items = [...queueList.querySelectorAll(".listbox-option")];
     const index = items.indexOf(option);
@@ -90,21 +183,45 @@ $("queue-list").addEventListener("click", (event) => {
             break;
         case "remove":
             option.remove();
+
+            session.dequeueCountry(optionName);
+            renderAvailableCountries();
             break;
     }
 });
 
 $("available-list").addEventListener("click", (e) => {
+    const availableList = $("available-list");
+
     const option = e.target.closest(".listbox-option");
-    const optionName = option.children[0].textContent;
+    if (!option || !availableList.contains(option)) return;
+
+    const optionName = option.querySelector(".speaker-name").textContent;
+
+    option.remove();
 
     session.enqueueCountry(optionName);
+    renderSpeakerQueue();
 });
 
 $("next-speaker").addEventListener("click", () => {
-    const nextSpeaker = session.speakerQueue.pop();
-    renderSpeaker(nextSpeaker);
+    if (session.speakerQueue.length === 0) {
+        renderActiveSpeaker(null);
+        return;
+    }
+
+    const countryKey = session.speakerQueue.shift();
+    const country = session.selectedCountries[countryKey];
+
+    renderActiveSpeaker(country);
+    renderSpeakerQueue();
+    renderAvailableCountries();
 });
 
 const country = session.availableCountries["Afghanistan"];
-renderSpeaker(country);
+renderActiveSpeaker(country);
+
+const randomElement = Object.keys(session.selectedCountries)[0];
+session.enqueueCountry(randomElement);
+renderSpeakerQueue();
+renderAvailableCountries();

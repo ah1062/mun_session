@@ -131,7 +131,7 @@
                             <h2>General Speaker's List</h2>
                         </div>
 
-                        <div class="timer-main">
+                        <div id="timerMain" class="timer-main">
                             <div id="speaker-flag-container" class="speaker-flag">
                                 <img id="speaker-flag" src="assets/un_country_flags/india.jpg">
                             </div>
@@ -323,7 +323,6 @@
         const root = document.documentElement;
         const $ = id => document.getElementById(id);
 
-        
         const infoLinks = {
             "about-link": "about-dialog",
             "contact-link": "contact-dialog",
@@ -350,43 +349,6 @@
             });
         });
         
-        $("queue-list").addEventListener("click", (event) => {
-            const button = event.target.closest("button[data-action]");
-            const option = event.target.closest(".listbox-option");
-
-            if (!option || !queueList.contains(option)) return;
-
-            if (!button) {
-                return;
-            }
-
-            const items = [...queueList.querySelectorAll(".listbox-option")];
-            const index = items.indexOf(option);
-            const action = button.dataset.action;
-
-            switch (action) {
-                case "top":
-                    queueList.prepend(option);
-                    break;
-                case "up":
-                    if (index > 0) {
-                        queueList.insertBefore(option, items[index - 1]);
-                    }
-                    break;
-                case "down":
-                    if (index < items.length - 1) {
-                        queueList.insertBefore(items[index + 1], option);
-                    }
-                    break;
-                case "bottom":
-                    queueList.appendChild(option);
-                    break;
-                case "remove":
-                    option.remove();
-                    break;
-            }
-        });
-
         const speakers = [
             { name: "India", flag: "assets/un_country_flags/india.jpg" },
             { name: "France", flag: "assets/un_country_flags/france.jpg" },
@@ -465,7 +427,6 @@
             currentSpeakerIndex = (currentSpeakerIndex + 1) % speakers.length;
             remainingSeconds = SPEAKING_TIME;
 
-            renderSpeaker();
             renderTimer();
 
             $("timer-status").textContent = "Ready for next speaker";

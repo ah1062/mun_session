@@ -14,8 +14,8 @@ class Session {
     }
 
     enqueueCountry(countryKey) {
-        if (!(countrykey in this.selectedCountries)) return;
-        if (countryKey in this.speakerQueue) return;
+        if (!(countryKey in this.selectedCountries)) return;
+        if (this.speakerQueue.includes(countryKey)) return;
 
         this.speakerQueue.push(countryKey);
     }

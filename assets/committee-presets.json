@@ -1,0 +1,160 @@
+{
+    "Arab League": {
+        "img": "assets/logo.png",
+        "countries": [
+            "Algeria",
+            "Bahrain",
+            "Comoros",
+            "Djibouti",
+            "Egypt",
+            "Iraq",
+            "Jordan",
+            "Kuwait",
+            "Lebanon",
+            "Libya",
+            "Mauritania",
+            "Morocco",
+            "Oman",
+            "Palestine",
+            "Qatar",
+            "Saudi Arabia",
+            "Somalia",
+            "Sudan",
+            "Syria",
+            "Tunisia",
+            "United Arab Emirates",
+            "Yemen"
+        ]
+    },
+    "ASEAN": {
+        "img": "assets/logo.png",
+        "countries": [
+            "Brunei",
+            "Cambodia",
+            "Indonesia",
+            "Laos",
+            "Malaysia",
+            "Myanmar",
+            "Philippines",
+            "Singapore",
+            "Thailand",
+            "Timor-Leste",
+            "Viet Nam"
+        ]
+    },
+    "European Union": {
+        "img": "assets/logo.png",
+        "countries": [
+            "Austria",
+            "Belgium",
+            "Bulgaria",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "Ireland",
+            "Italy",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Netherlands",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Slovakia",
+            "Slovenia",
+            "Spain",
+            "Sweden"
+        ]
+    },
+    "G7": {
+        "img": "assets/logo.png",
+        "countries": [
+            "Canada",
+            "France",
+            "Germany",
+            "Italy",
+            "Japan",
+            "United Kingdom",
+            "United States"
+        ]
+    },
+    "NATO": {
+        "img": "assets/logo.png",
+        "countries": [
+            "Albania",
+            "Belgium",
+            "Bulgaria",
+            "Canada",
+            "Croatia",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "Iceland",
+            "Italy",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Montenegro",
+            "Netherlands",
+            "North Macedonia",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Slovakia",
+            "Slovenia",
+            "Spain",
+            "Sweden",
+            "Türkiye",
+            "United Kingdom",
+            "United States"
+        ]
+    },
+    "Nordic Countries": {
+        "img": "assets/logo.png",
+        "countries": ["Denmark", "Finland", "Iceland", "Norway", "Sweden"]
+    },
+    "P5": {
+        "img": "assets/logo.png",
+        "countries": [
+            "China",
+            "France",
+            "Russia",
+            "United Kingdom",
+            "United States"
+        ]
+    },
+    "UNSC": {
+        "img": "assets/logo.png",
+        "countries": [
+            "Bahrain",
+            "China",
+            "Colombia",
+            "Democratic Republic of the Congo",
+            "Denmark",
+            "France",
+            "Greece",
+            "Latvia",
+            "Liberia",
+            "Pakistan",
+            "Panama",
+            "Russia",
+            "Somalia",
+            "United Kingdom",
+            "United States"
+        ]
+    }
+}
