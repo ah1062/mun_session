@@ -7,6 +7,22 @@
 
     <title>LIMUN Session App</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        #queue-list {
+            max-height: 300px;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        #available-list {
+            max-height: 660px;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
     <div class="page">
@@ -181,83 +197,51 @@
                 <section class="session-panel">
                     <!-- ROW 1: Presence indicators -->
                     <div class="box presence-section">
-                        <div class="presence-panel">
+                        <div id="session-presence-panel" class="presence-panel">
                             <div class="presence-item">
                                 <div class="presence-ring"
                                      style="--progress: 50%;">
                                 </div>
-                                <span class="presence-count">5</span>
+                                <span id="simple-majority-value" class="presence-count">0</span>
                             </div>
 
                             <div class="presence-item">
                                 <div class="presence-ring"
                                      style="--progress: 66.67%;">
                                 </div>
-                                <span class="presence-count">7</span>
+                                <span id="super-majority-value" class="presence-count">0</span>
                             </div>
 
                             <div class="presence-item">
                                 <div class="presence-ring"
                                      style="--progress: 100%;">
                                 </div>
-                                <span class="presence-count">10</span>
+                                <span id="unanimity-value" class="presence-count">0</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- ROW 2: Upcoming speaker queue -->
                     <div class="box speaker-queue">
-                        <h3>Upcoming Speakers</h3>
-                        <div id="queue-list" class="listbox" role="listbox" aria-label="Upcoming Speakers">
-                            <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
-                                <span class="speaker-name">Speaker 1</span>
-                                <div class="queue-controls">
-                                    <button type="button" data-action="top" aria-label="Move to top" title="Move to top">⮤</button>
-                                    <button type="button" data-action="up" aria-label="Move up" title="Move up">⮝</button>
-                                    <button type="button" data-action="down" aria-label="Move down" title="Move down">⮟</button>
-                                    <button type="button" data-action="bottom" aria-label="Move to bottom" title="Move to bottom">⮧</button>
-                                    <button type="button" data-action="remove" aria-label="Remove from list" title="Remove from list">⤬</button>
-                                </div>
-                            </div>
-
-                            <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
-                                <span class="speaker-name">Speaker 2</span>
-                                <div class="queue-controls">
-                                    <button type="button" data-action="top" aria-label="Move to top" title="Move to top">⮤</button>
-                                    <button type="button" data-action="up" aria-label="Move up" title="Move up">⮝</button>
-                                    <button type="button" data-action="down" aria-label="Move down" title="Move down">⮟</button>
-                                    <button type="button" data-action="bottom" aria-label="Move to bottom" title="Move to bottom">⮧</button>
-                                    <button type="button" data-action="remove" aria-label="Remove from list" title="Remove from list">⤬</button>
-                                </div>
-                            </div>
-
-                            <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
-                                <span class="speaker-name">Speaker 3</span>
-                                <div class="queue-controls">
-                                    <button type="button" data-action="top" aria-label="Move to top" title="Move to top">⮤</button>
-                                    <button type="button" data-action="up" aria-label="Move up" title="Move up">⮝</button>
-                                    <button type="button" data-action="down" aria-label="Move down" title="Move down">⮟</button>
-                                    <button type="button" data-action="bottom" aria-label="Move to bottom" title="Move to bottom">⮧</button>
-                                    <button type="button" data-action="remove" aria-label="Remove from list" title="Remove from list">⤬</button>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 id="upcoming-speakers-label">Upcoming Speakers</h3>
+                        <div id="queue-list" class="listbox" role="listbox" aria-label="Upcoming Speakers"></div>
                     </div>
 
                     <!-- ROW 3: Available speakers -->
                     <div class="box available-speakers">
-                        <h3>Available Speakers</h3>
-                        <div id="available-list" class="listbox" role="listbox" aria-label="Upcoming Speakers">
-                            <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
-                                <span class="speaker-name">Speaker 1</span>
-                            </div>
-                            <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
-                                <span class="speaker-name">Speaker 2</span>
-                            </div>
-                            <div class="listbox-option" role="option" aria-selected="false" tabindex="0">
-                                <span class="speaker-name">Speaker 3</span>
+                        <div class="section-header">
+                            <h3 id="available-speakers-label">Available Speakers</h3>
+                            <div class="search-box">
+                                <span class="search-icon" aria-hidden="true">⌕</span>
+                                <input
+                                    type="search"
+                                    id="country-search"
+                                    placeholder="Search countries..."
+                                    aria-label="Search countries"
+                                >
                             </div>
                         </div>
+                        <div id="available-list" class="listbox" role="listbox" aria-label="Upcoming Speakers"></div>
                     </div>
                 </section>
             </section>

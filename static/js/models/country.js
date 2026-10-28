@@ -5,8 +5,9 @@ export const VotingStatus = {
 };
 
 export class Country {
-    constructor(imgUrl, shortName, longName, status) {
+    constructor(imgUrl, shortName, longName, isoCode, status) {
         this.imgUrl = imgUrl;
+        this.isoCode = isoCode ?? 'XX';
         this.shortName = shortName;
         this.longName = longName;
         this.votingStatus = VotingStatus.ABSENT;

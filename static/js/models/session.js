@@ -60,7 +60,8 @@ async function fetchCountryData() {
         })
         .then(result => {
             for (const [countryKey, data] of Object.entries(result.nations)) {
-                const imgUrl = data.img;
+                const isoCode = data.isoCode;
+                const imgUrl = data.img ?? 'assets/logo.png';
                 const shortName = data.shortName;
                 const longName = data.longName ?? shortName;
                 const country = new Country(imgUrl, shortName, longName);
