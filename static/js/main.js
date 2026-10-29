@@ -52,6 +52,9 @@ for (const [countryKey, data] of Object.entries(session.selectedCountries)) {
     if (Math.random() < 0.2) {
         data.observerStatus = true;
     }
+    if (Math.random() < 0.2) {
+        data.p5status = true;
+    }
 }
 
 const firstSpeaker = Object.keys(session.selectedCountries)[0];
@@ -61,8 +64,10 @@ const root = document.documentElement;
 const $ = id => document.getElementById(id);
 
 $('theme-toggle').addEventListener('click', () => {
+    const themeToggle = $('theme-toggle');
     const isLight = root.dataset.theme !== 'light';
 
+    $("header-logo").src = isLight ? 'assets/logo_dark.png' : 'assets/logo.png';
     root.dataset.theme = isLight ? 'light' : 'dark';
 
     themeToggle.textContent = isLight ? 'Dark mode' : 'Light mode';
@@ -94,6 +99,14 @@ function createCountryDisplayElement(data) {
     name.textContent = data.shortName;
     item.appendChild(name);
 
+    if (data.p5status) {
+        const status = document.createElement('span');
+        status.textContent = '●';
+        status.style.color = "var(--p5-status)";
+        status.style.marginRight = "2px";
+
+        item.appendChild(status);
+    }
     if (data.observerStatus) {
         const status = document.createElement('span');
         status.textContent = '●';
@@ -167,7 +180,7 @@ function renderAvailableCountries() {
         if (data.votingStatus === "A") continue;
         if (searchValue && !(countryKey.toLowerCase().startsWith(searchValue))) continue;
         if (countryKey === session.currentSpeaker) continue;
-        if (session.speakerQueue.includes(countryKey)) continue;
+        // if (session.speakerQueue.includes(countryKey)) continue;
 
         const item = createCountryDisplayElement(data);
         $('available-list').appendChild(item);

@@ -5,6 +5,8 @@
 :root {
     color-scheme: dark;
 
+    --serif: 'Butler', 'Georgia', 'Times New Roman', serif;
+    --sans: 'Futura PT', 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
     --indigo: #16112E;
     --indigo-deep: #0E0A20;
     --elizabeth: #2B1C50;
@@ -13,6 +15,7 @@
     --hair: rgba(237, 234, 246, 0.12);
     --muted: rgba(237, 234, 246, 0.55);
 
+    --p5-status: #FF6060;
     --observer-status: #8F8;
     --voting-absent: #FF6060;
     --voting-present: #F6E060;
@@ -31,6 +34,7 @@ html[data-theme="light"] {
     --hair: rgba(22, 17, 46, 0.16);
     --muted: rgba(22, 17, 46, 0.65);
 
+    --p5-status: #BB2020;
     --observer-status: #0C0;
     --voting-absent: #FF0000;
     --voting-present: #a66000;
@@ -112,14 +116,9 @@ button {
     padding: 12px 20px;
     background: var(--indigo);
     color: var(--gold-1);
-    border-bottom: 1px solid var(--hair);
-}
-
-.header h1 {
-    margin: 0;
     font-family: var(--sans);
-    font-size: 24px;
-    font-weight: 400;
+    font-weight: 700;
+    border-bottom: 1px solid var(--hair);
 }
 
 .header span a {
@@ -777,6 +776,10 @@ button {
     min-height: 3.5rem;
     flex: 1;
     padding: 0.7rem 1rem;
+}
+
+.timer-btn span {
+    margin-left: 8px;
 }
 
 .start-btn {

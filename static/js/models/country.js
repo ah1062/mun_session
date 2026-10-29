@@ -12,6 +12,7 @@ export class Country {
         this.longName = longName;
         this.votingStatus = VotingStatus.ABSENT;
         this.observerStatus = false;
+        this.p5status = false;
     }
 
     setVotingStatus(status) {
