@@ -8,19 +8,20 @@
     <title>LIMUN Session App</title>
     <link rel="stylesheet" href="static/css/style.css">
     <style>
-        #queue-list {
-            max-height: 300px;
+        #queue-list,
+        #available-list {
             min-height: 0;
             overflow-y: auto;
             overflow-x: hidden;
             box-sizing: border-box;
         }
+
+        #queue-list {
+            max-height: 28vh;
+        }
+
         #available-list {
-            max-height: 660px;
-            min-height: 0;
-            overflow-y: auto;
-            overflow-x: hidden;
-            box-sizing: border-box;
+            max-height: 48vh;
         }
     </style>
 </head>
@@ -149,7 +150,7 @@
 
                         <div id="timerMain" class="timer-main">
                             <div id="speaker-flag-container" class="speaker-flag">
-                                <img id="speaker-flag" src="assets/un_country_flags/india.jpg">
+                                <img id="speaker-flag" src="assets/un_country_flags/uk.jpg">
                             </div>
                             <h1 id="speaker-name">India</h1>
                             <div class="timer-display" id="timer-display" role="timer"

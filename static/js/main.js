@@ -180,7 +180,7 @@ function renderAvailableCountries() {
         if (data.votingStatus === "A") continue;
         if (searchValue && !(countryKey.toLowerCase().startsWith(searchValue))) continue;
         if (countryKey === session.currentSpeaker) continue;
-        // if (session.speakerQueue.includes(countryKey)) continue;
+        if (session.speakerQueue.includes(countryKey)) continue;
 
         const item = createCountryDisplayElement(data);
         $('available-list').appendChild(item);
