@@ -40,7 +40,7 @@
 
         <main class="main-content">
             <!-- Left column -->
-            <section class="content-grid">
+            <section id="left-column" class="content-grid">
                 <div class="box">
                     <aside class="view-sidebar">
                         <div class="sidebar-heading">
@@ -50,7 +50,7 @@
                             </div>
                         </div>
 
-                        <nav class="view-navigation" aria-label="Meeting views">
+                        <nav id="view-navbar" class="view-navigation" aria-label="Meeting views">
                             <button class="view-nav-item"
                                     type="button"
                                     data-view="roll-call"
@@ -141,7 +141,7 @@
                     </aside>
                 </div>
 
-                <section class="central-column">
+                <section id="middle-column" class="central-column">
                     <div class="speaker-timer" aria-label="Current speaker">
                         <div class="timer-queue-heading">
                             <span aria-hidden="true">☷</span>
@@ -150,7 +150,7 @@
 
                         <div id="timerMain" class="timer-main">
                             <div id="speaker-flag-container" class="speaker-flag">
-                                <img id="speaker-flag" src="assets/un_country_flags/uk.jpg">
+                                <img id="speaker-flag" src="assets/un_country_flags/gb.png">
                             </div>
                             <h1 id="speaker-name">India</h1>
                             <div class="timer-display" id="timer-display" role="timer"
@@ -195,7 +195,7 @@
                 </section>
 
                 <!-- Right column: three rows -->
-                <section class="session-panel">
+                <section id="right-column" class="session-panel">
                     <!-- ROW 1: Presence indicators -->
                     <div class="box presence-section">
                         <div id="session-presence-panel" class="presence-panel">
@@ -265,6 +265,63 @@
             </span>
         </footer>
     </div>
+    
+    <template id="motions-template">
+        <div>Hello</div>
+    </template>
+
+    <template id="speakers-template">
+        <div class="speaker-timer" aria-label="Current speaker">
+            <div class="timer-queue-heading">
+                <span aria-hidden="true">☷</span>
+                <h2 id="speaker-topic">General Speaker's List</h2>
+            </div>
+
+            <div id="timerMain" class="timer-main">
+                <div id="speaker-flag-container" class="speaker-flag">
+                    <img id="speaker-flag" src="assets/un_country_flags/gb.png">
+                </div>
+                <h1 id="speaker-name">India</h1>
+                <div class="timer-display" id="timer-display" role="timer"
+                        aria-live="off">1:30</div>
+            </div>
+
+            <div class="timer-bottom">
+                <div class="timer-progress-row">
+                    <div class="timer-track"
+                            role="progressbar"
+                            aria-label="Speaking time remaining"
+                            aria-valuemin="0"
+                            aria-valuemax="90"
+                            aria-valuenow="90"
+                            id="timer-progress">
+                        <div class="timer-progress-fill" id="timer-fill"></div>
+                    </div>
+                </div>
+
+                <div class="timer-controls">
+                    <button type="button" class="timer-icon-btn"
+                            id="time-settings" title="Time settings">🌣</button>
+                    <button type="button" class="timer-icon-btn"
+                            id="add-time" title="Add 15 seconds">+</button>
+                    <button type="button" class="timer-icon-btn"
+                            id="reset-timer" title="Reset timer">⮎</button>
+                    <button type="button" class="timer-btn start-btn"
+                            id="start-timer">▶ <span>START</span></button>
+                    <button type="button" class="timer-btn stop-btn"
+                            id="stop-timer">⏸︎ <span>STOP</span></button>
+                    <button type="button" class="timer-btn next-btn"
+                            id="next-speaker">⏭ <span>NEXT</span></button>
+                    <button type="button" class="timer-icon-btn yield-btn"
+                            id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
+                </div>
+
+                <p class="timer-status" id="timer-status" aria-live="polite">
+                    Ready to begin
+                </p>
+            </div>
+        </div>
+    </template>
     
     <!-- About dialog -->
     <dialog id="about-dialog" class="info-dialog">

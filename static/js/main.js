@@ -77,6 +77,50 @@ $('theme-toggle').addEventListener('click', () => {
     );
 });
 
+$("view-navbar").addEventListener('click', (event) => {
+    const templateMap = {
+        "gsl": "speakers-template",
+        "motions": "motions-template"
+    }
+    const viewNavbar = $("view-navbar");
+
+    const button = event.target.closest('button[data-view]');
+    if (!button) return;
+
+    const view = button.dataset.view;
+    const templateId = templateMap[view];
+    if (!templateId) return;
+
+    const template = $(templateId);
+    if (!template) return;
+
+    const content = template.content.cloneNode(true);
+    console.log(content);
+    $("middle-column").replaceChildren(content);
+
+    switch (view) {
+        case "gsl":
+            $("speaker-topic").textContent = "General Speakers' List";
+            $('next-speaker').addEventListener('click', nextSpeaker);
+            renderActiveSpeaker(null);
+            renderSpeakerQueue();
+            renderAvailableCountries();
+            break;
+        case "single-speaker":
+            $("speaker-topic") = "Single Speaker";
+            break;
+    }
+
+
+    const navigationButtons = document.querySelectorAll(".view-nav-item");
+    navigationButtons.forEach(button => {
+        const isActive = button.dataset.view === view;
+
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-current", isActive ? "page" : "false");
+    });
+});
+
 function createCountryDisplayElement(data) {
     const item = document.createElement('div');    
     item.className = 'listbox-option';
@@ -277,7 +321,7 @@ $('available-list').addEventListener('click', (e) => {
     renderAvailableCountries();
 });
 
-$('next-speaker').addEventListener('click', () => {
+function nextSpeaker() {
     if (session.speakerQueue.length === 0) {
         renderActiveSpeaker(null);
         session.currentSpeaker = null;
@@ -290,7 +334,8 @@ $('next-speaker').addEventListener('click', () => {
     renderActiveSpeaker(countryKey);
     renderSpeakerQueue();
     renderAvailableCountries();
-});
+}
+$('next-speaker').addEventListener('click', nextSpeaker);
 
 renderPresence();
 renderActiveSpeaker(session.currentSpeaker);
