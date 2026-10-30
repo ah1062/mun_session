@@ -13,6 +13,9 @@ export function setupSpeakerControls(session) {
             case "stop-timer":
                 stopSpeaker(session);
                 break;
+            case "reset-timer":
+                resetSpeaker(session);
+                break;
             case "next-speaker":
                 nextSpeaker(session);
                 break;
@@ -23,16 +26,58 @@ export function setupSpeakerControls(session) {
     });
 
     function startSpeaker(session) {
-        console.log("start");
+        var timer = null;
+        switch (session.view) {
+            case "single-speaker": 
+                timer = session.timers.singleSpeaker;
+                break;
+            case "gsl":
+                timer = session.timers.gsl;
+                if (!session.currentSpeaker && session.speakerQueue.length > 0) {
+                    session.currentSpeaker = session.speakerQueue.shift();
+                    renderActiveSpeaker(session, session.currentSpeaker);
+                    renderAvailableQueue(session);
+                    renderSpeakerQueue(session);
+                }
+        }
+
+        if (!timer) return;
+        timer.start();
     }
 
     function stopSpeaker(session) {
-        console.log("stop");
+        var timer = null;
+        switch (session.view) {
+            case "single-speaker": 
+                timer = session.timers.singleSpeaker;
+                break;
+            case "gsl":
+                timer = session.timers.gsl;
+                break;
+        }
+
+        if (!timer) {return;}
+        timer.pause();
+    }
+
+    function resetSpeaker(session) {
+        var timer = null;
+        switch (session.view) {
+            case "single-speaker": 
+                timer = session.timers.singleSpeaker;
+                break;
+            case "gsl":
+                timer = session.timers.gsl;
+                break;
+        }
+
+        if (!timer) {return;}
+        timer.reset();
     }
 
     function nextSpeaker(session) {
         const countryKey = session.speakerQueue.shift();
-        console.log(countryKey);
+        resetSpeaker(session);
         if (!countryKey) {
             renderActiveSpeaker(null);
             session.currentSpeaker = null;

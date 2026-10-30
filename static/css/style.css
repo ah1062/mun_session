@@ -896,6 +896,10 @@ button {
     letter-spacing: -0.05em;
     color: var(--gold-1);
 }
+.timer-display.timer-danger {
+  color: #e53935;
+}
+
 
 .timer-progress-row {
     width: 100%;
@@ -918,6 +922,10 @@ button {
     border-radius: inherit;
     background: var(--gold-1);
     transition: width 0.25s linear;
+}
+
+.timer-progress-fill.timer-danger {
+  background-color: #e53935;
 }
 
 .timer-controls {
@@ -985,11 +993,6 @@ button {
 
 .timer-icon-btn small {
     font-size: 0.65rem;
-}
-
-.rtr-btn {
-    background: #f3c18b;
-    color: #69380f !important;
 }
 
 .yield-btn {

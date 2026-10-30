@@ -1,8 +1,8 @@
 import { createCountryDisplayElement } from "./available-queue-item.js";
 
 const actions = [
-    { symbol: 'P5', status: 'p5status', group: 'independent' },
-    { symbol: 'OBV', status: 'observerStatus', group: 'independent' },
+    { symbol: 'VETO', status: 'p5status', group: 'independent' },
+    { symbol: 'OBS', status: 'observerStatus', group: 'independent' },
     { symbol: 'A', status: 'A', group: 'attendance' },
     { symbol: 'P', status: 'P', group: 'attendance' },
     { symbol: 'P+V', status: 'PV', group: 'attendance' },

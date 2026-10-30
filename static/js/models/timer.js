@@ -50,10 +50,11 @@ export class CountdownTimer {
         this.onTick(this.remaining);
     }
 
-    format() {
-        const minutes = Math.floor(this.remaining / 60);
-        const seconds = this.remaining % 60;
+}
+
+export function formatTime(totalSeconds) {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
 
         return `${minutes}:${String(seconds).padStart(2, "0")}`;
     }
-}

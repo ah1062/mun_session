@@ -81,7 +81,7 @@
                                 <span class="view-icon">☷</span>
                                 <span class="view-label">
                                     <strong>General Speakers' List</strong>
-                                    <small>Manage the speaking queue</small>
+                                    <small>Establishing speeches</small>
                                 </span>
                                 <span class="view-chevron">›</span>
                             </button>
@@ -115,6 +115,17 @@
                                 <span class="view-label">
                                     <strong>Unmoderated Caucus</strong>
                                     <small>Freeform discussion</small>
+                                </span>
+                                <span class="view-chevron">›</span>
+                            </button>
+
+                            <button class="view-nav-item"
+                                    type="button"
+                                    data-view="voting">
+                                <span class="view-icon">◇</span>
+                                <span class="view-label">
+                                    <strong>Voting Procedure</strong>
+                                    <small></small>
                                 </span>
                                 <span class="view-chevron">›</span>
                             </button>
@@ -169,7 +180,7 @@
                         </div>
 
                         <div id="timerMain" class="timer-main">
-                            <div class="timer-display" id="timer-display" role="timer"
+                            <div class="timer-display" id="single-speaker-timer-display" role="timer"
                                  aria-live="off">1:30</div>
                         </div>
 
@@ -181,8 +192,8 @@
                                      aria-valuemin="0"
                                      aria-valuemax="90"
                                      aria-valuenow="90"
-                                     id="timer-progress">
-                                    <div class="timer-progress-fill" id="timer-fill"></div>
+                                     id="single-speaker-timer-progress">
+                                    <div class="timer-progress-fill" id="single-speaker-timer-fill"></div>
                                 </div>
                             </div>
 
@@ -213,7 +224,7 @@
                         <div id="speaker-flag-main" class="timer-main">
                             <div id="speaker-flag-container" class="speaker-flag"></div>
                             <h1 id="speaker-name"></h1>
-                            <div class="timer-display" id="timer-display" role="timer"
+                            <div class="timer-display" id="gsl-timer-display" role="timer"
                                  aria-live="off">1:30</div>
                         </div>
 
@@ -226,7 +237,7 @@
                                      aria-valuemax="90"
                                      aria-valuenow="90"
                                      id="timer-progress">
-                                    <div class="timer-progress-fill" id="timer-fill"></div>
+                                    <div class="timer-progress-fill" id="gsl-timer-fill"></div>
                                 </div>
                             </div>
 
@@ -257,7 +268,7 @@
                 <section id="right-column" class="session-panel" style="filter: brightness(0.8);">
                     <!-- ROW 1: Presence indicators -->
                     <div class="box presence-section">
-                        <div id="session-presence-panel" class="presence-panel">
+                        <div id="session-presence" class="presence-panel">
                             <div class="presence-item">
                                 <div class="presence-ring"
                                      style="--progress: 50%;">
@@ -324,13 +335,6 @@
             </span>
         </footer>
     </div>
-    
-    <template id="roll-call-template">
-
-    </template>
-    <template id="gsl-template">
-
-    </template>
     
     <template id="moderated-caucus-template">
         <div class="speaker-timer" aria-label="Current speaker">

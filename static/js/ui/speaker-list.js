@@ -6,9 +6,9 @@ export function renderCountryPresence(session) {
         (data) => data.votingStatus !== "A",
     ).length;
     document.getElementById("simple-majority-value").textContent =
-        Math.ceil(count * 0.5);
+        Math.floor(count * 0.5) + 1;
     document.getElementById("super-majority-value").textContent =
-        Math.ceil(count * 0.66);
+        Math.floor((count * 2) / 3) + 1;
 
     document.getElementById("unanimity-value").textContent = count;
 }
