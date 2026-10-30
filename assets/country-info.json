@@ -360,9 +360,9 @@
       "votingObserver": false,
       "isoCode": "CZ"
     },
-    "Democratic People's Republic of Korea": {
+    "North Korea": {
       "img": "assets/un_country_flags/kp.png",
-      "shortName": "Democratic People's Republic of Korea",
+      "shortName": "North Korea",
       "longName": "Democratic People's Republic of Korea",
       "votingStatus": "A",
       "votingObserver": false,
@@ -569,7 +569,7 @@
       "isoCode": "GN"
     },
     "Guinea-Bissau": {
-      "img": "assets/un_country_flags/guinea-gw.png",
+      "img": "assets/un_country_flags/gw.png",
       "shortName": "Guinea-Bissau",
       "longName": "Republic of Guinea-Bissau",
       "votingStatus": "A",
@@ -1112,9 +1112,9 @@
       "votingObserver": false,
       "isoCode": "QA"
     },
-    "Republic of Korea": {
+    "South Korea": {
       "img": "assets/un_country_flags/kr.png",
-      "shortName": "Republic of Korea",
+      "shortName": "South Korea",
       "longName": "Republic of Korea",
       "votingStatus": "A",
       "votingObserver": false,
@@ -1377,7 +1377,7 @@
       "isoCode": "TH"
     },
     "Timor-Leste": {
-      "img": "assets/un_country_flags/timor-tl.png",
+      "img": "assets/un_country_flags/tl.png",
       "shortName": "Timor-Leste",
       "longName": "Democratic Republic of Timor-Leste",
       "votingStatus": "A",

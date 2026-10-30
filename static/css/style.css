@@ -18,7 +18,7 @@
     --p5-status: #FF6060;
     --observer-status: #8F8;
     --voting-absent: #FF6060;
-    --voting-present: #F6E060;
+    --voting-present: #D6C060;
     --voting-present-and-voting: #6060F6;
 }
 
@@ -37,7 +37,7 @@ html[data-theme="light"] {
     --p5-status: #BB2020;
     --observer-status: #0C0;
     --voting-absent: #FF0000;
-    --voting-present: #a66000;
+    --voting-present: #C69040;
     --voting-present-and-voting: #6060c6;
 }
 
@@ -211,8 +211,6 @@ button {
     border: 1px solid var(--hair);
     border-radius: 14px;
 }
-
-
 
 /* =====================================
    RIGHT COLUMN: THREE ROWS
@@ -389,6 +387,161 @@ button {
     overflow-wrap: anywhere;
 }
 
+/* Roll call */
+.roll-call-panel {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+/* Heading stays fixed */
+.roll-call-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-shrink: 0;
+    margin-bottom: 12px;
+}
+
+.roll-call-header h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+}
+
+/* List fills all remaining space */
+#roll-call-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    flex: 1;
+    width: 100%;
+    height: auto;
+
+    min-height: 0;
+    min-width: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 6px;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-1) var(--indigo-deep);
+}
+
+/* Delegate rows should never shrink */
+#roll-call-list .listbox-option {
+    flex: 0 0 auto;
+}
+
+.roll-call-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.attendance-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.attendance-toggle {
+    min-width: 34px;
+    padding: 6px 9px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+
+    background: transparent;
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+/* Hover */
+.attendance-toggle:hover {
+    filter: brightness(0.9);
+}
+
+/* Permanent Five */
+.attendance-toggle.status-p5status {
+    color: var(--p5-status);
+    border-color: var(--p5-status);
+}
+
+.attendance-toggle.status-p5status.active {
+    background: var(--p5-status);
+    color: white;
+}
+
+/* Observer */
+.attendance-toggle.status-observerStatus {
+    color: var(--observer-status);
+    border-color: var(--observer-status);
+}
+
+.attendance-toggle.status-observerStatus.active {
+    background: var(--observer-status);
+    color: white;
+}
+
+/* Absent */
+.attendance-toggle.status-A {
+    color: var(--voting-absent);
+    border-color: var(--voting-absent);
+}
+
+.attendance-toggle.status-A.active {
+    background: var(--voting-absent);
+    color: white;
+}
+
+/* Present */
+.attendance-toggle.status-P {
+    color: var(--voting-present);
+    border-color: var(--voting-present);
+}
+
+.attendance-toggle.status-P.active {
+    background: var(--voting-present);
+    color: white;
+}
+
+/* Present and Voting */
+.attendance-toggle.status-PV {
+    color: var(--voting-present-and-voting);
+    border-color: var(--voting-present-and-voting);
+}
+
+.attendance-toggle.status-PV.active {
+    background: var(--voting-present-and-voting);
+    color: white;
+}
+
+/* Focus accessibility */
+.attendance-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
 /* Movement buttons */
 
 .queue-controls {
@@ -497,7 +650,7 @@ button {
 
 .listbox {
     scrollbar-width: thin;
-    scrollbar-color: var(--gold-2) var(--indigo-deep);
+    scrollbar-color: var(--gold-1) var(--indigo-deep);
 }
 
 .listbox::-webkit-scrollbar {

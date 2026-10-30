@@ -10,7 +10,7 @@ export class Country {
         this.isoCode = isoCode ?? 'XX';
         this.shortName = shortName;
         this.longName = longName;
-        this.votingStatus = VotingStatus.ABSENT;
+        this.votingStatus = status ??  VotingStatus.ABSENT;
         this.observerStatus = false;
         this.p5status = false;
     }

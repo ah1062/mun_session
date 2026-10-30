@@ -1,16 +1,26 @@
 import { Country } from "./country.js";
+import { CountdownTimer } from './timer.js'
 
 const supabase = null;
 
 class Session {
     constructor(sessionId, countries) {
         this.id = sessionId;
-        
+        this.view = 'roll-call';       
+
         this.availableCountries = countries;
 
         this.selectedCountries = {};
         this.currentSpeaker = null;
         this.speakerQueue = [];
+
+        const timers = {
+            gsl: new CountdownTimer(90),
+            singleSpeaker: new CountdownTimer(90),
+            moderatedSpeaker: new CountdownTimer(60),
+            moderatedTotal: new CountdownTimer(600),
+            unmoderatedTotal: new CountdownTimer(600),
+        };
     }
 
     enqueueCountry(countryKey) {
@@ -64,7 +74,7 @@ async function fetchCountryData() {
                 const imgUrl = data.img ?? 'assets/logo.png';
                 const shortName = data.shortName;
                 const longName = data.longName ?? shortName;
-                const country = new Country(imgUrl, shortName, longName);
+                const country = new Country(imgUrl, shortName, longName, isoCode);
                 countries[countryKey] = country;
             }
         })

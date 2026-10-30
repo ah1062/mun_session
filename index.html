@@ -40,18 +40,19 @@
 
         <main class="main-content">
             <!-- Left column -->
-            <section id="left-column" class="content-grid">
-                <div class="box">
-                    <aside class="view-sidebar">
+            <div class="content-grid">
+                <section id="left-column" class="session-control">
+                    <aside class="box view-sidebar">
                         <div class="sidebar-heading">
                             <div>
                                 <h2>Session Control</h2>
-                                <p>View selection</p>
+                                <p>Select a view</p>
                             </div>
                         </div>
+                        <div class="sidebar-divider"></div>
 
                         <nav id="view-navbar" class="view-navigation" aria-label="Meeting views">
-                            <button class="view-nav-item"
+                            <button class="view-nav-item active"
                                     type="button"
                                     data-view="roll-call"
                                     aria-current="page">
@@ -63,17 +64,6 @@
                                 <span class="view-chevron">›</span>
                             </button>
 
-                            <button class="view-nav-item active"
-                                    type="button"
-                                    data-view="gsl">
-                                <span class="view-icon">☷</span>
-                                <span class="view-label">
-                                    <strong>General Speakers' List</strong>
-                                    <small>Manage the speaking queue</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
-                            
                             <button class="view-nav-item"
                                     type="button"
                                     data-view="single-speaker">
@@ -81,6 +71,17 @@
                                 <span class="view-label">
                                     <strong>Single Speaker</strong>
                                     <small>Individual speaking timer</small>
+                                </span>
+                                <span class="view-chevron">›</span>
+                            </button>
+                            
+                            <button class="view-nav-item"
+                                    type="button"
+                                    data-view="gsl">
+                                <span class="view-icon">☷</span>
+                                <span class="view-label">
+                                    <strong>General Speakers' List</strong>
+                                    <small>Manage the speaking queue</small>
                                 </span>
                                 <span class="view-chevron">›</span>
                             </button>
@@ -98,7 +99,7 @@
                             
                             <button class="view-nav-item"
                                     type="button"
-                                    data-view="motions">
+                                    data-view="caucus">
                                 <span class="view-icon">⚑</span>
                                 <span class="view-label">
                                     <strong>Caucus</strong>
@@ -109,7 +110,7 @@
                             
                             <button class="view-nav-item"
                                     type="button"
-                                    data-view="motions">
+                                    data-view="unmod-caucus">
                                 <span class="view-icon">⚑</span>
                                 <span class="view-label">
                                     <strong>Unmoderated Caucus</strong>
@@ -136,66 +137,34 @@
 
                         <div class="sidebar-footer">
                             <span class="status-indicator"></span>
-                            <span>Meeting session active</span>
+                            <span id="session-existence">Session: </span>
                         </div>
                     </aside>
-                </div>
+                </section>
 
                 <section id="middle-column" class="central-column">
-                    <div class="speaker-timer" aria-label="Current speaker">
-                        <div class="timer-queue-heading">
-                            <span aria-hidden="true">☷</span>
-                            <h2>General Speaker's List</h2>
-                        </div>
-
-                        <div id="timerMain" class="timer-main">
-                            <div id="speaker-flag-container" class="speaker-flag">
-                                <img id="speaker-flag" src="assets/un_country_flags/gb.png">
+                    <div class="box roll-call-panel">
+                        <div class="roll-call-header">
+                            <h2>Roll Call</h2>
+                            <div>
+                                <button id="absent-all-button" class="attendance-toggle status-A active">
+                                    All Absent
+                                </button>
+                                <button id="present-all-button" class="attendance-toggle status-P active">
+                                    All Present
+                                </button>
+                                <button id="present-voting-all-button" class="attendance-toggle status-PV active">
+                                    All Present+Voting
+                                </button>
                             </div>
-                            <h1 id="speaker-name">India</h1>
-                            <div class="timer-display" id="timer-display" role="timer"
-                                 aria-live="off">1:30</div>
+                            <span id="roll-call-count"></span>
                         </div>
-
-                        <div class="timer-bottom">
-                            <div class="timer-progress-row">
-                                <div class="timer-track"
-                                     role="progressbar"
-                                     aria-label="Speaking time remaining"
-                                     aria-valuemin="0"
-                                     aria-valuemax="90"
-                                     aria-valuenow="90"
-                                     id="timer-progress">
-                                    <div class="timer-progress-fill" id="timer-fill"></div>
-                                </div>
-                            </div>
-
-                            <div class="timer-controls">
-                                <button type="button" class="timer-icon-btn"
-                                        id="time-settings" title="Time settings">🌣</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="add-time" title="Add 15 seconds">+</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="reset-timer" title="Reset timer">⮎</button>
-                                <button type="button" class="timer-btn start-btn"
-                                        id="start-timer">▶ <span>START</span></button>
-                                <button type="button" class="timer-btn stop-btn"
-                                        id="stop-timer">⏸︎ <span>STOP</span></button>
-                                <button type="button" class="timer-btn next-btn"
-                                        id="next-speaker">⏭ <span>NEXT</span></button>
-                                <button type="button" class="timer-icon-btn yield-btn"
-                                        id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
-                            </div>
-
-                            <p class="timer-status" id="timer-status" aria-live="polite">
-                                Ready to begin
-                            </p>
-                        </div>
+                            
+                        <div id="roll-call-list" class="listbox" role="listbox"></div>
                     </div>
                 </section>
 
-                <!-- Right column: three rows -->
-                <section id="right-column" class="session-panel">
+                <section id="right-column" class="session-panel" style="filter: brightness(0.8);">
                     <!-- ROW 1: Presence indicators -->
                     <div class="box presence-section">
                         <div id="session-presence-panel" class="presence-panel">
@@ -245,7 +214,7 @@
                         <div id="available-list" class="listbox" role="listbox" aria-label="Upcoming Speakers"></div>
                     </div>
                 </section>
-            </section>
+            </div>
         </main>
 
         <footer class="footer">
@@ -266,11 +235,79 @@
         </footer>
     </div>
     
-    <template id="motions-template">
-        <div>Hello</div>
+    <template id="roll-call-template">
+        <div class="box roll-call-panel">
+            <div class="roll-call-header">
+                <h2>Roll Call</h2>
+                <div>
+                    <button id="absent-all-button" class="attendance-toggle status-A active">
+                        All Absent
+                    </button>
+                    <button id="present-all-button" class="attendance-toggle status-P active">
+                        All Present
+                    </button>
+                    <button id="present-voting-all-button" class="attendance-toggle status-PV active">
+                        All Present+Voting
+                    </button>
+                </div>
+                <span id="roll-call-count"></span>
+            </div>
+                
+            <div id="roll-call-list" class="listbox" role="listbox"></div>
+        </div>
     </template>
+    <template id="gsl-template">
+        <div class="speaker-timer" aria-label="Current speaker">
+            <div class="timer-queue-heading">
+                <span aria-hidden="true">☷</span>
+                <h2>General Speaker's List</h2>
+            </div>
 
-    <template id="speakers-template">
+            <div id="timerMain" class="timer-main">
+                <div id="speaker-flag-container" class="speaker-flag"></div>
+                <h1 id="speaker-name"></h1>
+                <div class="timer-display" id="timer-display" role="timer"
+                     aria-live="off">1:30</div>
+            </div>
+
+            <div class="timer-bottom">
+                <div class="timer-progress-row">
+                    <div class="timer-track"
+                         role="progressbar"
+                         aria-label="Speaking time remaining"
+                         aria-valuemin="0"
+                         aria-valuemax="90"
+                         aria-valuenow="90"
+                         id="timer-progress">
+                        <div class="timer-progress-fill" id="timer-fill"></div>
+                    </div>
+                </div>
+
+                <div class="timer-controls">
+                    <button type="button" class="timer-icon-btn"
+                            id="time-settings" title="Time settings">🌣</button>
+                    <button type="button" class="timer-icon-btn"
+                            id="add-time" title="Add 15 seconds">+</button>
+                    <button type="button" class="timer-icon-btn"
+                            id="reset-timer" title="Reset timer">⮎</button>
+                    <button type="button" class="timer-btn start-btn"
+                            id="start-timer">▶ <span>START</span></button>
+                    <button type="button" class="timer-btn stop-btn"
+                            id="stop-timer">⏸︎ <span>STOP</span></button>
+                    <button type="button" class="timer-btn next-btn"
+                            id="next-speaker">⏭ <span>NEXT</span></button>
+                    <button type="button" class="timer-icon-btn yield-btn"
+                            id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
+                </div>
+
+                <p class="timer-status" id="timer-status" aria-live="polite">
+                    Ready to begin
+                </p>
+            </div>
+        </div>
+    </template>
+    
+    <template id="moderated-caucus-template">
         <div class="speaker-timer" aria-label="Current speaker">
             <div class="timer-queue-heading">
                 <span aria-hidden="true">☷</span>
@@ -390,111 +427,6 @@
                 }
             });
         });
-        
-        const speakers = [
-            { name: "India", flag: "assets/un_country_flags/india.jpg" },
-            { name: "France", flag: "assets/un_country_flags/france.jpg" },
-            { name: "Brazil", flag: "assets/un_country_flags/brazil.jpg" }
-        ];
-
-        const SPEAKING_TIME = 90;
-
-        let currentSpeakerIndex = 0;
-        let remainingSeconds = SPEAKING_TIME;
-        let timerInterval = null;
-        let isRunning = false;
-
-        function renderTimer() {
-            const minutes = Math.floor(remainingSeconds / 60);
-            const seconds = remainingSeconds % 60;
-
-            $("timer-display").textContent =
-                `${minutes}:${String(seconds).padStart(2, "0")}`;
-
-            $("timer-fill").style.width =
-                `${Math.max(0, remainingSeconds / SPEAKING_TIME * 100)}%`;
-
-            $("timer-progress").setAttribute(
-                "aria-valuenow",
-                remainingSeconds
-            );
-
-            const warning = remainingSeconds <= 10;
-
-            $("timer-fill").classList.toggle("is-warning", warning);
-            $("timer-display").classList.toggle("is-warning", warning);
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            isRunning = false;
-            $("timer-status").textContent = "Ready to begin";
-            $("timer-status").classList.remove("is-finished");
-        }
-
-        function startTimer() {
-            if (remainingSeconds <= 0) {
-                $("timer-status").textContent = "Reset the timer to start again";
-                return;
-            }
-
-            isRunning = true;
-            $("timer-status").textContent = "Speaker is speaking";
-            $("timer-status").classList.remove("is-finished");
-
-            timerInterval = setInterval(() => {
-                remainingSeconds--;
-                renderTimer();
-
-                if (remainingSeconds <= 0) {
-                    stopTimer();
-                    $("timer-status").textContent = "Speaking time has ended";
-                    $("timer-status").classList.add("is-finished");
-                }
-            }, 1000);
-        }        
-
-        function resetTimer() {
-            stopTimer();
-            remainingSeconds = SPEAKING_TIME;
-            renderTimer();
-            $("timer-status").textContent = "Ready to begin";
-            $("timer-status").classList.remove("is-finished");
-        }
-
-        function nextSpeaker() {
-            stopTimer();
-
-            currentSpeakerIndex = (currentSpeakerIndex + 1) % speakers.length;
-            remainingSeconds = SPEAKING_TIME;
-
-            renderTimer();
-
-            $("timer-status").textContent = "Ready for next speaker";
-            $("timer-status").classList.remove("is-finished");
-        }
-
-        $("start-timer").addEventListener("click", startTimer);
-        $("stop-timer").addEventListener("click", stopTimer);
-        $("reset-timer").addEventListener("click", resetTimer);
-        $("next-speaker").addEventListener("click", nextSpeaker);
-
-        $("add-time").addEventListener("click", () => {
-            remainingSeconds += 15;
-            renderTimer();
-            $("timer-status").textContent = "15 seconds added";
-            $("timer-status").classList.remove("is-finished");
-        });
-
-        $("yield-speaker").addEventListener("click", () => {
-            stopTimer();
-            $("timer-status").textContent =
-                "Speaker has yielded their remaining time";
-        });
-
-        renderSpeaker();
-        renderTimer();
     </script>
 </body>
 </html>

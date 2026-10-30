@@ -1,4 +1,9 @@
 import { createSession, saveSession, loadSession } from './models/session.js';
+import { setupNavigation, showView } from './ui/navigation.js';
+import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
+import { setupAvailableQueueControls, setupSpeakerControls, setupSpeakerQueueControls } from './ui/speaker-controls.js';
+import { renderActiveSpeaker, renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from './ui/speaker-list.js';
+import { setupTheme } from './ui/theme.js';
 
 const url = new URL(window.location.href);
 const cookies = new Map(
@@ -12,7 +17,7 @@ const cookies = new Map(
 );
 
 const params = url.searchParams;
-const sessionId = params.get('sessionId') ?? -1;
+const sessionId = params.get('sessionId') ?? crypto.randomUUID().substring(0, 8);
 
 var mode = params.get('mode') ?? 'new';
 if (cookies.get('lastSession') === sessionId) {
@@ -48,296 +53,49 @@ for (const [countryKey, data] of Object.entries(session.selectedCountries)) {
     } else if (Math.random() < 0.6) {
         data.votingStatus = "PV";
     }
-
-    if (Math.random() < 0.2) {
-        data.observerStatus = true;
-    }
-    if (Math.random() < 0.2) {
-        data.p5status = true;
-    }
 }
 
-const firstSpeaker = Object.keys(session.selectedCountries)[0];
-session.currentSpeaker = firstSpeaker;
+// const firstSpeaker = Object.keys(session.selectedCountries)[0];
+// session.currentSpeaker = firstSpeaker;
 
 const root = document.documentElement;
 const $ = id => document.getElementById(id);
+$("session-existence").textContent += sessionId;
 
-$('theme-toggle').addEventListener('click', () => {
-    const themeToggle = $('theme-toggle');
-    const isLight = root.dataset.theme !== 'light';
+function onViewChange(viewName) {
+    session.view = viewName;
 
-    $("header-logo").src = isLight ? 'assets/logo_dark.png' : 'assets/logo.png';
-    root.dataset.theme = isLight ? 'light' : 'dark';
-
-    themeToggle.textContent = isLight ? 'Dark mode' : 'Light mode';
-    themeToggle.setAttribute(
-        'aria-label',
-        isLight ? 'Switch to dark mode' : 'Switch to light mode'
-    );
-});
-
-$("view-navbar").addEventListener('click', (event) => {
-    const templateMap = {
-        "gsl": "speakers-template",
-        "motions": "motions-template"
-    }
-    const viewNavbar = $("view-navbar");
-
-    const button = event.target.closest('button[data-view]');
-    if (!button) return;
-
-    const view = button.dataset.view;
-    const templateId = templateMap[view];
-    if (!templateId) return;
-
-    const template = $(templateId);
-    if (!template) return;
-
-    const content = template.content.cloneNode(true);
-    console.log(content);
-    $("middle-column").replaceChildren(content);
-
-    switch (view) {
+    switch (viewName) {
         case "gsl":
-            $("speaker-topic").textContent = "General Speakers' List";
-            $('next-speaker').addEventListener('click', nextSpeaker);
-            renderActiveSpeaker(null);
-            renderSpeakerQueue();
-            renderAvailableCountries();
+            $("right-column").style.filter = 'brightness(1)';
+
+            renderActiveSpeaker(session, session.currentSpeaker);
+            
+            renderCountryPresence(session);
+            renderSpeakerQueue(session);
+            renderAvailableQueue(session);
             break;
-        case "single-speaker":
-            $("speaker-topic") = "Single Speaker";
-            break;
-    }
+        case "roll-call":
+            $("right-column").style.filter = 'brightness(0.8)';
 
-
-    const navigationButtons = document.querySelectorAll(".view-nav-item");
-    navigationButtons.forEach(button => {
-        const isActive = button.dataset.view === view;
-
-        button.classList.toggle("active", isActive);
-        button.setAttribute("aria-current", isActive ? "page" : "false");
-    });
-});
-
-function createCountryDisplayElement(data) {
-    const item = document.createElement('div');    
-    item.className = 'listbox-option';
-    item.role = 'option';
-    item.tabIndex = 0;
-
-    const img = document.createElement('img');
-    img.className = 'icon';
-    img.src = data.imgUrl;
-    img.style.height = '24px';
-    img.style.width = '32px';
-    img.style.border = '1px solid var(--indigo)'
-    img.style.borderRadius = '8px';
-    img.style.outline = '1px solid var(--muted)';
-    img.style.outlineOffset = '1px';
-    item.appendChild(img);
-
-    const name = document.createElement('span');
-    name.className = 'speaker-name';
-    name.textContent = data.shortName;
-    item.appendChild(name);
-
-    if (data.p5status) {
-        const status = document.createElement('span');
-        status.textContent = '●';
-        status.style.color = "var(--p5-status)";
-        status.style.marginRight = "2px";
-
-        item.appendChild(status);
-    }
-    if (data.observerStatus) {
-        const status = document.createElement('span');
-        status.textContent = '●';
-        status.style.color = "var(--observer-status)";
-        status.style.marginRight = "2px";
-
-        item.appendChild(status);
-    }
-
-    const status = document.createElement('span');
-    status.textContent = '●';
-    status.style.marginRight = "2px";
-    if (data.votingStatus === 'A') {
-        status.style.color = 'var(--voting-absent)';
-    } else if (data.votingStatus === 'P') {
-        status.style.color = 'var(--voting-present)';
-    } else if (data.votingStatus === 'PV') {
-        status.style.color = 'var(--voting-present-and-voting)';
-    }
-    item.appendChild(status);
-
-    return item;
-}
-function createSpeakerQueueElement(data) {
-    const actions = [
-        { action: 'top', text: '⮤', label: 'Move to top' },
-        { action: 'up', text: '⮝', label: 'Move up' },
-        { action: 'down', text: '⮟', label: 'Move down' },
-        { action: 'bottom', text: '⮧', label: 'Move to bottom' },
-        { action: 'remove', text: '⤬', label: 'Remove from list' }
-    ];
-
-    const item = createCountryDisplayElement(data);
-
-    const controls = document.createElement('div');
-    controls.className = 'queue-controls';
-    actions.forEach(({ action, text, label }) => {
-        const button = document.createElement('button');
-
-        button.type = 'button';
-        button.dataset.action = action;
-        button.setAttribute('aria-label', label);
-        button.title = label;
-        button.textContent = text;
-
-        controls.appendChild(button);
-    });
-
-    item.appendChild(controls);
-
-    return item;
-}
-
-function renderPresence() {
-    const count = Object.values(session.selectedCountries)
-        .filter(data => data.votingStatus !== "A")
-        .length;
-    if (count === 0) return;
-
-    $('simple-majority-value').textContent = Math.ceil(count * 0.5) + 1;
-    $('super-majority-value').textContent = Math.ceil(count * 0.66) + 1;
-    $('unanimity-value').textContent = count;
-}
-
-function renderAvailableCountries() {
-    $('available-list').replaceChildren();
-    
-    var displayCount = 0;
-    const searchValue = $('country-search').value.toLowerCase();
-    for (const [countryKey, data] of Object.entries(session.selectedCountries).sort()) {
-        if (data.votingStatus === "A") continue;
-        if (searchValue && !(countryKey.toLowerCase().startsWith(searchValue))) continue;
-        if (countryKey === session.currentSpeaker) continue;
-        if (session.speakerQueue.includes(countryKey)) continue;
-
-        const item = createCountryDisplayElement(data);
-        $('available-list').appendChild(item);
-        displayCount++;
-    }
-
-    $("available-speakers-label").textContent = 
-        `${displayCount} Available Speakers`;
-}
-
-function renderSpeakerQueue() {
-    $("upcoming-speakers-label").textContent = `${session.speakerQueue.length} Upcoming Speakers`;
-    $('queue-list').replaceChildren();
-    
-    for (const countryKey of session.speakerQueue) {
-        const data = session.selectedCountries[countryKey];
-        if (!data) continue;
-        
-        const element = createSpeakerQueueElement(data);
-        $('queue-list').appendChild(element);
-    }
-}
-function renderActiveSpeaker(countryKey) {
-    if (!countryKey) {
-        $('timerMain').style.visibility = 'hidden';
-        return;
-    }
-
-    if (!(Object.keys(session.selectedCountries).includes(countryKey))) {
-        $('timerMain').style.visibility = 'hidden';
-        return;
-    }
-    
-    $('timerMain').style.visibility = 'visible';
-    const country = session.selectedCountries[countryKey];
-    $('speaker-flag').src = country.imgUrl;
-    $('speaker-name').textContent = country.shortName;
-}
-
-$('queue-list').addEventListener('click', (event) => {
-    const queueList = $('queue-list');
-
-    const button = event.target.closest('button[data-action]');
-    if (!button) return;
-
-    const option = event.target.closest('.listbox-option');
-    if (!option || !queueList.contains(option)) return;
-
-    const optionName = option.querySelector('.speaker-name').textContent;
-
-    const items = [...queueList.querySelectorAll('.listbox-option')];
-    const index = items.indexOf(option);
-    const action = button.dataset.action;
-
-    switch (action) {
-        case 'top':
-            queueList.prepend(option);
-            break;
-        case 'up':
-            if (index > 0) {
-                queueList.insertBefore(option, items[index - 1]);
-            }
-            break;
-        case 'down':
-            if (index < items.length - 1) {
-                queueList.insertBefore(items[index + 1], option);
-            }
-            break;
-        case 'bottom':
-            queueList.appendChild(option);
-            break;
-        case 'remove':
-            option.remove();
-
-            session.dequeueCountry(optionName);
-            renderSpeakerQueue();
-            renderAvailableCountries();
+            renderRollCallList(session);
             break;
     }
-});
-
-$('country-search').addEventListener('input', renderAvailableCountries);
-$('available-list').addEventListener('click', (e) => {
-    const availableList = $('available-list');
-
-    const option = e.target.closest('.listbox-option');
-    if (!option || !availableList.contains(option)) return;
-
-    const optionName = option.querySelector('.speaker-name').textContent;
-    option.remove();
-
-    session.enqueueCountry(optionName);
-    renderSpeakerQueue();
-    renderAvailableCountries();
-});
-
-function nextSpeaker() {
-    if (session.speakerQueue.length === 0) {
-        renderActiveSpeaker(null);
-        session.currentSpeaker = null;
-        renderAvailableCountries();
-        return;
-    }
-
-    const countryKey = session.speakerQueue.shift();
-    session.currentSpeaker = countryKey;
-    renderActiveSpeaker(countryKey);
-    renderSpeakerQueue();
-    renderAvailableCountries();
 }
-$('next-speaker').addEventListener('click', nextSpeaker);
 
-renderPresence();
-renderActiveSpeaker(session.currentSpeaker);
-renderSpeakerQueue();
-renderAvailableCountries();
+async function main() {
+    setupTheme(session);
+    setupNavigation(onViewChange);
+
+    setupRollCallControls(session);
+    setupSpeakerControls(session);
+    setupAvailableQueueControls(session);
+    setupSpeakerQueueControls(session);
+
+    renderCountryPresence(session);
+    renderRollCallList(session);
+    renderAvailableQueue(session);
+    renderSpeakerQueue(session);
+}
+
+main().catch(console.error);
