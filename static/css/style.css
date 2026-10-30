@@ -159,6 +159,10 @@ button {
     background: var(--indigo-deep);
 }
 
+[hidden] {
+    display: none !important;
+}
+
 /* =====================================
    MAIN CONTENT
 ===================================== */
@@ -861,7 +865,7 @@ button {
     aspect-ratio: 1;
 
     border: 5px solid var(--indigo-deep);
-    outline: 2px solid var(--gold-2);
+    outline: 2px solid var(--gold-1);
     border-radius: 50%;
 
     background: var(--indigo-deep);

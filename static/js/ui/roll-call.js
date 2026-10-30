@@ -1,5 +1,5 @@
 import { createRollCallElement } from "../components/roll-call-item.js";
-import { renderAvailableQueue, renderCountryPresence } from "./speaker-list.js";
+import { renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from "./speaker-list.js";
 
 export function setupRollCallControls(session) {
     const list = document.getElementById("roll-call-list");
@@ -23,9 +23,12 @@ export function setupRollCallControls(session) {
             country.votingStatus = status;
         }
 
+        if (status === "A") session.dequeueCountry(countryKey);
+
         renderCountryPresence(session);
         renderRollCallList(session);
         renderAvailableQueue(session);
+        renderSpeakerQueue(session);
     });
 
     document.getElementById("absent-all-button")?.addEventListener("click", (e) => {
@@ -35,6 +38,10 @@ export function setupRollCallControls(session) {
         renderCountryPresence(session);
         renderRollCallList(session);
         renderAvailableQueue(session);
+
+        session.speakerQueue = [];
+        renderSpeakerQueue(session);
+        
     });
     document.getElementById("present-all-button")?.addEventListener("click", (e) => {
         for (const [_, data] of Object.entries(session.selectedCountries)) {

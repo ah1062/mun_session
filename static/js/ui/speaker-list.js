@@ -58,19 +58,20 @@ export function renderSpeakerQueue(session) {
 }
 
 export function renderActiveSpeaker(session, countryKey) {
+    const display = $("speaker-flag-main");
     if (!countryKey) {
-        $("timerMain").style.visibility = "hidden";
+        display.hidden = true;
         return;
     }
 
     if (!Object.keys(session.selectedCountries).includes(countryKey)) {
-        $("timerMain").style.visibility = "hidden";
+        display.hidden = true;
         return;
     }
 
-    $("timerMain").style.visibility = "visible";
-    const country = session.selectedCountries[countryKey];
+    display.hidden = false;
 
+    const country = session.selectedCountries[countryKey];
     const container = $("speaker-flag-container");
     if (container) {
         const img = document.createElement("img");

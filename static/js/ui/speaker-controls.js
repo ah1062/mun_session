@@ -52,23 +52,22 @@ export function setupSpeakerControls(session) {
 }
 
 export function setupSpeakerQueueControls(session) {
-    if (session.view === 'roll-call') return;
-
     const queueList = document.getElementById("queue-list");
     if (!queueList) return;
 
     queueList.addEventListener("click", (e) => {
+        if (session.view === 'roll-call') return;
+        if (session.view === 'single-speaker') return;
+
         const button = e.target.closest("button[data-action]");
         if (!button) return;
 
         const option = button.closest(".listbox-option");
         if (!option || !queueList.contains(option)) return;
-
         const countryKey = option.dataset.countryKey;
         const index = session.speakerQueue.indexOf(countryKey);
 
         if (index === -1) return;
-
         switch (button.dataset.action) {
             case "top":
                 moveCountry(session, index, 0);
@@ -114,6 +113,7 @@ export function setupAvailableQueueControls(session) {
 
     availableList.addEventListener('click', (e) => {
         if (session.view === 'roll-call') return;
+        if (session.view === 'single-speaker') return;
 
         const option = e.target.closest(".listbox-option");
         if (!option || !availableList.contains(option)) return;

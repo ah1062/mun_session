@@ -1,21 +1,17 @@
-const templateMap = {
-    "roll-call": "roll-call-template",
-    "single-speaker": "single-speaker-template",
-    "gsl": "gsl-template",
-    "motions": "motions-template",
-    "caucus": "moderated-caucus-template",
-    "unmod-caucus": "unmoderated-caucus-template",
+const panelMap = {
+    "roll-call": "roll-call-panel",
+    "single-speaker": "single-speaker-panel",
+    "gsl": "gsl-panel",
 }
 
 export function showView(viewName) {
-    const templateId = templateMap[viewName];
-    const template = document.getElementById(templateId);
-    const middleColumn = document.getElementById("middle-column");
-    
-    if (!template || !middleColumn) return;
+    const panelId = panelMap[viewName];
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
 
-    const content = template.content.cloneNode(true);
-    middleColumn.replaceChildren(content);
+    document.querySelectorAll("[id$='-panel']").forEach(item => {
+        item.hidden = item.id !== panelId;
+    })
 
     document.querySelectorAll(".view-nav-item").forEach(button => {
         const isActive = button.dataset.view === viewName;

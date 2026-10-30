@@ -64,20 +64,25 @@ $("session-existence").textContent += sessionId;
 
 function onViewChange(viewName) {
     session.view = viewName;
-
     switch (viewName) {
         case "gsl":
             $("right-column").style.filter = 'brightness(1)';
 
+            //setupSpeakerControls(session);
+            //setupSpeakerQueueControls(session);
             renderActiveSpeaker(session, session.currentSpeaker);
             
             renderCountryPresence(session);
             renderSpeakerQueue(session);
             renderAvailableQueue(session);
             break;
+        case "single-speaker":
+            $("right-column").style.filter = 'brightness(0.8)';
+            break;
         case "roll-call":
             $("right-column").style.filter = 'brightness(0.8)';
 
+            //setupRollCallControls(session);
             renderRollCallList(session);
             break;
     }
@@ -92,8 +97,9 @@ async function main() {
     setupAvailableQueueControls(session);
     setupSpeakerQueueControls(session);
 
-    renderCountryPresence(session);
     renderRollCallList(session);
+
+    renderCountryPresence(session);
     renderAvailableQueue(session);
     renderSpeakerQueue(session);
 }
