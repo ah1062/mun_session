@@ -1,6 +1,7 @@
 import { createSession, saveSession, loadSession } from './models/session.js';
 import { setupNavigation, showView } from './ui/navigation.js';
 import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
+import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls } from './ui/settings.js';
 import { setupAvailableQueueControls, setupSpeakerControls, setupSpeakerQueueControls } from './ui/speaker-controls.js';
 import { renderActiveSpeaker, renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from './ui/speaker-list.js';
 import { setupTheme } from './ui/theme.js';
@@ -39,7 +40,7 @@ switch (mode) {
     break;
 }
 
-const numEntries = 50;
+const numEntries = 0;
 const randomEntries = Object.entries(session.availableCountries)
     .sort(() => Math.random() - 0.5)
     .slice(0, numEntries);
@@ -64,9 +65,18 @@ $("session-existence").textContent += sessionId;
 
 function onViewChange(viewName) {
     session.view = viewName;
+
+    if (viewName !== "settings") {
+        document.getElementById("session-settings").hidden = true;
+        document.getElementById("session-attendance").hidden = false;           
+    }
+
+    for (const [name, timer] of Object.entries(session.timers)) {
+        timer.pause();
+    }
     switch (viewName) {
         case "gsl":
-            $("right-column").style.filter = 'brightness(1)';
+            $("session-attendance").style.filter = 'brightness(1)';
 
             //setupSpeakerControls(session);
             //setupSpeakerQueueControls(session);
@@ -77,14 +87,19 @@ function onViewChange(viewName) {
             renderAvailableQueue(session);
             break;
         case "single-speaker":
-            $("right-column").style.filter = 'brightness(0.8)';
+            $("session-attendance").style.filter = 'brightness(0.8)';
             break;
         case "roll-call":
-            $("right-column").style.filter = 'brightness(0.8)';
+            $("session-attendance").style.filter = 'brightness(0.8)';
 
             //setupRollCallControls(session);
             renderRollCallList(session);
             break;
+        case "settings":
+            document.getElementById("session-settings").hidden = false;
+            document.getElementById("session-attendance").hidden = true;           
+
+            renderCountrySelection(session);
     }
 }
 
@@ -96,6 +111,10 @@ async function main() {
     setupSpeakerControls(session);
     setupAvailableQueueControls(session);
     setupSpeakerQueueControls(session);
+
+    await renderCommitteeSelection(session);
+    setupCountrySelectionControls(session);
+    renderCountrySelection(session);
 
     renderRollCallList(session);
 

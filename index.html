@@ -17,11 +17,27 @@
         }
 
         #queue-list {
-            max-height: 28vh;
+            max-height: 32vh;
         }
 
         #available-list {
             max-height: 48vh;
+        }
+
+        #active-country-list,
+        #missing-country-list {
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        #active-country-list {
+            max-height: 100vh;
+        }
+
+        #missing-country-list {
+            max-height: 100vh;
         }
     </style>
 </head>
@@ -52,7 +68,7 @@
                         <div class="sidebar-divider"></div>
 
                         <nav id="view-navbar" class="view-navigation" aria-label="Meeting views">
-                            <button class="view-nav-item active"
+                            <button class="view-nav-item"
                                     type="button"
                                     data-view="roll-call"
                                     aria-current="page">
@@ -133,7 +149,7 @@
                             <div class="sidebar-divider"></div>
 
                             <div class="sidebar-bottom">
-                                <button class="view-nav-item"
+                                <button class="view-nav-item active"
                                         type="button"
                                         data-view="settings">
                                     <span class="view-icon">⚙</span>
@@ -154,7 +170,7 @@
                 </section>
 
                 <section id="middle-column" class="central-column">
-                    <div id="roll-call-panel" class="box roll-call-panel">
+                    <div id="roll-call-panel" class="box roll-call-panel" hidden>
                         <div class="roll-call-header">
                             <h2>Roll Call</h2>
                             <div>
@@ -263,9 +279,58 @@
                             </p>
                         </div>
                     </div>
+                    <div id="settings-panel" class="box settings-attendance-panel">
+                        <div class="settings-row">
+                            <div class="settings-row-header">
+                                <h2>Missing Countries</h2>
+                                <span id="missing-country-count">0</span>
+                            </div>
+
+                            <div id="missing-country-list" class="listbox" role="listbox">
+                                <!-- Generated country elements -->
+                            </div>
+                            <div class="custom-country-input">
+                                <a>Custom Country</a>
+                                <input
+                                    type="text"
+                                    id="custom-country-name"
+                                    placeholder="Enter custom country name..."
+                                >
+                                <button type="button" id="add-custom-country">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="settings-row-header">
+                                <h2>Active Countries</h2>
+                                <span id="active-country-count">0</span>
+                            </div>
+
+                            <div id="active-country-list" class="listbox" role="listbox">
+                                <!-- Generated country elements -->
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
-                <section id="right-column" class="session-panel" style="filter: brightness(0.8);">
+                <section id="session-settings" class="settings-panel">
+                    <div class="box">
+                        <div class="committee-field">
+                            <h2>Committee:</h2>
+                            <select id="committee-selection"></select>
+                        </div>
+                        <div class="committee-field">
+                            <h2>Committee Title:</h2>
+                            <input
+                                id="committee-title"
+                                placeholder="United Nations General Assembly"
+                            >
+                        </div>
+                    </div>
+                    <div class="box"></div>
+                </section>
+                <section id="session-attendance" class="session-panel" style="filter: brightness(0.8);" hidden>
                     <!-- ROW 1: Presence indicators -->
                     <div class="box presence-section">
                         <div id="session-presence" class="presence-panel">
