@@ -401,9 +401,9 @@
   },
   {
     "img": "assets/un_country_flags/ci.png",
-    "name": "Côte d’Ivoire",
-    "shortName": "Côte d’Ivoire",
-    "longName": "Republic of Côte d’Ivoire",
+    "name": "Côte d'Ivoire",
+    "shortName": "Côte d'Ivoire",
+    "longName": "Republic of Côte d'Ivoire",
     "votingStatus": "A",
     "votingObserver": false,
     "isoCode": "CI",
@@ -1422,7 +1422,7 @@
   {
     "img": "assets/un_country_flags/ru.png",
     "name": "Russia",
-    "shortName": "Russian Federation",
+    "shortName": "Russia",
     "longName": "Russian Federation",
     "votingStatus": "A",
     "votingObserver": false,

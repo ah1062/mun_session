@@ -1,10 +1,10 @@
 import { createSession, saveSession, loadSession } from './models/session.js';
 import { setupNavigation, showView } from './ui/navigation.js';
 import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
-import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls } from './ui/settings.js';
+import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls, setupSessionSettingsControls } from './ui/settings.js';
 import { setupAvailableQueueControls, setupSpeakerControls, setupSpeakerQueueControls } from './ui/speaker-controls.js';
 import { renderActiveSpeaker, renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from './ui/speaker-list.js';
-import { setupTheme } from './ui/theme.js';
+import { setupLanguages, setupTheme } from './ui/theme.js';
 
 const url = new URL(window.location.href);
 const cookies = new Map(
@@ -104,6 +104,7 @@ function onViewChange(viewName) {
 }
 
 async function main() {
+    await setupLanguages(session);
     setupTheme(session);
     setupNavigation(onViewChange);
 
@@ -113,6 +114,7 @@ async function main() {
     setupSpeakerQueueControls(session);
 
     await renderCommitteeSelection(session);
+    await setupSessionSettingsControls(session);
     setupCountrySelectionControls(session);
     renderCountrySelection(session);
 

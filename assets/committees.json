@@ -18,6 +18,7 @@
         "abbreviation": "CCPCJ",
         "longName": "Commission on Crime Prevention and Criminal Justice"
     },
+    { "abbreviation": "CN", "shortName": "The Commonwealth", "longName": "The Commonwealth of Nations"},
     { "abbreviation": "COP", "longName": "Conference of the Parties" },
     {
         "abbreviation": "COPUOS",

@@ -3,7 +3,7 @@
 ===================================== */
 
 :root {
-    color-scheme: dark;
+    color-scheme: LIMUN;
 
     --serif: 'Butler', 'Georgia', 'Times New Roman', serif;
     --sans: 'Futura PT', 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
@@ -12,8 +12,8 @@
     --elizabeth: #2B1C50;
     --gold-1: #FFC06B;
     --gold-2: #BE7800;
-    --hair: rgba(237, 234, 246, 0.12);
-    --muted: rgba(237, 234, 246, 0.55);
+    --hair: #edeaf61f;
+    --muted: #edeaf68c;
 
     --p5-status: #FF6060;
     --observer-status: #8F8;
@@ -27,18 +27,90 @@ html[data-theme="light"] {
     color-scheme: light;
 
     --indigo: #F0EDF7;
-    --indigo-deep: #FFFFFF;
+    --indigo-deep: #E6E6E6;
     --elizabeth: #E5DFF0;
     --gold-1: #251B3D;
-    --gold-2: #8A5700;
-    --hair: rgba(22, 17, 46, 0.16);
-    --muted: rgba(22, 17, 46, 0.65);
+    --gold-2: #2A5780;
+    --hair: #16112e29;
+    --muted: #16112ea6;
 
     --p5-status: #BB2020;
     --observer-status: #0C0;
     --voting-absent: #FF0000;
     --voting-present: #C69040;
     --voting-present-and-voting: #6060c6;
+}
+
+html[data-theme="blue"] {
+    color-scheme: blue;
+
+    --indigo: #A09Dd7;
+    --indigo-deep: #9090d0;
+    --elizabeth: #B5AFF0;
+    --gold-1: #251B3D;
+    --gold-2: #5A47b0;
+    --hair: #16112e29;
+    --muted: #16112ea6;
+
+    --p5-status: #BB2020;
+    --observer-status: #0C0;
+    --voting-absent: #FF0000;
+    --voting-present: #C69040;
+    --voting-present-and-voting: #6060c6;
+}
+
+html[data-theme="green"] {
+    color-scheme: light;
+
+    --indigo: #A0D79D;
+    --indigo-deep: #90d090;
+    --elizabeth: #C6f0af;
+    --gold-1: #251B3D;
+    --gold-2: #2A6037;
+    --hair: #16112e29;
+    --muted: #16112ea6;
+
+    --p5-status: #BB2020;
+    --observer-status: #0C0;
+    --voting-absent: #FF0000;
+    --voting-present: #C69040;
+    --voting-present-and-voting: #6060c6;
+}
+
+html[data-theme="UN"] {
+    color-scheme: un;
+
+    --indigo: #0f52ba;
+    --indigo-deep: #5190c6;
+    --elizabeth: #4583e2;
+    --gold-1: #e5ae5b;
+    --gold-2: #453e2b;
+    --hair: #222;
+    --muted: #222222bb;
+
+    --p5-status: #E05A5A;
+    --observer-status: #65C98A;
+    --voting-absent: #e55b92;
+    --voting-present: #e5ae5b;
+    --voting-present-and-voting: #5b92e5;
+}
+
+html[data-theme="black"] {
+    color-scheme: black;
+
+    --indigo: #222;
+    --indigo-deep: #000;
+    --elizabeth: #111;
+    --gold-1: #FFFFFF;
+    --gold-2: #aaa;
+    --hair: #999;
+    --muted: #999999bb;
+
+    --p5-status: #E05A5A;
+    --observer-status: #65C98A;
+    --voting-absent: #e55b92;
+    --voting-present: #e5ae5b;
+    --voting-present-and-voting: #5b92e5;
 }
 
 #theme-toggle {
@@ -53,6 +125,10 @@ html[data-theme="light"] {
 
 #theme-toggle:hover {
     border-color: var(--gold-1);
+}
+
+#theme-icon {
+    margin-left: 20px;
 }
 
 #theme-toggle:focus-visible {
@@ -129,14 +205,9 @@ button {
 .header span a {
     color: var(--gold-1);
     margin-left: 12px;
-    
-    border: 1px solid var(--gold-1);
-    border-radius: 8px;
-    padding: 8px;
 }
 
 .header span a:hover {
-    color: var(--gold-2);
     background: var(--indigo-deep);
 }
 
@@ -149,14 +220,22 @@ button {
     color: var(--gold-1);
     margin-left: 12px;
     
-    border: 1px solid var(--gold-1);
+    border: 1px solid var(--hair);
     border-radius: 8px;
     padding: 8px;
 }
 
 .footer span a:hover {
-    color: var(--gold-2);
+    border-color: var(--gold-1);
     background: var(--indigo-deep);
+}
+
+.footer select {
+    background-color: var(--indigo);
+    border-color: transparent;
+    border-radius: 4px;
+    color: var(--gold-1);
+    padding: 4px;
 }
 
 [hidden] {
@@ -249,26 +328,85 @@ button {
 }
 
 .committee-field h2 {
+    font: var(--serif);
     white-space: nowrap;
     margin: 5px;
 }
 
-#committee-selection {
-    background-color: var(--elizabeth);
-    border-color: var(--gold-1);
-    color: var(--gold-1);
-    font:inherit;
+.committee-field select {
     flex: 1;
-    min-width: 0;
+    padding: 2px;
+    background-color: var(--elizabeth);
+    border-color: var(--hair);
+    border-radius: 4px;
+    color: var(--gold-2);
 }
 
-#committee-title {
+.committee-field input {
+    flex: 1;
+    padding: 2px;
     background-color: var(--elizabeth);
-    border-color: var(--gold-1);
+    border-color: var(--hair);
+    border-radius: 4px;
     color: var(--gold-1);
-    font:inherit;
+}
+
+.committee-field input:focus {
+    border-color: var(--gold-1);
+}
+.committee-field input::placeholder {
+    color: var(--gold-2);
+}
+
+.committee-field select {
     flex: 1;
     min-width: 0;
+
+    background-color: var(--elizabeth);
+    border-color: var(--hair);
+    border-radius: 4px;
+    color: var(--gold-1);
+}
+
+#committee-preset-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.committee-preset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 8px;
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.committee-preset:hover {
+    border: 1px solid var(--gold-1);
+}
+
+.committee-preset .icon {
+    width: 20px;
+    height: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.committee-preset span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .session-panel {
@@ -479,6 +617,18 @@ button {
     margin: 0;
     font-family: var(--serif);
     font-weight: 400;
+}
+
+.settings-row-header button {
+    padding: 1px 6px 1px 6px;
+    border: 1px solid var(--hair);
+    border-radius: 8px;
+
+    background: transparent;
+}
+
+.settings-row-header button:hover {
+    border: 1px solid var(--gold-1);
 }
 
 .settings-row .listbox {
@@ -996,12 +1146,12 @@ button {
 .speaker-flag {
     display: grid;
     place-items: center;
-    width: clamp(9rem, min(20vw, 20vh), 16rem);
-    aspect-ratio: 1;
+    width: clamp(8rem, min(24vw, 24vh), 20rem);
+    aspect-ratio: 3 / 2;
 
-    border: 5px solid var(--indigo-deep);
+    border: 4px solid var(--indigo-deep);
     outline: 2px solid var(--gold-1);
-    border-radius: 50%;
+    border-radius: 8px;
 
     background: var(--indigo-deep);
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
@@ -1236,7 +1386,7 @@ button {
 
 .view-nav-item.active {
     background: var(--elizabeth);
-    border-color: rgba(255, 192, 107, 0.3);
+    border-color: var(--gold-1);
 }
 
 .view-nav-item.active::before {
