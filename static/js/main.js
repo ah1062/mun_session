@@ -1,7 +1,7 @@
 import { createSession, saveSession, loadSession } from './models/session.js';
 import { setupNavigation, showView } from './ui/navigation.js';
 import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
-import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls, setupSessionSettingsControls } from './ui/settings.js';
+import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls, setupSessionMemoryControls, setupSessionSettingsControls } from './ui/settings.js';
 import { setupAvailableQueueControls, setupSpeakerControls, setupSpeakerQueueControls } from './ui/speaker-controls.js';
 import { renderActiveSpeaker, renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from './ui/speaker-list.js';
 import { setupLanguages, setupTheme } from './ui/theme.js';
@@ -116,6 +116,7 @@ async function main() {
     await renderCommitteeSelection(session);
     await setupSessionSettingsControls(session);
     setupCountrySelectionControls(session);
+    setupSessionMemoryControls(session);
     renderCountrySelection(session);
 
     renderRollCallList(session);

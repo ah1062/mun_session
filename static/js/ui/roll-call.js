@@ -31,6 +31,22 @@ export function setupRollCallControls(session) {
         renderSpeakerQueue(session);
     });
 
+    document.getElementById("remove-vetoes-button")?.addEventListener("click", (e) => {
+        for (const [_, data] of Object.entries(session.selectedCountries)) {
+            data.p5status = false;
+        }
+        renderRollCallList(session);
+        renderAvailableQueue(session);
+        renderSpeakerQueue(session);
+    });
+    document.getElementById("remove-observers-button")?.addEventListener("click", (e) => {
+        for (const [_, data] of Object.entries(session.selectedCountries)) {
+            data.observerStatus = false;
+        }
+        renderRollCallList(session);
+        renderAvailableQueue(session);
+        renderSpeakerQueue(session);
+    });
     document.getElementById("absent-all-button")?.addEventListener("click", (e) => {
         for (const [_, data] of Object.entries(session.selectedCountries)) {
             data.votingStatus = "A";

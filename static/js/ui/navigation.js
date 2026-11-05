@@ -2,6 +2,7 @@ const panelMap = {
     "roll-call": "roll-call-panel",
     "single-speaker": "single-speaker-panel",
     "gsl": "gsl-panel",
+    "motions": "motions-panel",
     "settings": "settings-panel"
 }
 

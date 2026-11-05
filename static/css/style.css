@@ -77,22 +77,22 @@ html[data-theme="green"] {
     --voting-present-and-voting: #6060c6;
 }
 
-html[data-theme="UN"] {
-    color-scheme: un;
+html[data-theme="purple"] {
+    color-scheme: light;
 
-    --indigo: #0f52ba;
-    --indigo-deep: #5190c6;
-    --elizabeth: #4583e2;
-    --gold-1: #e5ae5b;
-    --gold-2: #453e2b;
-    --hair: #222;
-    --muted: #222222bb;
+    --indigo: #c893e0;
+    --indigo-deep: #d9a1f3;
+    --elizabeth: #d18ff0;
+    --gold-1: #050B1D;
+    --gold-2: #6A3087;
+    --hair: #16112e29;
+    --muted: #16112ea6;
 
-    --p5-status: #E05A5A;
-    --observer-status: #65C98A;
-    --voting-absent: #e55b92;
-    --voting-present: #e5ae5b;
-    --voting-present-and-voting: #5b92e5;
+    --p5-status: #BB2020;
+    --observer-status: #0C0;
+    --voting-absent: #FF0000;
+    --voting-present: #C69040;
+    --voting-present-and-voting: #6060c6;
 }
 
 html[data-theme="black"] {
@@ -112,6 +112,25 @@ html[data-theme="black"] {
     --voting-present: #e5ae5b;
     --voting-present-and-voting: #5b92e5;
 }
+
+html[data-theme="UN"] {
+    color-scheme: un;
+
+    --indigo: #0f52ba;
+    --indigo-deep: #5190c6;
+    --elizabeth: #4583e2;
+    --gold-1: #e5ae5b;
+    --gold-2: #453e2b;
+    --hair: #222;
+    --muted: #222222bb;
+
+    --p5-status: #E05A5A;
+    --observer-status: #65C98A;
+    --voting-absent: #e55b92;
+    --voting-present: #e5ae5b;
+    --voting-present-and-voting: #5b92e5;
+}
+
 
 #theme-toggle {
     padding: 0.5rem 0.8rem;
@@ -333,13 +352,26 @@ button {
     margin: 5px;
 }
 
-.committee-field select {
+.committee-field button {
     flex: 1;
     padding: 2px;
+
     background-color: var(--elizabeth);
     border-color: var(--hair);
     border-radius: 4px;
-    color: var(--gold-2);
+    color: var(--gold-1);
+}
+
+.committee-field button:focus {
+    border-color: var(--gold-1);
+}
+
+#save-button {
+    min-width: 40px;
+}
+
+#load-button {
+    min-width: 40px;
 }
 
 .committee-field input {
@@ -652,14 +684,17 @@ button {
     flex: 1;
     min-width: 0;
 
+    padding: 2px;
     font-size: medium;
 
     color: var(--gold-1);
-    background: var(--indigo);
+    background-color: var(--elizabeth);
     border: 1px solid var(--hair);
-    outline: 2px solid var(--hair);
-    outline-offset: 1px;
     border-radius: 4px;
+}
+
+.custom-country-input input::placeholder {
+    color: var(--gold-2);
 }
 
 .custom-country-input button {

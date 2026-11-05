@@ -164,7 +164,7 @@
 
                         <div class="sidebar-footer">
                             <span class="status-indicator"></span>
-                            <span id="session-existence">Session: </span>
+                            <span id="session-existence">Session ID: </span>
                         </div>
                     </aside>
                 </section>
@@ -174,6 +174,12 @@
                         <div class="roll-call-header">
                             <h2>Roll Call</h2>
                             <div>
+                                <button id="remove-vetoes-button" class="attendance-toggle status-p5status">
+                                    Clear Vetoes 
+                                </button>
+                                <button id="remove-observers-button" class="attendance-toggle status-observerStatus">
+                                    Clear Observers
+                                </button>
                                 <button id="absent-all-button" class="attendance-toggle status-A active">
                                     All Absent
                                 </button>
@@ -279,6 +285,9 @@
                             </p>
                         </div>
                     </div>
+                    <div id="motions-panel" class="" hidden>
+                        Hello
+                    </div>
                     <div id="settings-panel" class="box settings-attendance-panel">
                         <div class="settings-row">
                             <div class="settings-row-header">
@@ -320,34 +329,55 @@
                 <!-- Right column option 1-->
                 <section id="session-settings" class="settings-panel">
                     <div class="box">
-                        <div class="settings-row-header">
-                            <h2>Committee Settings</h2>
+                        <div>
+                            <div class="settings-row-header">
+                                <h2>Session Settings</h2>
+                            </div>
+                            <div class="sidebar-divider"></div>
+                            <div class="committee-field">
+                                <h2>Name:</h2>
+                                <input
+                                    id="committee-name"
+                                    placeholder="Unnamed Session"
+                                >
+                            </div>
+                            <div class="committee-field">
+                                <h2>Committee:</h2>
+                                <select id="committee-selection"></select>
+                            </div>
+                            <div class="committee-field">
+                                <h2>Title:</h2>
+                                <input
+                                    id="committee-title"
+                                    placeholder="United Nations General Assembly"
+                                >
+                            </div>
+                            <div class="committee-field">
+                                <h2>Topic:</h2>
+                                <input
+                                    id="committee-topic"
+                                    placeholder="Unnamed Session"
+                                >
+                            </div>
                         </div>
                         <div class="sidebar-divider"></div>
-                        <div class="committee-field">
-                            <h2>Name:</h2>
-                            <input
-                                id="committee-name"
-                                placeholder="Unnamed Session"
-                            >
-                        </div>
-                        <div class="committee-field">
-                            <h2>Committee:</h2>
-                            <select id="committee-selection"></select>
-                        </div>
-                        <div class="committee-field">
-                            <h2>Title:</h2>
-                            <input
-                                id="committee-title"
-                                placeholder="United Nations General Assembly"
-                            >
-                        </div>
-                        <div class="committee-field">
-                            <h2>Topic:</h2>
-                            <input
-                                id="committee-topic"
-                                placeholder="Unnamed Session"
-                            >
+                        <div>
+                            <div class="settings-row-header">
+                                <h2>Manage Session</h2>
+                            </div>
+                            <div class="sidebar-divider"></div>
+                            <div class="committee-field">
+                                <h2 id="save-button">Save</h2>
+                                <button id="save-button-csv">CSV</button>
+                                <button id="save-button-json">JSON</button>
+                            </div>
+                            <div class="committee-field">
+                                <h2 id="load-button">Load</h2>
+                                <button id="load-button-csv">CSV</button>
+                                <input id="file-input-csv" type="file" accept=".csv,text/csv" hidden>
+                                <button id="load-button-json">JSON</button>
+                                <input id="file-input-json" type="file" accept=".json,application/json" hidden>
+                            </div>
                         </div>
                     </div>
                     <div class="box">
@@ -420,7 +450,7 @@
                 <span id="theme-icon">☼</span>
                 <select id="theme-select"></select>
             </div>
-            <span>
+            <span hidden>
                 <a>Session Log: OPENED</a>
             </span>
             <span>

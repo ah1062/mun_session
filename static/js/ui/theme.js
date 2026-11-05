@@ -1,4 +1,4 @@
-const lightThemes = new Set(['light', 'blue', 'green', 'UN']);
+const lightThemes = new Set(['light', 'blue', 'green', 'purple']);
 
 async function fetchLanguageDictionaries() {
     return ["EN"];
