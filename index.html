@@ -33,7 +33,6 @@
         </header>
 
         <main class="main-content">
-            <!-- Left column -->
             <div class="content-grid">
                 <section id="left-column" class="session-control">
                     <aside class="box view-sidebar">
@@ -175,8 +174,25 @@
                     </div>
                     <div id="single-speaker-panel" class="speaker-timer" hidden>
                         <div class="timer-queue-heading">
-                            <span aria-hidden="true">☷</span>
-                            <h2>Individual Speakers Time</h2>
+                            <div id="topleft-heading" class="heading-top-left">
+                                <span>Session: UNGA</span>
+                            </div>
+
+                            <div id="topright-heading" class="heading-top-right">
+                                <span>Round 1</span>
+                            </div>
+
+                            <div id="centre-heading" class="heading-centre">
+                                <h2>Speaker Queue</h2>
+                            </div>
+
+                            <div id="bottomleft-heading" class="heading-bottom-left">
+                                <span>Current Speaker: France</span>
+                            </div>
+
+                            <div id="bottomright-heading" class="heading-bottom-right">
+                                <span>Speakers: 12</span>
+                            </div>
                         </div>
 
                         <div id="timerMain" class="timer-main">
@@ -217,8 +233,25 @@
                     </div>
                     <div id="gsl-panel" class="speaker-timer" hidden>
                         <div class="timer-queue-heading">
-                            <span aria-hidden="true">☷</span>
-                            <h2>General Speaker's List</h2>
+                            <div id="topleft-heading" class="heading-top-left">
+                                <span>Session: UNGA</span>
+                            </div>
+
+                            <div id="topright-heading" class="heading-top-right">
+                                <span>Round 1</span>
+                            </div>
+
+                            <div id="centre-heading" class="heading-centre">
+                                <h2>Speaker Queue</h2>
+                            </div>
+
+                            <div id="bottomleft-heading" class="heading-bottom-left">
+                                <span>Current Speaker: France</span>
+                            </div>
+
+                            <div id="bottomright-heading" class="heading-bottom-right">
+                                <span>Speakers: 12</span>
+                            </div>
                         </div>
 
                         <div id="speaker-flag-main" class="timer-main">
@@ -385,7 +418,7 @@
                                 <h2>Topic:</h2>
                                 <input
                                     id="committee-topic"
-                                    placeholder="Unnamed Session"
+                                    placeholder="Unnamed Topic"
                                 >
                             </div>
                         </div>
@@ -407,6 +440,10 @@
                                 <button id="load-button-json">JSON</button>
                                 <input id="file-input-json" type="file" accept=".json,application/json" hidden>
                             </div>
+                        </div>
+                        <div class="sidebar-divider"></div>
+                        <div class="committee-field">
+                            <button id="create-session">Create Session</button>
                         </div>
                     </div>
                     <div class="box">

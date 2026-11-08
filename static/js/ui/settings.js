@@ -1,4 +1,5 @@
 import { createCountryDisplayElement } from "../components/available-queue-item.js";
+import { createCommitteePresetElement } from "../components/committee-preset.js";
 import { renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from "./speaker-list.js";
 
 async function getCommitteeInfo() {
@@ -57,7 +58,7 @@ export function renderCountrySelection(session) {
   missing.replaceChildren();
 
   for (const [countryKey, data] of Object.entries(
-    session.availableCountries,
+    session.countryDataset,
   ).sort()) {
     const item = createCountryDisplayElement(data, false);
     item.dataset.countryKey = countryKey;
@@ -83,37 +84,47 @@ export function renderCountrySelection(session) {
 }
 
 export async function setupSessionSettingsControls(session) {
-  const committeeSelection = document.getElementById("committee-selection");
-  const committeeTitle = document.getElementById("committee-title");
-  const committeeName = document.getElementById("committee-name");
+  const createSessionButton = document.getElementById("create-session");
+  createSessionButton?.addEventListener('click', () => {
+    session.created = true;
+    const navbarItems = document.querySelectorAll('.view-nav-item');
+    for (const item of navbarItems) {
+        if (item.dataset.view === "settings") continue;
+        item.style.filter = 'brightness(1)';
+    }
+  });
 
+  const committeeTitle = document.getElementById("committee-title");
+  committeeTitle?.addEventListener('input', () => {
+    const value = committeeTitle.value ?? committeeTitle.placeholder;
+    session.title = value;
+  });
+  const committeeName = document.getElementById("committee-name");
+  committeeName?.addEventListener('input', () => {
+    const value = committeeName.value ?? committeeName.placeholder;
+    session.name = value;
+  });
+  const committeeTopic = document.getElementById("committee-topic");
+  committeeTopic?.addEventListener('input', () => {
+    const value = committeeTopic.value ?? committeeTopic.placeholder;
+    session.topic = value;
+  });
+
+  const committeeSelection = document.getElementById("committee-selection");
   committeeSelection.addEventListener("change", (e) => {
     const selected = committeeSelection.selectedOptions[0];
     committeeTitle.placeholder = selected.dataset.name;
+
+    session.committeeCode = selected.dataset.abbreviation;
+    session.committeeName = selected.dataset.name;
   });
 
   const committeePresetContainer = document.getElementById(
     "committee-preset-container",
   );
   const committeePresets = await getCommitteePresets();
-
   for (const preset of committeePresets) {
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = "committee-preset";
-    item.tabIndex = 0;
-    item.setAttribute("role", "button");
-
-    const img = document.createElement("img");
-    img.className = "icon";
-    img.style.maxHeight = "16px";
-    img.src = preset.imgUrl;
-
-    const span = document.createElement("span");
-    span.textContent = preset.abbrev;
-
-    item.append(img, span);
-
+    const item = createCommitteePresetElement(preset.imgUrl, preset.abbrev)
     item.addEventListener("click", (e) => {
       for (const countryKey of preset.countries) {
         session.selectCountry(countryKey);

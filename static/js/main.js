@@ -1,7 +1,6 @@
-import { createCountryDisplayElement } from './components/available-queue-item.js';
 import { createSession, saveSession, loadSession } from './models/session.js';
 import { renderMotionAvailableSubmitters, setupMotionControls } from './ui/motions.js';
-import { setupNavigation, showView } from './ui/navigation.js';
+import { setupNavigation} from './ui/navigation.js';
 import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
 import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls, setupSessionMemoryControls, setupSessionSettingsControls } from './ui/settings.js';
 import { setupAvailableQueueControls, setupSpeakerControls, setupSpeakerQueueControls } from './ui/speaker-controls.js';
@@ -43,7 +42,7 @@ switch (mode) {
 }
 
 const numEntries = 50;
-const randomEntries = Object.entries(session.availableCountries)
+const randomEntries = Object.entries(session.countryDataset)
     .sort(() => Math.random() - 0.5)
     .slice(0, numEntries);
 const randomElements = Object.fromEntries(randomEntries);
@@ -70,6 +69,15 @@ $("session-existence").textContent += sessionId;
 
 function onViewChange(viewName) {
     session.view = viewName;
+
+    for (const item of document.querySelectorAll('#topleft-heading')) 
+        item.textContent = session.title;
+    for (const item of document.querySelectorAll('#bottomleft-heading')) 
+        item.textContent = session.committeeCode;
+    for (const item of document.querySelectorAll('#topright-heading'))
+        item.textContent = session.name;
+    for (const item of document.querySelectorAll('#bottomright-heading'))
+        item.textContent = session.topic;
 
     if (viewName === "settings") {
         document.getElementById("session-settings").hidden = false;
@@ -123,8 +131,8 @@ function onViewChange(viewName) {
 async function main() {
     await setupLanguages(session);
     setupTheme(session);
-    setupNavigation(onViewChange);
-
+    setupNavigation(session, onViewChange);
+    
     setupRollCallControls(session);
     setupSpeakerControls(session);
     setupAvailableQueueControls(session);

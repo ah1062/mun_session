@@ -6,9 +6,17 @@ const supabase = null;
 class Session {
   constructor(sessionId, countries) {
     this.id = sessionId;
-    this.view = "roll-call";
+    this.created = false;
+    this.view = "settings";
 
-    this.availableCountries = countries;
+    this.title = "United Nations General Assembly";
+    this.committeeCode = "GA";
+    this.committeeName = "General Assembly"
+
+    this.name = "Unnamed Session"
+    this.topic = "Unnamed Topic"
+    
+    this.countryDataset = countries;
 
     this.selectedCountries = {};
     this.currentSpeaker = null;
@@ -60,7 +68,7 @@ class Session {
   selectCountry(countryKey) {
     if (this.selectedCountries[countryKey]) return;
 
-    var data = this.availableCountries[countryKey];
+    var data = this.countryDataset[countryKey];
     if (!data) {
       data = {
         imgUrl: "assets/logo.png",

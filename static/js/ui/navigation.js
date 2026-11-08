@@ -6,7 +6,7 @@ const panelMap = {
     "settings": "settings-panel"
 }
 
-export function showView(viewName) {
+function showView(viewName) {
     const panelId = panelMap[viewName];
     const panel = document.getElementById(panelId);
     if (!panel) return;
@@ -25,10 +25,17 @@ export function showView(viewName) {
     return viewName;
 }
 
-export function setupNavigation(onViewChange = () => {}) {
+export function setupNavigation(session, onViewChange = () => {}) {
+    const navbarItems = document.querySelectorAll('.view-nav-item');
+    for (const item of navbarItems) {
+        if (item.dataset.view === "settings") continue;
+        item.style.filter = 'brightness(0.4)';
+    }
+
     const navbar = document.getElementById("view-navbar");
-    
     navbar?.addEventListener('click', (event) => {
+        if (!session.created) return;
+
         const button = event.target.closest('button[data-view]');
         if (!button || !navbar.contains(button)) return;
 
