@@ -1,4 +1,6 @@
+import { createCountryDisplayElement } from './components/available-queue-item.js';
 import { createSession, saveSession, loadSession } from './models/session.js';
+import { renderMotionAvailableSubmitters, setupMotionControls } from './ui/motions.js';
 import { setupNavigation, showView } from './ui/navigation.js';
 import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
 import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls, setupSessionMemoryControls, setupSessionSettingsControls } from './ui/settings.js';
@@ -40,12 +42,14 @@ switch (mode) {
     break;
 }
 
-const numEntries = 0;
+const numEntries = 50;
 const randomEntries = Object.entries(session.availableCountries)
     .sort(() => Math.random() - 0.5)
     .slice(0, numEntries);
 const randomElements = Object.fromEntries(randomEntries);
-session.selectedCountries = randomElements;
+for (const [countryKey, _] of Object.entries(randomElements)) {
+    session.selectCountry(countryKey);
+}
 
 for (const [countryKey, data] of Object.entries(session.selectedCountries)) {
     data.votingStatus = "A";
@@ -54,6 +58,7 @@ for (const [countryKey, data] of Object.entries(session.selectedCountries)) {
     } else if (Math.random() < 0.6) {
         data.votingStatus = "PV";
     }
+
 }
 
 // const firstSpeaker = Object.keys(session.selectedCountries)[0];
@@ -66,8 +71,17 @@ $("session-existence").textContent += sessionId;
 function onViewChange(viewName) {
     session.view = viewName;
 
-    if (viewName !== "settings") {
+    if (viewName === "settings") {
+        document.getElementById("session-settings").hidden = false;
+        document.getElementById("session-attendance").hidden = true;           
+        document.getElementById("motion-availability").hidden = true;           
+    } else if (viewName === "motions") {
         document.getElementById("session-settings").hidden = true;
+        document.getElementById("session-attendance").hidden = true;           
+        document.getElementById("motion-availability").hidden = false;           
+    } else {
+        document.getElementById("session-settings").hidden = true;
+        document.getElementById("motion-availability").hidden = true;
         document.getElementById("session-attendance").hidden = false;           
     }
 
@@ -95,11 +109,14 @@ function onViewChange(viewName) {
             //setupRollCallControls(session);
             renderRollCallList(session);
             break;
+        case "motions":
+            renderMotionAvailableSubmitters(session);
+            break;
         case "settings":
-            document.getElementById("session-settings").hidden = false;
-            document.getElementById("session-attendance").hidden = true;           
-
             renderCountrySelection(session);
+            break;
+        case _:
+            console.error(`Unhandled viewName: ${viewName}`);
     }
 }
 
@@ -120,6 +137,9 @@ async function main() {
     renderCountrySelection(session);
 
     renderRollCallList(session);
+
+    setupMotionControls(session);
+    renderMotionAvailableSubmitters(session);
 
     renderCountryPresence(session);
     renderAvailableQueue(session);

@@ -1,5 +1,6 @@
 export function createCountryDisplayElement(data, status=true) {
     const item = document.createElement("div");
+    item.dataset.countryKey = data.shortName;
     item.className = "listbox-option";
     item.setAttribute("role", "option");
     item.tabIndex = 0;

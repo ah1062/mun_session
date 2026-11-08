@@ -1,5 +1,5 @@
 import { createCountryDisplayElement } from "../components/available-queue-item.js";
-import { renderAvailableQueue, renderSpeakerQueue } from "./speaker-list.js";
+import { renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from "./speaker-list.js";
 
 async function getCommitteeInfo() {
   try {
@@ -116,13 +116,13 @@ export async function setupSessionSettingsControls(session) {
 
     item.addEventListener("click", (e) => {
       for (const countryKey of preset.countries) {
-        if (session.selectedCountries[countryKey]) continue;
-
-        const country = session.availableCountries[countryKey];
-        session.selectedCountries[countryKey] = structuredClone(country);
+        session.selectCountry(countryKey);
       }
 
+      renderCountryPresence(session);
       renderCountrySelection(session);
+      renderAvailableQueue(session);
+      renderSpeakerQueue(session);
     });
 
     committeePresetContainer.append(item);
@@ -132,7 +132,6 @@ export async function setupSessionSettingsControls(session) {
 export function setupCountrySelectionControls(session) {
   const missing = document.getElementById("missing-country-list");
   const selected = document.getElementById("active-country-list");
-
   if (!missing || !selected) return;
 
   missing.addEventListener("click", (e) => {
@@ -140,12 +139,9 @@ export function setupCountrySelectionControls(session) {
     if (!option || !missing.contains(option)) return;
 
     const countryKey = option.dataset.countryKey;
-    if (session.selectedCountries[countryKey]) return;
+    session.selectCountry(countryKey);
 
-    const country = session.availableCountries[countryKey];
-    if (!country) return;
-
-    session.selectedCountries[countryKey] = structuredClone(country);
+    renderCountryPresence(session);
     renderCountrySelection(session);
     renderAvailableQueue(session);
     renderSpeakerQueue(session);
@@ -156,9 +152,9 @@ export function setupCountrySelectionControls(session) {
     if (!option || !selected.contains(option)) return;
 
     const countryKey = option.dataset.countryKey;
-    if (!session.selectedCountries[countryKey]) return;
+    session.deselectCountry(countryKey);
 
-    delete session.selectedCountries[countryKey];
+    renderCountryPresence(session);
     renderCountrySelection(session);
     renderAvailableQueue(session);
     renderSpeakerQueue(session);
@@ -166,29 +162,20 @@ export function setupCountrySelectionControls(session) {
 
   const clearButton = document.getElementById("remove-all-countries");
   clearButton.addEventListener("click", () => {
-    session.selectedCountries = {};
+    session.clearCountries();
+
+    renderCountryPresence(session);
     renderCountrySelection(session);
     renderAvailableQueue(session);
     renderSpeakerQueue(session);
   });
 
   const customCountryButton = document.getElementById("add-custom-country");
-  if (!customCountryButton) return;
-
-  customCountryButton.addEventListener("click", () => {
+  customCountryButton?.addEventListener("click", () => {
     const countryKey = document.getElementById("custom-country-name").value;
     if (!countryKey) return;
 
-    session.selectedCountries[countryKey] = {
-      imgUrl: "assets/logo.png",
-      shortName: countryKey,
-      longName: countryKey,
-      votingStatus: "A",
-      votingObserver: false,
-      isoCode: "--",
-      iso3code: "---",
-    };
-
+    session.selectCountry(countryKey);
     renderCountrySelection(session);
   });
 }

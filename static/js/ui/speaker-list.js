@@ -5,12 +5,17 @@ export function renderCountryPresence(session) {
     const count = Object.values(session.selectedCountries).filter(
         (data) => data.votingStatus !== "A",
     ).length;
-    document.getElementById("simple-majority-value").textContent =
-        Math.floor(count * 0.5) + 1;
-    document.getElementById("super-majority-value").textContent =
-        Math.floor((count * 2) / 3) + 1;
+    const isEmpty = count === 0;
+    document.getElementById("simple-majority-value").textContent = isEmpty
+        ? 0
+        : Math.floor(count * 0.5) + 1;
+    document.getElementById("super-majority-value").textContent = isEmpty
+        ? 0
+        : Math.floor((count * 2) / 3) + 1;
 
-    document.getElementById("unanimity-value").textContent = count;
+    document.getElementById("unanimity-value").textContent = isEmpty
+        ? 0
+        : count;
 }
 
 export function renderAvailableQueue(session, searchValue) {

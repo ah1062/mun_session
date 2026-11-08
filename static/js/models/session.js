@@ -57,6 +57,34 @@ class Session {
     };
   }
 
+  selectCountry(countryKey) {
+    if (this.selectedCountries[countryKey]) return;
+
+    var data = this.availableCountries[countryKey];
+    if (!data) {
+      data = {
+        imgUrl: "assets/logo.png",
+        shortName: countryKey,
+        longName: countryKey,
+        votingStatus: "A",
+        votingObserver: false,
+        isoCode: "--",
+        iso3code: "---",
+      };
+    }
+
+    this.selectedCountries[countryKey] = structuredClone(data);
+  }
+
+  deselectCountry(countryKey) {
+    if (!this.selectedCountries[countryKey]) return;
+    delete this.selectedCountries[countryKey];
+  }
+
+  clearCountries() {
+    this.selectedCountries = {};
+  }
+
   enqueueCountry(countryKey) {
     if (!(countryKey in this.selectedCountries)) return;
     // if (this.speakerQueue.includes(countryKey)) return;

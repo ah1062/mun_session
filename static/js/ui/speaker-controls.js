@@ -153,10 +153,17 @@ function moveCountry(session, fromIndex, toIndex) {
 }
 
 export function setupAvailableQueueControls(session) {
-    const availableList = document.getElementById("available-list");
-    if (!availableList) return;
+    const searchInput = document.getElementById("country-search");
+    searchInput?.addEventListener('input', () => {
+        if (session.view === 'roll-call') return;
+        if (session.view === 'single-speaker') return;
 
-    availableList.addEventListener('click', (e) => {
+        const value = searchInput.value.toLowerCase();
+        renderAvailableQueue(session, value);
+    });
+
+    const availableList = document.getElementById("available-list");
+    availableList?.addEventListener('click', (e) => {
         if (session.view === 'roll-call') return;
         if (session.view === 'single-speaker') return;
 
