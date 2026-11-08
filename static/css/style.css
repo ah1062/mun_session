@@ -3,7 +3,7 @@
 ===================================== */
 
 :root {
-    color-scheme: LIMUN;
+    color-scheme: dark;
 
     --serif: 'Butler', 'Georgia', 'Times New Roman', serif;
     --sans: 'Futura PT', 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
@@ -16,7 +16,7 @@
     --muted: #edeaf68c;
 
     --p5-status: #FF6060;
-    --observer-status: #8F8;
+    --observer-status: #8D8;
     --voting-absent: #FF6060;
     --voting-present: #D6C060;
     --voting-present-and-voting: #6060F6;
@@ -42,61 +42,79 @@ html[data-theme="light"] {
 }
 
 html[data-theme="blue"] {
-    color-scheme: blue;
+    color-scheme: light;
 
-    --indigo: #A09Dd7;
-    --indigo-deep: #9090d0;
+    --indigo: #A09DD7;
+    --indigo-deep: #8581C5;
     --elizabeth: #B5AFF0;
     --gold-1: #251B3D;
-    --gold-2: #5A47b0;
+    --gold-2: #5A47B0;
     --hair: #16112e29;
     --muted: #16112ea6;
 
-    --p5-status: #BB2020;
-    --observer-status: #0C0;
-    --voting-absent: #FF0000;
-    --voting-present: #C69040;
-    --voting-present-and-voting: #6060c6;
+    --p5-status: #A82035;
+    --observer-status: #167A43;
+    --voting-absent: #C62838;
+    --voting-present: #D6A928;
+    --voting-present-and-voting: #315DBB;
 }
 
 html[data-theme="green"] {
     color-scheme: light;
 
-    --indigo: #A0D79D;
-    --indigo-deep: #90d090;
-    --elizabeth: #C6f0af;
-    --gold-1: #251B3D;
-    --gold-2: #2A6037;
-    --hair: #16112e29;
-    --muted: #16112ea6;
+    --indigo: #9DD7A0;
+    --indigo-deep: #81C585;
+    --elizabeth: #AFF0B5;
+    --gold-1: #1B3D25;
+    --gold-2: #47B05A;
+    --hair: #111E1229;
+    --muted: #111E12a6;
 
-    --p5-status: #BB2020;
-    --observer-status: #0C0;
-    --voting-absent: #FF0000;
-    --voting-present: #C69040;
-    --voting-present-and-voting: #6060c6;
+    --p5-status: #A82035;
+    --observer-status: #176B35;
+    --voting-absent: #C62838;
+    --voting-present: #C69A20;
+    --voting-present-and-voting: #315DBB;
 }
 
 html[data-theme="purple"] {
     color-scheme: light;
 
-    --indigo: #c893e0;
-    --indigo-deep: #d9a1f3;
-    --elizabeth: #d18ff0;
-    --gold-1: #050B1D;
-    --gold-2: #6A3087;
-    --hair: #16112e29;
-    --muted: #16112ea6;
+    --indigo: #D79DD7;
+    --indigo-deep: #C581C5;
+    --elizabeth: #F0AFF0;
+    --gold-1: #3D1B3D;
+    --gold-2: #B047B0;
+    --hair: #1E111E29;
+    --muted: #1E111Ea6;
 
-    --p5-status: #BB2020;
-    --observer-status: #0C0;
-    --voting-absent: #FF0000;
-    --voting-present: #C69040;
-    --voting-present-and-voting: #6060c6;
+    --p5-status: #A82035;
+    --observer-status: #167A43;
+    --voting-absent: #C62838;
+    --voting-present: #C99A24;
+    --voting-present-and-voting: #315DBB;
+}
+
+html[data-theme="sepia"] {
+    color-scheme: light;
+
+    --indigo: #D8C5A3;
+    --indigo-deep: #C3AD88;
+    --elizabeth: #E8D8BA;
+    --gold-1: #3D2B1F;
+    --gold-2: #89643C;
+    --hair: #3D2B1F29;
+    --muted: #3D2B1FA6;
+
+    --p5-status: #96352F;
+    --observer-status: #386B3D;
+    --voting-absent: #B83B32;
+    --voting-present: #C39A3A;
+    --voting-present-and-voting: #426A9C;
 }
 
 html[data-theme="black"] {
-    color-scheme: black;
+    color-scheme: dark;
 
     --indigo: #222;
     --indigo-deep: #000;
@@ -112,25 +130,6 @@ html[data-theme="black"] {
     --voting-present: #e5ae5b;
     --voting-present-and-voting: #5b92e5;
 }
-
-html[data-theme="UN"] {
-    color-scheme: un;
-
-    --indigo: #0f52ba;
-    --indigo-deep: #5190c6;
-    --elizabeth: #4583e2;
-    --gold-1: #e5ae5b;
-    --gold-2: #453e2b;
-    --hair: #222;
-    --muted: #222222bb;
-
-    --p5-status: #E05A5A;
-    --observer-status: #65C98A;
-    --voting-absent: #e55b92;
-    --voting-present: #e5ae5b;
-    --voting-present-and-voting: #5b92e5;
-}
-
 
 #theme-toggle {
     padding: 0.5rem 0.8rem;
@@ -847,7 +846,8 @@ button {
 
 .attendance-toggle.status-p5status.active {
     background: var(--p5-status);
-    color: white;
+    text-shadow: 1px 1px #000;
+    color:#EEE;
 }
 
 /* Observer */
@@ -858,40 +858,50 @@ button {
 
 .attendance-toggle.status-observerStatus.active {
     background: var(--observer-status);
-    color: white;
+    text-shadow: 1px 1px #000;
+    color: #EEE;
 }
 
 /* Absent */
 .attendance-toggle.status-A {
     color: var(--voting-absent);
     border-color: var(--voting-absent);
+    filter: brightness(0.6);
 }
 
 .attendance-toggle.status-A.active {
     background: var(--voting-absent);
+    text-shadow: 1px 1px #000;
     color: white;
+    filter: brightness(1);
 }
 
 /* Present */
 .attendance-toggle.status-P {
     color: var(--voting-present);
     border-color: var(--voting-present);
+    filter: brightness(0.6);
 }
 
 .attendance-toggle.status-P.active {
     background: var(--voting-present);
+    text-shadow: 1px 1px #000;
     color: white;
+    filter: brightness(1);
 }
 
 /* Present and Voting */
 .attendance-toggle.status-PV {
     color: var(--voting-present-and-voting);
     border-color: var(--voting-present-and-voting);
+    filter: brightness(0.6);
 }
 
 .attendance-toggle.status-PV.active {
     background: var(--voting-present-and-voting);
+    text-shadow: 1px 1px #000;
     color: white;
+    filter: brightness(1);
 }
 
 /* Focus accessibility */

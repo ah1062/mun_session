@@ -1,5 +1,3 @@
-const lightThemes = new Set(['light', 'blue', 'green', 'purple']);
-
 async function fetchLanguageDictionaries() {
     return ["EN"];
 }
@@ -16,6 +14,15 @@ export async function setupLanguages(session) {
 
         languageSelect.append(option);
     }
+}
+
+function isLightTheme() {
+    const colorScheme = getComputedStyle(document.documentElement)
+        .getPropertyValue("color-scheme")
+        .trim();
+
+    console.log(colorScheme);
+    return colorScheme === "light";
 }
 
 export function setupTheme(session) {
@@ -47,12 +54,11 @@ export function setupTheme(session) {
 
     const currentTheme = root.dataset.theme || 'LIMUN';
     themeSelect.value = currentTheme;
-
     themeSelect?.addEventListener('change', () => {
         const value = themeSelect.value;
-        const isLight = lightThemes.keys().includes(value);
-        
         root.dataset.theme = value;       
+        
+        const isLight = isLightTheme();
 
         const logo = document.getElementById("header-logo");
         if (logo) {
