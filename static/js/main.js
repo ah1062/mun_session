@@ -71,9 +71,9 @@ function onViewChange(viewName) {
     session.view = viewName;
 
     for (const item of document.querySelectorAll('#topleft-heading')) 
-        item.textContent = session.title;
-    for (const item of document.querySelectorAll('#bottomleft-heading')) 
         item.textContent = session.committeeCode;
+    for (const item of document.querySelectorAll('#bottomleft-heading')) 
+        item.textContent = session.committeeTitle;
     for (const item of document.querySelectorAll('#topright-heading'))
         item.textContent = session.name;
     for (const item of document.querySelectorAll('#bottomright-heading'))

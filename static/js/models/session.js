@@ -9,9 +9,8 @@ class Session {
     this.created = false;
     this.view = "settings";
 
-    this.title = "United Nations General Assembly";
     this.committeeCode = "GA";
-    this.committeeName = "General Assembly"
+    this.committeeTitle = "General Assembly"
 
     this.name = "Unnamed Session"
     this.topic = "Unnamed Topic"

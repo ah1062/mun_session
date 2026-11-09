@@ -97,7 +97,7 @@ export async function setupSessionSettingsControls(session) {
   const committeeTitle = document.getElementById("committee-title");
   committeeTitle?.addEventListener('input', () => {
     const value = committeeTitle.value ?? committeeTitle.placeholder;
-    session.title = value;
+    session.committeeTitle = value;
   });
   const committeeName = document.getElementById("committee-name");
   committeeName?.addEventListener('input', () => {
@@ -116,7 +116,10 @@ export async function setupSessionSettingsControls(session) {
     committeeTitle.placeholder = selected.dataset.name;
 
     session.committeeCode = selected.dataset.abbreviation;
-    session.committeeName = selected.dataset.name;
+
+    if (!committeeTitle.value) {
+      session.committeeTitle = selected.dataset.name;
+    }
   });
 
   const committeePresetContainer = document.getElementById(
