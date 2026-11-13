@@ -1,3 +1,5 @@
+import { formatTime } from "../models/timer.js";
+
 function _createMotionTopElement(motion, data) {
     const item = document.createElement("div");
     item.className = "motion-information-element";
@@ -35,22 +37,26 @@ function _createMotionBottomElement(motion, data) {
 
     const time = document.createElement("span");
     time.textContent = 
-        `${motion.duration ?? ""} / ${motion.individual_duration ?? ""}`;
+        `${formatTime(motion.duration) ?? ""} / 
+        ${formatTime(motion.individual_duration) ?? ""}`;
 
     const actions = document.createElement("div");
     actions.className = "motion-actions";
 
-    const approve = document.createElement("button");
-    approve.type = "button";
-    approve.className = "motion-approve";
-    approve.textContent = motion.history ? "Approve" : "Re-Submit";
+    if (motion.status === null) {
+        const approve = document.createElement("button");
+        approve.type = "button";
+        approve.className = "motion-approve";
+        approve.textContent = motion.history === true ? "Re-Submit": "Approve";
+        actions.append(approve);
+    }
 
     const reject = document.createElement("button");
     reject.type = "button";
     reject.className = "motion-reject";
-    reject.textContent = motion.history ? "Reject": "Clear";
+    reject.textContent = motion.history === true ? "Clear": "Reject";
+    actions.append(reject);
 
-    actions.append(approve, reject);
     item.append(time, actions);
 
     return item;

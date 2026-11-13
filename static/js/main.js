@@ -65,6 +65,25 @@ for (const [countryKey, data] of Object.entries(session.selectedCountries)) {
 // const firstSpeaker = Object.keys(session.selectedCountries)[0];
 // session.currentSpeaker = firstSpeaker;
 
+const names = Object.keys(session.selectedCountries);
+session.motions.push(
+    new DebateMotion(names[0], "Moderated Caucus", "Topic A", 900, 50),
+    new DebateMotion(names[1], "Moderated Caucus", "Topic B", 300, 150),
+    new DebateMotion(names[2], "Moderated Caucus", "Topic C", 500, 50),
+);
+session.motionHistory.push(
+    new DebateMotion(names[3], "Moderated Caucus", "Topic D", 900, 50),
+    new DebateMotion(names[4], "Moderated Caucus", "Topic E", 300, 150),
+    new DebateMotion(names[5], "Moderated Caucus", "Topic F", 500, 50),
+);
+for (const motion of session.motionHistory) {
+    motion.history = !motion.history;
+
+    if (Math.random() < 0.5) {
+        motion.status = false;
+    }
+}
+
 const root = document.documentElement;
 const $ = id => document.getElementById(id);
 $("session-existence").textContent += sessionId;
@@ -156,18 +175,6 @@ async function main() {
 
     setupMotionControls(session);
     
-    const names = Object.keys(session.selectedCountries);
-    session.motions.push(
-        new DebateMotion(names[0], "Moderated Caucus", "Topic A", 900, 50),
-        new DebateMotion(names[1], "Moderated Caucus", "Topic B", 300, 150),
-        new DebateMotion(names[2], "Moderated Caucus", "Topic C", 500, 50),
-    )
-    session.motionHistory.push(
-        new DebateMotion(names[3], "Moderated Caucus", "Topic D", 900, 50),
-        new DebateMotion(names[4], "Moderated Caucus", "Topic E", 300, 150),
-        new DebateMotion(names[5], "Moderated Caucus", "Topic F", 500, 50),
-    )
-
     renderMotionAvailableSubmitters(session);
     renderMotionTray(session);
     renderMotionHistory(session);

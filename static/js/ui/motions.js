@@ -11,7 +11,7 @@ export function setupMotionControls(session) {
     const searchInput = document.getElementById("motion-country-search");
     searchInput?.addEventListener('input', () => {
         renderMotionAvailableSubmitters(session);
-    }) 
+    })
 
     const submission = document.getElementById("submission-field");
     submission?.addEventListener('click', (e) => {
@@ -52,7 +52,24 @@ export function setupMotionControls(session) {
 }
 
 function sortTray(motions) {
-    return motions;
+    return [...motions].sort((a, b) => {
+        // motion priority
+        const priorityA = a.priority;
+        const priorityB = b.priority;
+        if (priorityA !== priorityB) {
+            return priorityA - priorityB;
+        }
+        
+        // duration / individual_duration 
+        const ratioA = a.duration / a.individual_duration;
+        const ratioB = b.duration / b.individual_duration;
+        if (ratioA !== ratioB) {
+            return ratioA - ratioB;
+        }
+
+        // submission sequence
+        return a.sequence - b.sequence;
+    });
 }
 export function renderMotionTray(session) {
     const tray = document.getElementById("motions-tray");
@@ -62,13 +79,12 @@ export function renderMotionTray(session) {
     const existing = document.getElementById("most-disruptive");
     if (existing) existing.remove();
     
-    const motions = structuredClone = session.motions.sort(sortTray);
+    const motions = sortTray = structuredClone(session.motions);
     const priority = motions.pop();
     if (priority) {
         document.getElementById("template-motion-disruptive").hidden = true;
 
         const data = session.selectedCountries[priority.submitter] ?? {};
-        console.log(data);
         const disruptive = _createMotionElement(priority, data);
         disruptive.id="most-disruptive";
         container.append(disruptive);
