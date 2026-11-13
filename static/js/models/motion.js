@@ -1,6 +1,8 @@
-const MOTION_PRIORITY = new Map([
-    ["Moderated Caucus", 1]
-]);
+export const MOTION_PRIORITY = {
+    "Moderated Caucus": {
+        "priority": 1
+    }
+}
 
 var COUNTER = 0;
 
@@ -8,7 +10,7 @@ export class Motion {
     constructor(countryKey, type) {
         this.sequence = COUNTER++;
         this.type = type;
-        this.priority = MOTION_PRIORITY.get(type) ?? -1;
+        this.priority = MOTION_PRIORITY[type].priority ?? -1;
         this.submitter = countryKey;
     
         this.topic = null;

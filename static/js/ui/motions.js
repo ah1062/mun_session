@@ -1,9 +1,6 @@
 import { createCountryDisplayElement } from "../components/available-queue-item.js";
-import { _createMotionElement, createMotionElement } from "../components/motion.js";
-
-export function renderMotionSubmissions(session) {
-
-}
+import { _createMotionElement } from "../components/motion.js";
+import { DebateMotion, MOTION_PRIORITY } from "../models/motion.js";
 
 var CURRENT_SUBMITTER = null;
 
@@ -13,16 +10,52 @@ export function setupMotionControls(session) {
         renderMotionAvailableSubmitters(session);
     })
 
-    const submission = document.getElementById("submission-field");
-    submission?.addEventListener('click', (e) => {
+    const submitter = document.getElementById("submission-field");
+    submitter?.addEventListener('click', (e) => {
         const option = e.target.closest("#motion-submitter");
-        if (!option|| !submission.contains(option)) return;
+        if (!option|| !submitter.contains(option)) return;
 
         option.remove();
         document.getElementById("template-motion-submitter").hidden = false;
         
         CURRENT_SUBMITTER = null;
         renderMotionAvailableSubmitters(session);
+    });
+
+    const motionTypeSelect = document.getElementById("motion-type");
+    for (const element of Object.keys(MOTION_PRIORITY)) {
+        const item = document.createElement('option');
+        item.textContent = element;
+        item.style.fontFamily = 'monospace';
+        motionTypeSelect.append(item);   
+    }
+    motionTypeSelect?.addEventListener('change', (e) => {
+    });
+
+    const submitButton = document.getElementById("submit-motion");
+    submitButton?.addEventListener('click', (e) => {
+        const motionType = motionTypeSelect.selectedOptions[0].textContent.trim();
+        const motionTopic = document.getElementById("motion-name").value ?? "Discussion";
+        
+        const durationMinutes = document.getElementById("motion-total-duration-minutes").value ?? 10;
+        const durationSeconds = document.getElementById("motion-total-duration-seconds").value ?? 0;
+        const totalDuration = (durationMinutes * 60) + durationSeconds;
+
+        const speakerMinutes = document.getElementById("motion-speaker-duration-minutes").value ?? 1;
+        const speakerSeconds = document.getElementById("motion-speaker-duration-seconds").value ?? 0;
+        const speakerDuration = (speakerMinutes * 60) + speakerSeconds;
+    
+        const motion = new DebateMotion(
+            CURRENT_SUBMITTER, 
+            motionType, 
+            motionTopic, 
+            totalDuration, 
+            speakerDuration
+        );
+        
+        console.log(motion);
+        session.motions.push(motion);
+        renderMotionTray(session);
     });
 
     const listbox = document.getElementById("motion-available-list");

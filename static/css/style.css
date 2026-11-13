@@ -374,6 +374,9 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
+    
+    background-color: var(--elizabeth);
+    color: var(--gold-1);
 }
 
 .committee-field h2 {
