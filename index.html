@@ -290,8 +290,8 @@
                         </div>
                     </div>
                     <div id="motions-panel" class="motions-container" hidden>
-                        <div class="submit-motions-container box">
-                            <div class="box">
+                        <div class="submit-motions-container">
+                            <div id="motion-settings" class="box">
                                 <h2>Motion Information</h2>
 
                                 <div class="sidebar-divider"></div>                                
@@ -325,22 +325,142 @@
                                     <input id="motion-name" type="number" min="0" max="59" step="5" placeholder="0">
                                 </div>
 
-                                <div class="sidebar-divider"></div>
+                                <div class="sidebar-divider"></div>                                
                                 <div class="committee-field">
                                     <button id="submit-motion" class="">Submit Motion</button>
                                 </div>
-
-                                <div class="sidebar-divider"></div>                                
-                                <h2>Most Disruptive Motion</h2>
                             </div>
-                            <div class="box">
-                                <h2>Motion Tray</h2>
-                                <div class="sidebar-divider"></div>                                
+                            <div id="most-disruptive-container" class="box">
+                                <h2>Most Disruptive Motion</h2>
+                                <div id="template-motion-disruptive" class="motion-option" style="flex: 1;"></div>
                             </div>
                         </div>
-                        <div class="history-motions-container box">
-                            <h2>Motion History</h2>
-                            <div class="sidebar-divider"></div>
+                        <div class="history-motions-container">
+                            <div class="box">
+                                <h2>Motion Tray</h2>
+                                <div id="motions-tray" class="listbox" role="listbox"></div>
+                            </div>
+                            <div class="box">
+                                <h2>Motion History</h2>
+                                <div id="motions-history" class="listbox" role="listbox"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="caucus-panel" class="speaker-timer" hidden>
+                        <div class="timer-queue-heading">
+                            <div id="topleft-heading" class="heading-top-left">
+                                <span>TOPLEFT</span>
+                            </div>
+                            <div id="topright-heading" class="heading-top-right">
+                                <span>TOPRIGHT</span>
+                            </div>
+                            <div id="bottomleft-heading" class="heading-bottom-left">
+                                <span>BOTTOMLEFT</span>
+                            </div>
+                            <div id="bottomright-heading" class="heading-bottom-right">
+                                <span>BOTTOMRIGHT</span>
+                            </div>
+                        </div>
+                        <div id="caucus-heading" class="heading-centre">
+                            <h2>Moderated Caucus</h2>
+                        </div>
+
+
+                        <div id="speaker-flag-main" class="timer-main">
+                            <div id="speaker-flag-container" class="speaker-flag"></div>
+                            <h1 id="speaker-name"></h1>
+                            <div class="timer-display" id="gsl-timer-display" role="timer"
+                                 aria-live="off">1:30</div>
+                        </div>
+
+                        <div class="timer-bottom">
+                            <div class="timer-progress-row">
+                                <div class="timer-track"
+                                     role="progressbar"
+                                     aria-label="Speaking time remaining"
+                                     aria-valuemin="0"
+                                     aria-valuemax="90"
+                                     aria-valuenow="90"
+                                     id="timer-progress">
+                                    <div class="timer-progress-fill" id="gsl-timer-fill"></div>
+                                </div>
+                            </div>
+
+                            <div class="timer-controls">
+                                <button type="button" class="timer-icon-btn"
+                                        id="time-settings" title="Time settings">🌣</button>
+                                <button type="button" class="timer-icon-btn"
+                                        id="add-time" title="Add 15 seconds">+</button>
+                                <button type="button" class="timer-icon-btn"
+                                        id="reset-timer" title="Reset timer">⮎</button>
+                                <button type="button" class="timer-btn start-btn"
+                                        id="start-timer">▶ <span>START</span></button>
+                                <button type="button" class="timer-btn stop-btn"
+                                        id="stop-timer">⏸︎ <span>STOP</span></button>
+                                <button type="button" class="timer-btn next-btn"
+                                        id="next-speaker">⏭ <span>NEXT</span></button>
+                                <button type="button" class="timer-icon-btn yield-btn"
+                                        id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
+                            </div>
+
+                            <p class="timer-status" id="timer-status" aria-live="polite">
+                                Ready to begin
+                            </p>
+                        </div>
+                    </div>
+                    <div id="unmod-caucus-panel" class="speaker-timer" hidden>
+                        <div class="timer-queue-heading">
+                            <div id="topleft-heading" class="heading-top-left">
+                                <span>TOPLEFT</span>
+                            </div>
+                            <div id="topright-heading" class="heading-top-right">
+                                <span>TOPRIGHT</span>
+                            </div>
+                            <div id="bottomleft-heading" class="heading-bottom-left">
+                                <span>BOTTOMLEFT</span>
+                            </div>
+                            <div id="bottomright-heading" class="heading-bottom-right">
+                                <span>BOTTOMRIGHT</span>
+                            </div>
+                        </div>
+                        <div id="centre-heading" class="heading-centre">
+                            <h2>Unmoderated Caucus</h2>
+                        </div>
+
+                        <div id="timerMain" class="timer-main">
+                            <div class="timer-display" id="single-speaker-timer-display" role="timer"
+                                 aria-live="off">1:30</div>
+                        </div>
+
+                        <div class="timer-bottom">
+                            <div class="timer-progress-row">
+                                <div class="timer-track"
+                                     role="progressbar"
+                                     aria-label="Speaking time remaining"
+                                     aria-valuemin="0"
+                                     aria-valuemax="90"
+                                     aria-valuenow="90"
+                                     id="single-speaker-timer-progress">
+                                    <div class="timer-progress-fill" id="single-speaker-timer-fill"></div>
+                                </div>
+                            </div>
+
+                            <div class="timer-controls">
+                                <button type="button" class="timer-icon-btn"
+                                        id="time-settings" title="Time settings">🌣</button>
+                                <button type="button" class="timer-icon-btn"
+                                        id="add-time" title="Add 15 seconds">+</button>
+                                <button type="button" class="timer-icon-btn"
+                                        id="reset-timer" title="Reset timer">⮎</button>
+                                <button type="button" class="timer-btn start-btn"
+                                        id="start-timer">▶ <span>START</span></button>
+                                <button type="button" class="timer-btn stop-btn"
+                                        id="stop-timer">⏸︎ <span>STOP</span></button>
+                            </div>
+
+                            <p class="timer-status" id="timer-status" aria-live="polite">
+                                Ready to begin
+                            </p>
                         </div>
                     </div>
                     <div id="settings-panel" class="box settings-attendance-panel">
@@ -358,7 +478,12 @@
                                 <input
                                     type="text"
                                     id="custom-country-name"
-                                    placeholder="Enter custom country name..."
+                                    placeholder="custom name..."
+                                >
+                                <input
+                                    type="text"
+                                    id="custom-country-img"
+                                    placeholder="image link..."
                                 >
                                 <button type="button" id="add-custom-country">
                                     Add

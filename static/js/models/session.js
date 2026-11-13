@@ -21,6 +21,8 @@ class Session {
     this.currentSpeaker = null;
     this.speakerQueue = [];
 
+    this.motions = [];
+    this.motionHistory = [];
     this.timers = {
       gsl: new CountdownTimer(90, (time) => {
         const perc = Math.min(time / this.timers.singleSpeaker.duration, 1);

@@ -185,12 +185,43 @@ export function setupCountrySelectionControls(session) {
   });
 
   const customCountryButton = document.getElementById("add-custom-country");
-  customCountryButton?.addEventListener("click", () => {
-    const countryKey = document.getElementById("custom-country-name").value;
+  customCountryButton?.addEventListener("click", async () => {
+    const countryName = document.getElementById("custom-country-name")
+    const countryImg = document.getElementById("custom-country-img");
+
+    const countryKey = countryName.value.trim();
+    const countryImageUrl = countryImg.value.trim();
     if (!countryKey) return;
 
-    session.selectCountry(countryKey);
-    renderCountrySelection(session);
+    if (!countryImageUrl) {
+        addCountry();
+        return;
+    }
+
+    const addCountry = (imgUrl = null) => {
+        session.selectCountry(countryKey);
+
+        if (imgUrl) {
+            session.selectedCountries[countryKey].imgUrl = imgUrl;
+        }
+
+        renderCountrySelection(session);
+        countryName.value = null;
+        countryImg.value = null;
+    };
+
+    // Validate image
+    const img = new Image();
+    img.onload = () => {
+        addCountry(countryImageUrl);
+    };
+
+    img.onerror = () => {
+        console.error("Invalid image URL for custom country:", imageUrl);
+        addCountry();
+    };
+
+    img.src = countryImageUrl;
   });
 }
 

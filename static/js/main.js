@@ -1,5 +1,7 @@
 import { createSession, saveSession, loadSession } from './models/session.js';
-import { renderMotionAvailableSubmitters, setupMotionControls } from './ui/motions.js';
+import { DebateMotion, Motion, ProceduralMotion } from "./models/motion.js";
+
+import { renderMotionAvailableSubmitters, renderMotionHistory, renderMotionTray, setupMotionControls } from './ui/motions.js';
 import { setupNavigation} from './ui/navigation.js';
 import { renderRollCallList, setupRollCallControls } from './ui/roll-call.js';
 import { renderCommitteeSelection, renderCountrySelection, setupCountrySelectionControls, setupSessionMemoryControls, setupSessionSettingsControls } from './ui/settings.js';
@@ -71,9 +73,9 @@ function onViewChange(viewName) {
     session.view = viewName;
 
     for (const item of document.querySelectorAll('#topleft-heading')) 
-        item.textContent = session.committeeCode;
-    for (const item of document.querySelectorAll('#bottomleft-heading')) 
         item.textContent = session.committeeTitle;
+    for (const item of document.querySelectorAll('#bottomleft-heading')) 
+        item.textContent = session.committeeCode;
     for (const item of document.querySelectorAll('#topright-heading'))
         item.textContent = session.name;
     for (const item of document.querySelectorAll('#bottomright-heading'))
@@ -99,11 +101,7 @@ function onViewChange(viewName) {
     switch (viewName) {
         case "gsl":
             $("session-attendance").style.filter = 'brightness(1)';
-
-            //setupSpeakerControls(session);
-            //setupSpeakerQueueControls(session);
             renderActiveSpeaker(session, session.currentSpeaker);
-            
             renderCountryPresence(session);
             renderSpeakerQueue(session);
             renderAvailableQueue(session);
@@ -119,6 +117,16 @@ function onViewChange(viewName) {
             break;
         case "motions":
             renderMotionAvailableSubmitters(session);
+            break;
+        case "caucus": 
+            $("session-attendance").style.filter = 'brightness(1)';
+            renderActiveSpeaker(session, session.currentSpeaker);
+            renderCountryPresence(session);
+            renderSpeakerQueue(session);
+            renderAvailableQueue(session);
+            break;
+        case "unmod-caucus":
+            $("session-attendance").style.filter = 'brightness(0.8)';
             break;
         case "settings":
             renderCountrySelection(session);
@@ -147,7 +155,22 @@ async function main() {
     renderRollCallList(session);
 
     setupMotionControls(session);
+    
+    const names = Object.keys(session.selectedCountries);
+    session.motions.push(
+        new DebateMotion(names[0], "Moderated Caucus", "Topic A", 900, 50),
+        new DebateMotion(names[1], "Moderated Caucus", "Topic B", 300, 150),
+        new DebateMotion(names[2], "Moderated Caucus", "Topic C", 500, 50),
+    )
+    session.motionHistory.push(
+        new DebateMotion(names[3], "Moderated Caucus", "Topic D", 900, 50),
+        new DebateMotion(names[4], "Moderated Caucus", "Topic E", 300, 150),
+        new DebateMotion(names[5], "Moderated Caucus", "Topic F", 500, 50),
+    )
+
     renderMotionAvailableSubmitters(session);
+    renderMotionTray(session);
+    renderMotionHistory(session);
 
     renderCountryPresence(session);
     renderAvailableQueue(session);

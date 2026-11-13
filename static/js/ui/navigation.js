@@ -3,6 +3,8 @@ const panelMap = {
     "single-speaker": "single-speaker-panel",
     "gsl": "gsl-panel",
     "motions": "motions-panel",
+    "caucus": "caucus-panel",
+    "unmod-caucus": "unmod-caucus-panel",
     "settings": "settings-panel"
 }
 

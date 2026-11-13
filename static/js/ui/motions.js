@@ -1,4 +1,5 @@
 import { createCountryDisplayElement } from "../components/available-queue-item.js";
+import { _createMotionElement, createMotionElement } from "../components/motion.js";
 
 export function renderMotionSubmissions(session) {
 
@@ -50,6 +51,53 @@ export function setupMotionControls(session) {
     });
 }
 
+function sortTray(motions) {
+    return motions;
+}
+export function renderMotionTray(session) {
+    const tray = document.getElementById("motions-tray");
+    tray.replaceChildren();
+    
+    const container = document.getElementById("most-disruptive-container");
+    const existing = document.getElementById("most-disruptive");
+    if (existing) existing.remove();
+    
+    const motions = structuredClone = session.motions.sort(sortTray);
+    const priority = motions.pop();
+    if (priority) {
+        document.getElementById("template-motion-disruptive").hidden = true;
+
+        const data = session.selectedCountries[priority.submitter] ?? {};
+        console.log(data);
+        const disruptive = _createMotionElement(priority, data);
+        disruptive.id="most-disruptive";
+        container.append(disruptive);
+    } else {
+        document.getElementById("template-motion-disruptive").hidden = false;
+        return;
+    }
+
+    for (const motion of motions) {
+        const data = session.selectedCountries[motion.submitter] ?? {};
+        const item = _createMotionElement(motion, data);
+        item.id = "active-motion";
+        tray.append(item);
+    };
+}
+
+export function renderMotionHistory(session) {
+    const history = document.getElementById("motions-history");
+    history.replaceChildren();
+
+    for (const motion of session.motionHistory.sort(s => s.sequence)) {
+        const data = session.selectedCountries[motion.submitter] ?? null;
+
+        const item = _createMotionElement(motion, data);
+        item.id = "past-motion";
+        history.append(item);
+    }
+}
+
 export function renderMotionAvailableSubmitters(session) {
     const listbox = document.getElementById("motion-available-list");
     if (!listbox) return;
@@ -63,6 +111,7 @@ export function renderMotionAvailableSubmitters(session) {
         if (countryKey === CURRENT_SUBMITTER) continue;
         if (searchValue && !countryKey.toLowerCase().startsWith(searchValue)) continue;
         if (data.votingStatus === "A") continue;
+        if (session.motions.some(s => s.submitter === countryKey)) continue;
 
         const item = createCountryDisplayElement(data, false);
         listbox.append(item);
