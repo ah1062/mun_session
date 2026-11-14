@@ -43,6 +43,7 @@ switch (mode) {
     break;
 }
 
+/* 
 const numEntries = 50;
 const randomEntries = Object.entries(session.countryDataset)
     .sort(() => Math.random() - 0.5)
@@ -83,6 +84,8 @@ for (const motion of session.motionHistory) {
         motion.status = false;
     }
 }
+
+*/
 
 const root = document.documentElement;
 const $ = id => document.getElementById(id);

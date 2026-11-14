@@ -21,6 +21,7 @@ class Session {
     this.currentSpeaker = null;
     this.speakerQueue = [];
 
+    this.activeMotion = null;
     this.motions = [];
     this.motionHistory = [];
     this.timers = {

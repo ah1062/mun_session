@@ -1,6 +1,9 @@
 export const MOTION_PRIORITY = {
     "Moderated Caucus": {
         "priority": 1
+    },
+    "Unmoderated Caucus": {
+        "priority": 2
     }
 }
 

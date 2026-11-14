@@ -4,6 +4,63 @@ import { DebateMotion, MOTION_PRIORITY } from "../models/motion.js";
 
 var CURRENT_SUBMITTER = null;
 
+function toggleDurationElements(value) {
+    const durationMinutes = document.getElementById("motion-total-duration-minutes");
+    const durationSeconds = document.getElementById("motion-total-duration-seconds");
+    const speakerMinutes = document.getElementById("motion-speaker-duration-minutes");
+    const speakerSeconds = document.getElementById("motion-speaker-duration-seconds");
+
+    switch (value) {
+        case "Moderated Caucus":
+            durationMinutes.style.filter = 'brightness(1)';
+            durationSeconds.style.filter = 'brightness(1)';
+            speakerMinutes.style.filter = 'brightness(1)';
+            speakerSeconds.style.filter = 'brightness(1)';
+            break;
+        case "Unmoderated Caucus":
+            speakerMinutes.style.filter = 'brightness(0.6)';
+            speakerSeconds.style.filter = 'brightness(0.6)';
+            break;
+        case "Close Debate":
+            durationMinutes.style.filter = 'brightness(0.6)';
+            durationSeconds.style.filter = 'brightness(0.6)';
+            speakerMinutes.style.filter = 'brightness(0.6)';
+            speakerSeconds.style.filter = 'brightness(0.6)';
+        default:
+            console.error(`unhandled motion type ${value}`);
+    }
+}
+
+function buildMotion() {
+    if (!CURRENT_SUBMITTER) throw new Error("no submitter for motion");
+
+    const motionTypeSelect = document.getElementById("motion-type");
+    const motionType = motionTypeSelect.selectedOptions[0].textContent.trim();
+    const motionTopic = document.getElementById("motion-name").value ?? "Discussion";
+        
+    var durationMinutes = document.getElementById("motion-total-duration-minutes").value.trim()
+    if (!durationMinutes) durationMinutes = 10;
+    var durationSeconds = document.getElementById("motion-total-duration-seconds").value.trim() ?? 0;
+    if (!durationSeconds) durationSeconds = 0;
+    const totalDuration = (durationMinutes * 60) + durationSeconds;
+
+    var speakerMinutes = document.getElementById("motion-speaker-duration-minutes").value.trim() ?? 1;
+    if (!speakerMinutes) speakerMinutes = 1;
+    var speakerSeconds = document.getElementById("motion-speaker-duration-seconds").value.trim() ?? 0;
+    if (!speakerSeconds) speakerSeconds = 0;
+    const speakerDuration = (speakerMinutes * 60) + speakerSeconds;
+    
+    const motion = new DebateMotion(
+        CURRENT_SUBMITTER, 
+        motionType, 
+        motionTopic, 
+        totalDuration, 
+        speakerDuration
+    );
+        
+    return motion;
+}
+
 export function setupMotionControls(session) {
     const searchInput = document.getElementById("motion-country-search");
     searchInput?.addEventListener('input', () => {
@@ -30,33 +87,45 @@ export function setupMotionControls(session) {
         motionTypeSelect.append(item);   
     }
     motionTypeSelect?.addEventListener('change', (e) => {
+        const value = motionTypeSelect.selectedOptions[0].textContent.trim();
+        toggleDurationElements(value);
     });
 
     const submitButton = document.getElementById("submit-motion");
     submitButton?.addEventListener('click', (e) => {
-        const motionType = motionTypeSelect.selectedOptions[0].textContent.trim();
-        const motionTopic = document.getElementById("motion-name").value ?? "Discussion";
-        
-        const durationMinutes = document.getElementById("motion-total-duration-minutes").value ?? 10;
-        const durationSeconds = document.getElementById("motion-total-duration-seconds").value ?? 0;
-        const totalDuration = (durationMinutes * 60) + durationSeconds;
+        try {
+            const motion = buildMotion();
+            session.motions.push(motion);
+            
+            const submitter = document.getElementById("motion-submitter");
+            submitter?.remove()
+            
+            document.getElementById("template-motion-submitter").hidden = false;
 
-        const speakerMinutes = document.getElementById("motion-speaker-duration-minutes").value ?? 1;
-        const speakerSeconds = document.getElementById("motion-speaker-duration-seconds").value ?? 0;
-        const speakerDuration = (speakerMinutes * 60) + speakerSeconds;
-    
-        const motion = new DebateMotion(
-            CURRENT_SUBMITTER, 
-            motionType, 
-            motionTopic, 
-            totalDuration, 
-            speakerDuration
-        );
-        
-        console.log(motion);
-        session.motions.push(motion);
-        renderMotionTray(session);
+            renderMotionAvailableSubmitters(session);
+            renderMotionTray(session);
+        } catch (error) {
+            console.error(error);
+        }
     });
+
+    const disruptive = document.getElementById("most-disruptive-container");
+    disruptive?.addEventListener('click', (e) => {});
+
+    const tray = document.getElementById("motions-tray");
+    tray?.addEventListener('click', (e) => {
+        const option = e.target.closest('.motion-option');
+        const button = e.target.closest('button[data-action]');
+        if (!button || !tray.contains(button)) return;
+
+        console.log(option);
+        console.log(button);
+
+        renderMotionTray(session.motions);
+    });
+
+    const history = document.getElementById("motions-history");
+    history?.addEventListener('click', (e) => {});
 
     const listbox = document.getElementById("motion-available-list");
     listbox?.addEventListener('click', (e) => {
@@ -93,12 +162,18 @@ function sortTray(motions) {
             return priorityA - priorityB;
         }
         
-        // duration / individual_duration 
-        const ratioA = a.duration / a.individual_duration;
-        const ratioB = b.duration / b.individual_duration;
-        if (ratioA !== ratioB) {
-            return ratioA - ratioB;
-        }
+        // duration
+        const durationA = a.duration;
+        const durationB = b.duration;
+        if (durationA !== durationB) {
+            return durationA - durationB;
+        } 
+        // individual_duration 
+        const speakerA = a.individualDuration;
+        const speakerB = b.individualDuration;
+        if (speakerA !== speakerB) {
+            return speakerA - speakerB;
+        } 
 
         // submission sequence
         return a.sequence - b.sequence;
@@ -112,8 +187,10 @@ export function renderMotionTray(session) {
     const existing = document.getElementById("most-disruptive");
     if (existing) existing.remove();
     
-    const motions = sortTray = structuredClone(session.motions);
-    const priority = motions.pop();
+    const motions = sortTray(structuredClone(session.motions));
+    motions.reverse();
+
+    const priority = motions.shift();
     if (priority) {
         document.getElementById("template-motion-disruptive").hidden = true;
 
@@ -155,8 +232,12 @@ export function renderMotionAvailableSubmitters(session) {
     const searchValue = searchInput.value.toLowerCase();
 
     listbox.replaceChildren();
-    const countries = Object.entries(session.selectedCountries);
-    for (const [countryKey, data] of countries.sort()) {
+    const keys = Object.keys(session.selectedCountries).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: "base" })
+    );
+    console.log("keys")
+    for (const countryKey of keys) {
+        const data = session.selectedCountries[countryKey];
         if (countryKey === CURRENT_SUBMITTER) continue;
         if (searchValue && !countryKey.toLowerCase().startsWith(searchValue)) continue;
         if (data.votingStatus === "A") continue;

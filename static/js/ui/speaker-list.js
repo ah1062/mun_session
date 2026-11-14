@@ -24,9 +24,13 @@ export function renderAvailableQueue(session, searchValue) {
 
     var count = 0;
     list.replaceChildren();
-    for (const [countryKey, data] of Object.entries(
-        session.selectedCountries,
-    ).sort()) {
+
+    const keys = Object.keys(session.selectedCountries).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: "base" })
+    );
+    for (const countryKey of keys) {
+        const data = session.selectedCountries[countryKey];
+        
         if (data.votingStatus === "A") continue;
         if (searchValue && !countryKey.toLowerCase().startsWith(searchValue))
             continue;

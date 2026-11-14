@@ -1626,6 +1626,17 @@ button {
     flex: 1 1 auto;
 }
 
+#most-disruptive  .motion-information{
+    gap: 3.5rem;
+}
+#most-disruptive .motion-information-element {
+    font-size: larger;
+}
+
+#most-disruptive .motion-flag {
+    width: clamp(6rem, min(24vw, 24vh), 12rem);
+}
+
 .history-motions-container {
     display: grid;
     grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
@@ -1642,9 +1653,23 @@ button {
     display: flex;
     flex-direction: column;
 
+    gap: 10px;
+
     min-width: 0;
     min-height: 0;
     overflow: hidden;
+}
+
+.duration-group {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+}
+
+.duration-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .history-motions-container .listbox {

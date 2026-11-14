@@ -67,9 +67,10 @@ export function renderCountrySelection(session) {
     missing.append(item);
   }
 
-  for (const countryKey of Object.keys(session.selectedCountries).sort((a, b) =>
-    a.toLowerCase().localeCompare(b.toLowerCase()),
-  )) {
+  const keys = Object.keys(session.selectedCountries).sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
+  for (const countryKey of keys) {
     const data = session.selectedCountries[countryKey];
     const item = createCountryDisplayElement(data, false);
     item.dataset.countryKey = countryKey;
@@ -193,11 +194,6 @@ export function setupCountrySelectionControls(session) {
     const countryImageUrl = countryImg.value.trim();
     if (!countryKey) return;
 
-    if (!countryImageUrl) {
-        addCountry();
-        return;
-    }
-
     const addCountry = (imgUrl = null) => {
         session.selectCountry(countryKey);
 
@@ -209,6 +205,11 @@ export function setupCountrySelectionControls(session) {
         countryName.value = null;
         countryImg.value = null;
     };
+
+    if (!countryImageUrl) {
+        addCountry();
+        return;
+    }
 
     // Validate image
     const img = new Image();

@@ -86,9 +86,11 @@ export function renderRollCallList(session) {
         `${Object.entries(session.selectedCountries).length} countries`;
 
     list.replaceChildren();
-    for (const [countryKey, data] of Object.entries(
-        session.selectedCountries,
-    ).sort()) {
+    const keys = Object.keys(session.selectedCountries).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: "base" })
+    );
+    for (const countryKey of keys) {
+        const data = session.selectedCountries[countryKey];
         const item = createRollCallElement(data);
 
         item.dataset.countryKey = countryKey;

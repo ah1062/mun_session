@@ -48,6 +48,7 @@ function _createMotionBottomElement(motion, data) {
         approve.type = "button";
         approve.className = "motion-approve";
         approve.textContent = motion.history === true ? "Re-Submit": "Approve";
+        approve.dataset.action = motion.history === true ? "resubmit" : "approve";
         actions.append(approve);
     }
 
@@ -55,6 +56,7 @@ function _createMotionBottomElement(motion, data) {
     reject.type = "button";
     reject.className = "motion-reject";
     reject.textContent = motion.history === true ? "Clear": "Reject";
+    reject.dataset.action = motion.history === true ? "clear" : "reject";
     actions.append(reject);
 
     item.append(time, actions);
