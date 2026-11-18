@@ -1,6 +1,10 @@
 import { createCountryDisplayElement } from "../components/available-queue-item.js";
 import { createCommitteePresetElement } from "../components/committee-preset.js";
-import { renderAvailableQueue, renderCountryPresence, renderSpeakerQueue } from "./speaker-list.js";
+import {
+  renderAvailableQueue,
+  renderCountryPresence,
+  renderSpeakerQueue,
+} from "./speaker-list.js";
 
 async function getCommitteeInfo() {
   try {
@@ -68,7 +72,7 @@ export function renderCountrySelection(session) {
   }
 
   const keys = Object.keys(session.selectedCountries).sort((a, b) =>
-    a.localeCompare(b, undefined, { sensitivity: "base" })
+    a.localeCompare(b, undefined, { sensitivity: "base" }),
   );
   for (const countryKey of keys) {
     const data = session.selectedCountries[countryKey];
@@ -86,27 +90,27 @@ export function renderCountrySelection(session) {
 
 export async function setupSessionSettingsControls(session) {
   const createSessionButton = document.getElementById("create-session");
-  createSessionButton?.addEventListener('click', () => {
+  createSessionButton?.addEventListener("click", () => {
     session.created = true;
-    const navbarItems = document.querySelectorAll('.view-nav-item');
+    const navbarItems = document.querySelectorAll(".view-nav-item");
     for (const item of navbarItems) {
-        if (item.dataset.view === "settings") continue;
-        item.style.filter = 'brightness(1)';
+      if (item.dataset.view === "settings") continue;
+      item.style.filter = "brightness(1)";
     }
   });
 
   const committeeTitle = document.getElementById("committee-title");
-  committeeTitle?.addEventListener('input', () => {
+  committeeTitle?.addEventListener("input", () => {
     const value = committeeTitle.value ?? committeeTitle.placeholder;
     session.committeeTitle = value;
   });
   const committeeName = document.getElementById("committee-name");
-  committeeName?.addEventListener('input', () => {
+  committeeName?.addEventListener("input", () => {
     const value = committeeName.value ?? committeeName.placeholder;
     session.name = value;
   });
   const committeeTopic = document.getElementById("committee-topic");
-  committeeTopic?.addEventListener('input', () => {
+  committeeTopic?.addEventListener("input", () => {
     const value = committeeTopic.value ?? committeeTopic.placeholder;
     session.topic = value;
   });
@@ -128,7 +132,7 @@ export async function setupSessionSettingsControls(session) {
   );
   const committeePresets = await getCommitteePresets();
   for (const preset of committeePresets) {
-    const item = createCommitteePresetElement(preset.imgUrl, preset.abbrev)
+    const item = createCommitteePresetElement(preset.imgUrl, preset.abbrev);
     item.addEventListener("click", (e) => {
       for (const countryKey of preset.countries) {
         session.selectCountry(countryKey);
@@ -187,7 +191,7 @@ export function setupCountrySelectionControls(session) {
 
   const customCountryButton = document.getElementById("add-custom-country");
   customCountryButton?.addEventListener("click", async () => {
-    const countryName = document.getElementById("custom-country-name")
+    const countryName = document.getElementById("custom-country-name");
     const countryImg = document.getElementById("custom-country-img");
 
     const countryKey = countryName.value.trim();
@@ -195,31 +199,31 @@ export function setupCountrySelectionControls(session) {
     if (!countryKey) return;
 
     const addCountry = (imgUrl = null) => {
-        session.selectCountry(countryKey);
+      session.selectCountry(countryKey);
 
-        if (imgUrl) {
-            session.selectedCountries[countryKey].imgUrl = imgUrl;
-        }
+      if (imgUrl) {
+        session.selectedCountries[countryKey].imgUrl = imgUrl;
+      }
 
-        renderCountrySelection(session);
-        countryName.value = null;
-        countryImg.value = null;
+      renderCountrySelection(session);
+      countryName.value = null;
+      countryImg.value = null;
     };
 
     if (!countryImageUrl) {
-        addCountry();
-        return;
+      addCountry();
+      return;
     }
 
     // Validate image
     const img = new Image();
     img.onload = () => {
-        addCountry(countryImageUrl);
+      addCountry(countryImageUrl);
     };
 
     img.onerror = () => {
-        console.error("Invalid image URL for custom country:", imageUrl);
-        addCountry();
+      console.error("Invalid image URL for custom country:", imageUrl);
+      addCountry();
     };
 
     img.src = countryImageUrl;
@@ -240,63 +244,60 @@ function downloadFile(blob, filename) {
   URL.revokeObjectURL(url);
 }
 function parseCSV(csv) {
-    const rows = [];
-    let row = [];
-    let value = "";
-    let quoted = false;
+  const rows = [];
+  let row = [];
+  let value = "";
+  let quoted = false;
 
-    for (let i = 0; i < csv.length; i++) {
-        const char = csv[i];
-        const next = csv[i + 1];
+  for (let i = 0; i < csv.length; i++) {
+    const char = csv[i];
+    const next = csv[i + 1];
 
-        if (char === '"' && quoted && next === '"') {
-            value += '"';
-            i++;
-        } else if (char === '"') {
-            quoted = !quoted;
-        } else if (char === "," && !quoted) {
-            row.push(value);
-            value = "";
-        } else if ((char === "\n" || char === "\r") && !quoted) {
-            if (char === "\r" && next === "\n") i++;
+    if (char === '"' && quoted && next === '"') {
+      value += '"';
+      i++;
+    } else if (char === '"') {
+      quoted = !quoted;
+    } else if (char === "," && !quoted) {
+      row.push(value);
+      value = "";
+    } else if ((char === "\n" || char === "\r") && !quoted) {
+      if (char === "\r" && next === "\n") i++;
 
-            row.push(value);
-            rows.push(row);
+      row.push(value);
+      rows.push(row);
 
-            row = [];
-            value = "";
-        } else {
-            value += char;
+      row = [];
+      value = "";
+    } else {
+      value += char;
+    }
+  }
+
+  if (value || row.length) {
+    row.push(value);
+    rows.push(row);
+  }
+
+  const headers = rows.shift()?.map((header) => header.trim()) ?? [];
+
+  return Object.fromEntries(
+    rows
+      .filter((row) => row.some((cell) => cell !== ""))
+      .map((row) => {
+        const country = Object.fromEntries(
+          headers.slice(1).map((header, i) => [header, row[i + 1] ?? ""]),
+        );
+
+        // Restore basic boolean values
+        for (const key of ["observerStatus", "p5status"]) {
+          if (country[key] === "true") country[key] = true;
+          if (country[key] === "false") country[key] = false;
         }
-    }
 
-    if (value || row.length) {
-        row.push(value);
-        rows.push(row);
-    }
-
-    const headers = rows.shift()?.map(header => header.trim()) ?? [];
-
-    return Object.fromEntries(
-        rows
-            .filter(row => row.some(cell => cell !== ""))
-            .map(row => {
-                const country = Object.fromEntries(
-                    headers.slice(1).map((header, i) => [
-                        header,
-                        row[i + 1] ?? ""
-                    ])
-                );
-
-                // Restore basic boolean values
-                for (const key of ["observerStatus", "p5status"]) {
-                    if (country[key] === "true") country[key] = true;
-                    if (country[key] === "false") country[key] = false;
-                }
-
-                return [row[0], country];
-            })
-    );
+        return [row[0], country];
+      }),
+  );
 }
 export function setupSessionMemoryControls(session) {
   const saveCsv = document.getElementById("save-button-csv");
@@ -328,7 +329,7 @@ export function setupSessionMemoryControls(session) {
       headers.map(escapeCSV).join(","),
       ...rows.map((row) => row.map(escapeCSV).join(",")),
     ].join("\r\n");
-    const blob = new Blob([body], { type: 'text/csv;charset=utf-8' });
+    const blob = new Blob([body], { type: "text/csv;charset=utf-8" });
     downloadFile(blob, "currentCommittee.csv");
   });
 
@@ -340,38 +341,38 @@ export function setupSessionMemoryControls(session) {
 
   const loadCsv = document.getElementById("load-button-csv");
   const csvInput = document.getElementById("file-input-csv");
-  loadCsv.addEventListener('click', () => csvInput.click());
-  csvInput.addEventListener('change', async () => {
+  loadCsv.addEventListener("click", () => csvInput.click());
+  csvInput.addEventListener("change", async () => {
     const file = csvInput.files[0];
     if (!file) return;
     try {
-        const csv = await file.text();
-        const data = parseCSV(csv);
-        session.selectedCountries = data;
-        renderCountrySelection(session);
-        renderAvailableQueue(session);
-        renderSpeakerQueue(session);
+      const csv = await file.text();
+      const data = parseCSV(csv);
+      session.selectedCountries = data;
+      renderCountrySelection(session);
+      renderAvailableQueue(session);
+      renderSpeakerQueue(session);
     } catch (error) {
     } finally {
-        csvInput.value = "";
+      csvInput.value = "";
     }
   });
-  
+
   const loadJson = document.getElementById("load-button-json");
   const jsonInput = document.getElementById("file-input-json");
-  loadJson.addEventListener('click', () => jsonInput.click());
-  jsonInput.addEventListener('change', async () => {
+  loadJson.addEventListener("click", () => jsonInput.click());
+  jsonInput.addEventListener("change", async () => {
     const file = jsonInput.files[0];
     if (!file) return;
     try {
-        const data = JSON.parse(await file.text());
-        session.selectedCountries = data;
-        renderCountrySelection(session);
-        renderAvailableQueue(session);
-        renderSpeakerQueue(session);
+      const data = JSON.parse(await file.text());
+      session.selectedCountries = data;
+      renderCountrySelection(session);
+      renderAvailableQueue(session);
+      renderSpeakerQueue(session);
     } catch (error) {
     } finally {
-        jsonInput.value = "";
+      jsonInput.value = "";
     }
   });
 }

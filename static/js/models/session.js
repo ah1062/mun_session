@@ -10,11 +10,11 @@ class Session {
     this.view = "settings";
 
     this.committeeCode = "GA";
-    this.committeeTitle = "General Assembly"
+    this.committeeTitle = "General Assembly";
 
-    this.name = "Unnamed Session"
-    this.topic = "Unnamed Topic"
-    
+    this.name = "Unnamed Session";
+    this.topic = "Unnamed Topic";
+
     this.countryDataset = countries;
 
     this.selectedCountries = {};
@@ -29,16 +29,14 @@ class Session {
         const perc = Math.min(time / this.timers.singleSpeaker.duration, 1);
 
         const display = document.getElementById("gsl-timer-display");
-        display.textContent =
-          formatTime(time);
+        display.textContent = formatTime(time);
 
         const fill = document.getElementById("gsl-timer-fill");
         fill.style.transform = `scaleX(${perc})`;
         if (time <= 10) {
           display.classList.toggle("timer-danger", true);
-          fill.classList.toggle("timer-danger", true);        
-        }
-        else {
+          fill.classList.toggle("timer-danger", true);
+        } else {
           display.classList.remove("timer-danger");
           fill.classList.remove("timer-danger");
         }
@@ -47,16 +45,14 @@ class Session {
         const perc = Math.min(time / this.timers.singleSpeaker.duration, 1);
 
         const display = document.getElementById("single-speaker-timer-display");
-        display.textContent =
-          formatTime(time);
+        display.textContent = formatTime(time);
 
         const fill = document.getElementById("single-speaker-timer-fill");
         fill.style.transform = `scaleX(${perc})`;
         if (time <= 10) {
           display.classList.toggle("timer-danger", true);
-          fill.classList.toggle("timer-danger", true);        
-        }
-        else {
+          fill.classList.toggle("timer-danger", true);
+        } else {
           display.classList.remove("timer-danger");
           fill.classList.remove("timer-danger");
         }

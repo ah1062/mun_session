@@ -2,93 +2,91 @@ import { createCountryDisplayElement } from "../components/available-queue-item.
 import { createSpeakerQueueElement } from "../components/speaker-queue-item.js";
 
 export function renderCountryPresence(session) {
-    const count = Object.values(session.selectedCountries).filter(
-        (data) => data.votingStatus !== "A",
-    ).length;
-    const isEmpty = count === 0;
-    document.getElementById("simple-majority-value").textContent = isEmpty
-        ? 0
-        : Math.floor(count * 0.5) + 1;
-    document.getElementById("super-majority-value").textContent = isEmpty
-        ? 0
-        : Math.floor((count * 2) / 3) + 1;
+  const count = Object.values(session.selectedCountries).filter(
+    (data) => data.votingStatus !== "A",
+  ).length;
+  const isEmpty = count === 0;
+  document.getElementById("simple-majority-value").textContent = isEmpty
+    ? 0
+    : Math.floor(count * 0.5) + 1;
+  document.getElementById("super-majority-value").textContent = isEmpty
+    ? 0
+    : Math.floor((count * 2) / 3) + 1;
 
-    document.getElementById("unanimity-value").textContent = isEmpty
-        ? 0
-        : count;
+  document.getElementById("unanimity-value").textContent = isEmpty ? 0 : count;
 }
 
 export function renderAvailableQueue(session, searchValue) {
-    const list = document.getElementById("available-list");
-    if (!list) return;
+  const list = document.getElementById("available-list");
+  if (!list) return;
 
-    var count = 0;
-    list.replaceChildren();
+  var count = 0;
+  list.replaceChildren();
 
-    const keys = Object.keys(session.selectedCountries).sort((a, b) =>
-        a.localeCompare(b, undefined, { sensitivity: "base" })
-    );
-    for (const countryKey of keys) {
-        const data = session.selectedCountries[countryKey];
-        
-        if (data.votingStatus === "A") continue;
-        if (searchValue && !countryKey.toLowerCase().startsWith(searchValue))
-            continue;
-        if (countryKey === session.currentSpeaker) continue;
-        if (session.speakerQueue.includes(countryKey)) continue;
+  const keys = Object.keys(session.selectedCountries).sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" }),
+  );
+  for (const countryKey of keys) {
+    const data = session.selectedCountries[countryKey];
 
-        const item = createCountryDisplayElement(data);
-        list.append(item);
-        count++;
-    }
+    if (data.votingStatus === "A") continue;
+    if (searchValue && !countryKey.toLowerCase().startsWith(searchValue))
+      continue;
+    if (countryKey === session.currentSpeaker) continue;
+    if (session.speakerQueue.includes(countryKey)) continue;
 
-    const label = document.getElementById("available-speakers-label");
-    if (label) label.textContent = `${count} Available Speakers`;
+    const item = createCountryDisplayElement(data);
+    list.append(item);
+    count++;
+  }
+
+  const label = document.getElementById("available-speakers-label");
+  if (label) label.textContent = `${count} Available Speakers`;
 }
 
 export function renderSpeakerQueue(session) {
-    const label = document.getElementById("upcoming-speakers-label");
-    const list = document.getElementById("queue-list");
-    if (!list) return;
+  const label = document.getElementById("upcoming-speakers-label");
+  const list = document.getElementById("queue-list");
+  if (!list) return;
 
-    if (label) {
-        label.textContent = `${session.speakerQueue.length} Upcoming Speakers`;
-    }
+  if (label) {
+    label.textContent = `${session.speakerQueue.length} Upcoming Speakers`;
+  }
 
-    list.replaceChildren();
-    for (const countryKey of session.speakerQueue) {
-        const data = session.selectedCountries[countryKey];
-        if (!data) continue;
+  list.replaceChildren();
+  for (const countryKey of session.speakerQueue) {
+    const data = session.selectedCountries[countryKey];
+    if (!data) continue;
 
-        const item = createSpeakerQueueElement(data);
-        item.dataset.countryKey = countryKey;
-        list.append(item);
-    }
+    const item = createSpeakerQueueElement(data);
+    item.dataset.countryKey = countryKey;
+    list.append(item);
+  }
 }
 
 export function renderActiveSpeaker(session, countryKey) {
-    const display = $("speaker-flag-main");
-    if (!countryKey) {
-        display.hidden = true;
-        return;
-    }
+  const display = $("speaker-flag-main");
+  if (!countryKey) {
+    display.hidden = true;
+    return;
+  }
 
-    if (!Object.keys(session.selectedCountries).includes(countryKey)) {
-        display.hidden = true;
-        return;
-    }
+  if (!Object.keys(session.selectedCountries).includes(countryKey)) {
+    display.hidden = true;
+    return;
+  }
 
-    display.hidden = false;
+  display.hidden = false;
 
-    const country = session.selectedCountries[countryKey];
-    const container = $("speaker-flag-container");
-    if (container) {
-        const img = document.createElement("img");
-        img.id = "speaker-flag";
-        img.src = country.imgUrl;
+  const country = session.selectedCountries[countryKey];
+  const container = $("speaker-flag-container");
+  if (container) {
+    const img = document.createElement("img");
+    img.id = "speaker-flag";
+    img.src = country.imgUrl;
 
-        container.replaceChildren(img);
-    }
+    container.replaceChildren(img);
+  }
 
-    $("speaker-name").textContent = country.shortName;
+  $("speaker-name").textContent = country.shortName;
 }

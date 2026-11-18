@@ -1,31 +1,31 @@
 export const VotingStatus = {
-    ABSENT: "A",
-    PRESENT: "P",
-    PRESENT_AND_VOTING: "PV"
+  ABSENT: "A",
+  PRESENT: "P",
+  PRESENT_AND_VOTING: "PV",
 };
 
 export class Country {
-    constructor(imgUrl, shortName, longName, isoCode, status) {
-        this.imgUrl = imgUrl;
-        this.isoCode = isoCode ?? 'XX';
-        this.shortName = shortName;
-        this.longName = longName;
-        this.votingStatus = status ??  VotingStatus.ABSENT;
-        this.observerStatus = false;
-        this.p5status = false;
+  constructor(imgUrl, shortName, longName, isoCode, status) {
+    this.imgUrl = imgUrl;
+    this.isoCode = isoCode ?? "XX";
+    this.shortName = shortName;
+    this.longName = longName;
+    this.votingStatus = status ?? VotingStatus.ABSENT;
+    this.observerStatus = false;
+    this.p5status = false;
+  }
+
+  setVotingStatus(status) {
+    if (status === VotingStatus.PRESENT_AND_VOTING && this.observerStatus) {
+      throw new Error("An observer must be able to abstain");
     }
 
-    setVotingStatus(status) {
-        if (status === VotingStatus.PRESENT_AND_VOTING && this.observerStatus) {
-            throw new Error("An observer must be able to abstain");
-        }
+    this.votingStatus = status;
+    return true;
+  }
 
-        this.votingStatus = status;
-        return true;
-    }
-
-    canAbstain() {
-        if (this.votingStatus !== VotingStatus.PRESENT) return false;
-        return true;
-    }
+  canAbstain() {
+    if (this.votingStatus !== VotingStatus.PRESENT) return false;
+    return true;
+  }
 }
