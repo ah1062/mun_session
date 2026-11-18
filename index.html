@@ -1,742 +1,1023 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="pragma" content="no-cache" />
 
     <title>LIMUN Session App</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/style.css" />
     <style>
-        #motion-availability {
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            height: 100%;
-        }
-        #motion-availability .box {
+      #motion-availability {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        height: 100%;
+      }
+      #motion-availability .box {
         flex: 1 1 auto;
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="page">
-        <header class="header">
-            <div class="icon-text">            
-                <img id='header-logo' src="assets/logo.png" alt="" class="icon">
-                LIMUN Session App
+      <header class="header">
+        <div class="icon-text">
+          <img id="header-logo" src="assets/logo.png" alt="" class="icon" />
+          LIMUN Session App
+        </div>
+        <span>
+          <a href="https://www.limun.org.uk">LIMUN Home</a>
+          <a href="https://www.limunportal.org.uk">Portal Home</a>
+        </span>
+      </header>
+
+      <main class="main-content">
+        <div class="content-grid">
+          <section id="left-column" class="session-control">
+            <aside class="box view-sidebar">
+              <div class="sidebar-heading">
+                <div>
+                  <h2>Session Control</h2>
+                  <p>Select a view</p>
+                </div>
+              </div>
+              <div class="sidebar-divider"></div>
+
+              <nav
+                id="view-navbar"
+                class="view-navigation"
+                aria-label="Meeting views"
+              >
+                <button
+                  class="view-nav-item"
+                  type="button"
+                  data-view="roll-call"
+                  aria-current="page"
+                >
+                  <span class="view-icon">◉</span>
+                  <span class="view-label">
+                    <strong>Roll Call</strong>
+                    <small>Attendance and presence</small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <button
+                  class="view-nav-item"
+                  type="button"
+                  data-view="single-speaker"
+                >
+                  <span class="view-icon">◷</span>
+                  <span class="view-label">
+                    <strong>Single Speaker</strong>
+                    <small>Individual speaking timer</small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <button class="view-nav-item" type="button" data-view="gsl">
+                  <span class="view-icon">☷</span>
+                  <span class="view-label">
+                    <strong>General Speakers' List</strong>
+                    <small>Establishing speeches</small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <button class="view-nav-item" type="button" data-view="motions">
+                  <span class="view-icon">⚑</span>
+                  <span class="view-label">
+                    <strong>Motions</strong>
+                    <small>Submit and manage motions</small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <button class="view-nav-item" type="button" data-view="caucus">
+                  <span class="view-icon">⚑</span>
+                  <span class="view-label">
+                    <strong>Caucus</strong>
+                    <small>Structured debating</small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <button
+                  class="view-nav-item"
+                  type="button"
+                  data-view="unmod-caucus"
+                >
+                  <span class="view-icon">⚑</span>
+                  <span class="view-label">
+                    <strong>Unmoderated Caucus</strong>
+                    <small>Freeform discussion</small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <button class="view-nav-item" type="button" data-view="voting">
+                  <span class="view-icon">◇</span>
+                  <span class="view-label">
+                    <strong>Voting Procedure</strong>
+                    <small></small>
+                  </span>
+                  <span class="view-chevron">›</span>
+                </button>
+
+                <div class="sidebar-divider"></div>
+
+                <div class="sidebar-bottom">
+                  <button
+                    class="view-nav-item active"
+                    type="button"
+                    data-view="settings"
+                  >
+                    <span class="view-icon">⚙</span>
+                    <span class="view-label">
+                      <strong>General Settings</strong>
+                      <small>Configure the meeting</small>
+                    </span>
+                    <span class="view-chevron">›</span>
+                  </button>
+                </div>
+              </nav>
+
+              <div class="sidebar-footer">
+                <span class="status-indicator"></span>
+                <span id="session-existence">Session ID: </span>
+              </div>
+            </aside>
+          </section>
+
+          <section id="middle-column" class="central-column">
+            <div id="roll-call-panel" class="box roll-call-panel" hidden>
+              <div class="roll-call-header">
+                <h2>Roll Call</h2>
+                <div>
+                  <button
+                    id="remove-vetoes-button"
+                    class="attendance-toggle status-p5status"
+                  >
+                    Clear Vetoes
+                  </button>
+                  <button
+                    id="remove-observers-button"
+                    class="attendance-toggle status-observerStatus"
+                  >
+                    Clear Observers
+                  </button>
+                  <button
+                    id="absent-all-button"
+                    class="attendance-toggle status-A active"
+                  >
+                    All Absent
+                  </button>
+                  <button
+                    id="present-all-button"
+                    class="attendance-toggle status-P active"
+                  >
+                    All Present
+                  </button>
+                  <button
+                    id="present-voting-all-button"
+                    class="attendance-toggle status-PV active"
+                  >
+                    All Present+Voting
+                  </button>
+                </div>
+                <span id="roll-call-count"></span>
+              </div>
+
+              <div id="roll-call-list" class="listbox" role="listbox"></div>
             </div>
-            <span>
-                <a href="https://www.limun.org.uk">LIMUN Home</a>
-                <a href="https://www.limunportal.org.uk">Portal Home</a>
-            </span>
-        </header>
+            <div id="single-speaker-panel" class="speaker-timer" hidden>
+              <div class="timer-queue-heading">
+                <div id="topleft-heading" class="heading-top-left">
+                  <span>TOPLEFT</span>
+                </div>
+                <div id="topright-heading" class="heading-top-right">
+                  <span>TOPRIGHT</span>
+                </div>
+                <div id="bottomleft-heading" class="heading-bottom-left">
+                  <span>BOTTOMLEFT</span>
+                </div>
+                <div id="bottomright-heading" class="heading-bottom-right">
+                  <span>BOTTOMRIGHT</span>
+                </div>
+              </div>
+              <div id="centre-heading" class="heading-centre">
+                <h2>Individual Speaker</h2>
+              </div>
 
-        <main class="main-content">
-            <div class="content-grid">
-                <section id="left-column" class="session-control">
-                    <aside class="box view-sidebar">
-                        <div class="sidebar-heading">
-                            <div>
-                                <h2>Session Control</h2>
-                                <p>Select a view</p>
-                            </div>
-                        </div>
-                        <div class="sidebar-divider"></div>
+              <div id="timerMain" class="timer-main">
+                <div
+                  class="timer-display"
+                  id="single-speaker-timer-display"
+                  role="timer"
+                  aria-live="off"
+                >
+                  1:30
+                </div>
+              </div>
 
-                        <nav id="view-navbar" class="view-navigation" aria-label="Meeting views">
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="roll-call"
-                                    aria-current="page">
-                                <span class="view-icon">◉</span>
-                                <span class="view-label">
-                                    <strong>Roll Call</strong>
-                                    <small>Attendance and presence</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
+              <div class="timer-bottom">
+                <div class="timer-progress-row">
+                  <div
+                    class="timer-track"
+                    role="progressbar"
+                    aria-label="Speaking time remaining"
+                    aria-valuemin="0"
+                    aria-valuemax="90"
+                    aria-valuenow="90"
+                    id="single-speaker-timer-progress"
+                  >
+                    <div
+                      class="timer-progress-fill"
+                      id="single-speaker-timer-fill"
+                    ></div>
+                  </div>
+                </div>
 
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="single-speaker">
-                                <span class="view-icon">◷</span>
-                                <span class="view-label">
-                                    <strong>Single Speaker</strong>
-                                    <small>Individual speaking timer</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
-                            
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="gsl">
-                                <span class="view-icon">☷</span>
-                                <span class="view-label">
-                                    <strong>General Speakers' List</strong>
-                                    <small>Establishing speeches</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
-                            
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="motions">
-                                <span class="view-icon">⚑</span>
-                                <span class="view-label">
-                                    <strong>Motions</strong>
-                                    <small>Submit and manage motions</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
-                            
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="caucus">
-                                <span class="view-icon">⚑</span>
-                                <span class="view-label">
-                                    <strong>Caucus</strong>
-                                    <small>Structured debating</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
-                            
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="unmod-caucus">
-                                <span class="view-icon">⚑</span>
-                                <span class="view-label">
-                                    <strong>Unmoderated Caucus</strong>
-                                    <small>Freeform discussion</small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
+                <div class="timer-controls">
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="time-settings"
+                    title="Time settings"
+                  >
+                    🌣
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="add-time"
+                    title="Add 15 seconds"
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="reset-timer"
+                    title="Reset timer"
+                  >
+                    ⮎
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn start-btn"
+                    id="start-timer"
+                  >
+                    ▶ <span>START</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn stop-btn"
+                    id="stop-timer"
+                  >
+                    ⏸︎ <span>STOP</span>
+                  </button>
+                </div>
 
-                            <button class="view-nav-item"
-                                    type="button"
-                                    data-view="voting">
-                                <span class="view-icon">◇</span>
-                                <span class="view-label">
-                                    <strong>Voting Procedure</strong>
-                                    <small></small>
-                                </span>
-                                <span class="view-chevron">›</span>
-                            </button>
-
-                            <div class="sidebar-divider"></div>
-
-                            <div class="sidebar-bottom">
-                                <button class="view-nav-item active"
-                                        type="button"
-                                        data-view="settings">
-                                    <span class="view-icon">⚙</span>
-                                    <span class="view-label">
-                                        <strong>General Settings</strong>
-                                        <small>Configure the meeting</small>
-                                    </span>
-                                    <span class="view-chevron">›</span>
-                                </button>
-                            </div>
-                        </nav>
-
-                        <div class="sidebar-footer">
-                            <span class="status-indicator"></span>
-                            <span id="session-existence">Session ID: </span>
-                        </div>
-                    </aside>
-                </section>
-
-                <section id="middle-column" class="central-column">
-                    <div id="roll-call-panel" class="box roll-call-panel" hidden>
-                        <div class="roll-call-header">
-                            <h2>Roll Call</h2>
-                            <div>
-                                <button id="remove-vetoes-button" class="attendance-toggle status-p5status">
-                                    Clear Vetoes 
-                                </button>
-                                <button id="remove-observers-button" class="attendance-toggle status-observerStatus">
-                                    Clear Observers
-                                </button>
-                                <button id="absent-all-button" class="attendance-toggle status-A active">
-                                    All Absent
-                                </button>
-                                <button id="present-all-button" class="attendance-toggle status-P active">
-                                    All Present
-                                </button>
-                                <button id="present-voting-all-button" class="attendance-toggle status-PV active">
-                                    All Present+Voting
-                                </button>
-                            </div>
-                            <span id="roll-call-count"></span>
-                        </div>
-                            
-                        <div id="roll-call-list" class="listbox" role="listbox"></div>
-                    </div>
-                    <div id="single-speaker-panel" class="speaker-timer" hidden>
-                        <div class="timer-queue-heading">
-                            <div id="topleft-heading" class="heading-top-left">
-                                <span>TOPLEFT</span>
-                            </div>
-                            <div id="topright-heading" class="heading-top-right">
-                                <span>TOPRIGHT</span>
-                            </div>
-                            <div id="bottomleft-heading" class="heading-bottom-left">
-                                <span>BOTTOMLEFT</span>
-                            </div>
-                            <div id="bottomright-heading" class="heading-bottom-right">
-                                <span>BOTTOMRIGHT</span>
-                            </div>
-                        </div>
-                        <div id="centre-heading" class="heading-centre">
-                            <h2>Individual Speaker</h2>
-                        </div>
-
-                        <div id="timerMain" class="timer-main">
-                            <div class="timer-display" id="single-speaker-timer-display" role="timer"
-                                 aria-live="off">1:30</div>
-                        </div>
-
-                        <div class="timer-bottom">
-                            <div class="timer-progress-row">
-                                <div class="timer-track"
-                                     role="progressbar"
-                                     aria-label="Speaking time remaining"
-                                     aria-valuemin="0"
-                                     aria-valuemax="90"
-                                     aria-valuenow="90"
-                                     id="single-speaker-timer-progress">
-                                    <div class="timer-progress-fill" id="single-speaker-timer-fill"></div>
-                                </div>
-                            </div>
-
-                            <div class="timer-controls">
-                                <button type="button" class="timer-icon-btn"
-                                        id="time-settings" title="Time settings">🌣</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="add-time" title="Add 15 seconds">+</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="reset-timer" title="Reset timer">⮎</button>
-                                <button type="button" class="timer-btn start-btn"
-                                        id="start-timer">▶ <span>START</span></button>
-                                <button type="button" class="timer-btn stop-btn"
-                                        id="stop-timer">⏸︎ <span>STOP</span></button>
-                            </div>
-
-                            <p class="timer-status" id="timer-status" aria-live="polite">
-                                Ready to begin
-                            </p>
-                        </div>
-                    </div>
-                    <div id="gsl-panel" class="speaker-timer" hidden>
-                        <div class="timer-queue-heading">
-                            <div id="topleft-heading" class="heading-top-left">
-                                <span>TOPLEFT</span>
-                            </div>
-                            <div id="topright-heading" class="heading-top-right">
-                                <span>TOPRIGHT</span>
-                            </div>
-                            <div id="bottomleft-heading" class="heading-bottom-left">
-                                <span>BOTTOMLEFT</span>
-                            </div>
-                            <div id="bottomright-heading" class="heading-bottom-right">
-                                <span>BOTTOMRIGHT</span>
-                            </div>
-                        </div>
-                        <div id="centre-heading" class="heading-centre">
-                            <h2>General Speakers' List</h2>
-                        </div>
-
-
-                        <div id="speaker-flag-main" class="timer-main">
-                            <div id="speaker-flag-container" class="speaker-flag"></div>
-                            <h1 id="speaker-name"></h1>
-                            <div class="timer-display" id="gsl-timer-display" role="timer"
-                                 aria-live="off">1:30</div>
-                        </div>
-
-                        <div class="timer-bottom">
-                            <div class="timer-progress-row">
-                                <div class="timer-track"
-                                     role="progressbar"
-                                     aria-label="Speaking time remaining"
-                                     aria-valuemin="0"
-                                     aria-valuemax="90"
-                                     aria-valuenow="90"
-                                     id="timer-progress">
-                                    <div class="timer-progress-fill" id="gsl-timer-fill"></div>
-                                </div>
-                            </div>
-
-                            <div class="timer-controls">
-                                <button type="button" class="timer-icon-btn"
-                                        id="time-settings" title="Time settings">🌣</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="add-time" title="Add 15 seconds">+</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="reset-timer" title="Reset timer">⮎</button>
-                                <button type="button" class="timer-btn start-btn"
-                                        id="start-timer">▶ <span>START</span></button>
-                                <button type="button" class="timer-btn stop-btn"
-                                        id="stop-timer">⏸︎ <span>STOP</span></button>
-                                <button type="button" class="timer-btn next-btn"
-                                        id="next-speaker">⏭ <span>NEXT</span></button>
-                                <button type="button" class="timer-icon-btn yield-btn"
-                                        id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
-                            </div>
-
-                            <p class="timer-status" id="timer-status" aria-live="polite">
-                                Ready to begin
-                            </p>
-                        </div>
-                    </div>
-                    <div id="motions-panel" class="motions-container" hidden>
-                        <div class="submit-motions-container">
-                            <div id="motion-settings" class="box">
-                                <h2>Motion Information</h2>
-
-                                <div class="sidebar-divider"></div>                                
-                                <div id="submission-field" class="committee-field">
-                                    <h2>Submitted By:</h2>
-                                    <div id="template-motion-submitter" class="listbox-option" style="flex: 1;"></div>
-                                </div>
-                                <div class="committee-field">
-                                    <h2>Motion Type:</h2>
-                                    <select id="motion-type"></select>
-                                </div>
-                                <div class="committee-field">
-                                    <h2>Topic:</h2>
-                                    <input id="motion-name" placeholder="Discussion">
-                                </div>
-                                <div class="sidebar-divider"></div>
-                                <div class="duration-group">
-                                    <div class="duration-section">
-                                        <div class="committee-field">
-                                            <h2>Total Minutes:</h2>
-                                            <input id="motion-total-duration-minutes" type="number" min="0" placeholder="10">
-                                        </div>
-                                        <div class="committee-field">
-                                            <h2>Total Seconds:</h2>
-                                            <input id="motion-total-duration-seconds" type="number" min="0" max="59" step="5" placeholder="0">
-                                        </div>
-                                    </div>
-                                    <div class="duration-section">
-                                        <div class="committee-field">
-                                            <h2>Speaker's Minutes:</h2>
-                                            <input id="motion-speaker-duration-minutes" type="number" min="0" placeholder="1">
-                                        </div>
-                                        <div class="committee-field">
-                                            <h2>Speaker's Seconds:</h2>
-                                            <input id="motion-speaker-duration-seconds" type="number" min="0" max="59" step="5" placeholder="0">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sidebar-divider"></div>                                
-                                <div class="committee-field">
-                                    <button id="submit-motion" class="">Submit Motion</button>
-                                </div>
-                            </div>
-                            <div id="most-disruptive-container" class="box">
-                                <h2>Most Disruptive Motion</h2>
-                                <div id="template-motion-disruptive" class="motion-option" style="flex: 1;"></div>
-                            </div>
-                        </div>
-                        <div class="history-motions-container">
-                            <div class="box">
-                                <h2>Motion Tray</h2>
-                                <div id="motions-tray" class="listbox" role="listbox"></div>
-                            </div>
-                            <div class="box">
-                                <h2>Motion History</h2>
-                                <div id="motions-history" class="listbox" role="listbox"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="caucus-panel" class="speaker-timer" hidden>
-                        <div class="timer-queue-heading">
-                            <div id="topleft-heading" class="heading-top-left">
-                                <span>TOPLEFT</span>
-                            </div>
-                            <div id="topright-heading" class="heading-top-right">
-                                <span>TOPRIGHT</span>
-                            </div>
-                            <div id="bottomleft-heading" class="heading-bottom-left">
-                                <span>BOTTOMLEFT</span>
-                            </div>
-                            <div id="bottomright-heading" class="heading-bottom-right">
-                                <span>BOTTOMRIGHT</span>
-                            </div>
-                        </div>
-                        <div id="caucus-heading" class="heading-centre">
-                            <h2>Moderated Caucus</h2>
-                        </div>
-
-
-                        <div id="speaker-flag-main" class="timer-main">
-                            <div id="speaker-flag-container" class="speaker-flag"></div>
-                            <h1 id="speaker-name"></h1>
-                            <div class="timer-display" id="gsl-timer-display" role="timer"
-                                 aria-live="off">1:30</div>
-                        </div>
-
-                        <div class="timer-bottom">
-                            <div class="timer-progress-row">
-                                <div class="timer-track"
-                                     role="progressbar"
-                                     aria-label="Speaking time remaining"
-                                     aria-valuemin="0"
-                                     aria-valuemax="90"
-                                     aria-valuenow="90"
-                                     id="timer-progress">
-                                    <div class="timer-progress-fill" id="gsl-timer-fill"></div>
-                                </div>
-                            </div>
-
-                            <div class="timer-controls">
-                                <button type="button" class="timer-icon-btn"
-                                        id="time-settings" title="Time settings">🌣</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="add-time" title="Add 15 seconds">+</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="reset-timer" title="Reset timer">⮎</button>
-                                <button type="button" class="timer-btn start-btn"
-                                        id="start-timer">▶ <span>START</span></button>
-                                <button type="button" class="timer-btn stop-btn"
-                                        id="stop-timer">⏸︎ <span>STOP</span></button>
-                                <button type="button" class="timer-btn next-btn"
-                                        id="next-speaker">⏭ <span>NEXT</span></button>
-                                <button type="button" class="timer-icon-btn yield-btn"
-                                        id="yield-speaker" title="Yield speaking time">↪<small>Yield</small></button>
-                            </div>
-
-                            <p class="timer-status" id="timer-status" aria-live="polite">
-                                Ready to begin
-                            </p>
-                        </div>
-                    </div>
-                    <div id="unmod-caucus-panel" class="speaker-timer" hidden>
-                        <div class="timer-queue-heading">
-                            <div id="topleft-heading" class="heading-top-left">
-                                <span>TOPLEFT</span>
-                            </div>
-                            <div id="topright-heading" class="heading-top-right">
-                                <span>TOPRIGHT</span>
-                            </div>
-                            <div id="bottomleft-heading" class="heading-bottom-left">
-                                <span>BOTTOMLEFT</span>
-                            </div>
-                            <div id="bottomright-heading" class="heading-bottom-right">
-                                <span>BOTTOMRIGHT</span>
-                            </div>
-                        </div>
-                        <div id="centre-heading" class="heading-centre">
-                            <h2>Unmoderated Caucus</h2>
-                        </div>
-
-                        <div id="timerMain" class="timer-main">
-                            <div class="timer-display" id="single-speaker-timer-display" role="timer"
-                                 aria-live="off">1:30</div>
-                        </div>
-
-                        <div class="timer-bottom">
-                            <div class="timer-progress-row">
-                                <div class="timer-track"
-                                     role="progressbar"
-                                     aria-label="Speaking time remaining"
-                                     aria-valuemin="0"
-                                     aria-valuemax="90"
-                                     aria-valuenow="90"
-                                     id="single-speaker-timer-progress">
-                                    <div class="timer-progress-fill" id="single-speaker-timer-fill"></div>
-                                </div>
-                            </div>
-
-                            <div class="timer-controls">
-                                <button type="button" class="timer-icon-btn"
-                                        id="time-settings" title="Time settings">🌣</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="add-time" title="Add 15 seconds">+</button>
-                                <button type="button" class="timer-icon-btn"
-                                        id="reset-timer" title="Reset timer">⮎</button>
-                                <button type="button" class="timer-btn start-btn"
-                                        id="start-timer">▶ <span>START</span></button>
-                                <button type="button" class="timer-btn stop-btn"
-                                        id="stop-timer">⏸︎ <span>STOP</span></button>
-                            </div>
-
-                            <p class="timer-status" id="timer-status" aria-live="polite">
-                                Ready to begin
-                            </p>
-                        </div>
-                    </div>
-                    <div id="settings-panel" class="box settings-attendance-panel">
-                        <div class="settings-row">
-                            <div class="settings-row-header">
-                                <h2>Missing Countries</h2>
-                                <span id="missing-country-count">0</span>
-                            </div>
-
-                            <div id="missing-country-list" class="listbox" role="listbox">
-                                <!-- Generated country elements -->
-                            </div>
-                            <div class="custom-country-input">
-                                <a>Custom Country</a>
-                                <input
-                                    type="text"
-                                    id="custom-country-name"
-                                    placeholder="custom name..."
-                                >
-                                <input
-                                    type="text"
-                                    id="custom-country-img"
-                                    placeholder="image link..."
-                                >
-                                <button type="button" id="add-custom-country">
-                                    Add
-                                </button>
-                            </div>
-                        </div>
-                        <div class="settings-row">
-                            <div class="settings-row-header">
-                                <h2>Active Countries</h2>
-                                <div>
-                                    <button type="button" id="remove-all-countries">Remove All</button>
-                                    <span id="active-country-count">0</span>
-                                </div>
-                            </div>
-
-                            <div id="active-country-list" class="listbox" role="listbox">
-                                <!-- Generated country elements -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Right column option 1-->
-                <section id="session-settings" class="settings-panel">
-                    <div class="box">
-                        <div>
-                            <div class="settings-row-header">
-                                <h2>Session Settings</h2>
-                            </div>
-                            <div class="sidebar-divider"></div>
-                            <div class="committee-field">
-                                <h2>Name:</h2>
-                                <input
-                                    id="committee-name"
-                                    placeholder="Unnamed Session"
-                                >
-                            </div>
-                            <div class="committee-field">
-                                <h2>Committee:</h2>
-                                <select id="committee-selection"></select>
-                            </div>
-                            <div class="committee-field">
-                                <h2>Title:</h2>
-                                <input
-                                    id="committee-title"
-                                    placeholder="United Nations General Assembly"
-                                >
-                            </div>
-                            <div class="committee-field">
-                                <h2>Topic:</h2>
-                                <input
-                                    id="committee-topic"
-                                    placeholder="Unnamed Topic"
-                                >
-                            </div>
-                        </div>
-                        <div class="sidebar-divider"></div>
-                        <div>
-                            <div class="settings-row-header">
-                                <h2>Manage Session</h2>
-                            </div>
-                            <div class="sidebar-divider"></div>
-                            <div class="committee-field">
-                                <h2 id="save-button">Save</h2>
-                                <button id="save-button-csv">CSV</button>
-                                <button id="save-button-json">JSON</button>
-                            </div>
-                            <div class="committee-field">
-                                <h2 id="load-button">Load</h2>
-                                <button id="load-button-csv">CSV</button>
-                                <input id="file-input-csv" type="file" accept=".csv,text/csv" hidden>
-                                <button id="load-button-json">JSON</button>
-                                <input id="file-input-json" type="file" accept=".json,application/json" hidden>
-                            </div>
-                        </div>
-                        <div class="sidebar-divider"></div>
-                        <div class="committee-field">
-                            <button id="create-session">Create Session</button>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <div class="settings-row-header">
-                            <h2>Committee Presets</h2>
-                        </div>
-                        <div class="sidebar-divider"></div>
-                        <div id="committee-preset-container"></div>
-                    </div>
-                </section>
-
-                <!-- Right column option 2-->
-                <section id="motion-availability" class="motion-panel" hidden>
-                    <div class="box available-speakers">
-                        <div class="section-header">
-                            <h3 id="motion-available-label">Available Countries</h3>
-                            <div class="search-box">
-                                <span class="search-icon" aria-hidden="true">⌕</span>
-                                <input
-                                    type="search"
-                                    id="motion-country-search"
-                                    placeholder="Search countries..."
-                                    aria-label="Search countries"
-                                >
-                            </div>
-                        </div>
-                        <div id="motion-available-list" class="listbox" role="listbox"></div>
-                    </div>
-                </section>
-
-                <!-- Right column option 3-->
-                <section id="session-attendance" class="session-panel" style="filter: brightness(0.8);" hidden>
-                    <!-- ROW 1: Presence indicators -->
-                    <div class="box presence-section">
-                        <div id="session-presence" class="presence-panel">
-                            <div class="presence-item">
-                                <div class="presence-ring"
-                                     style="--progress: 50%;">
-                                </div>
-                                <span id="simple-majority-value" class="presence-count">0</span>
-                            </div>
-
-                            <div class="presence-item">
-                                <div class="presence-ring"
-                                     style="--progress: 66.67%;">
-                                </div>
-                                <span id="super-majority-value" class="presence-count">0</span>
-                            </div>
-
-                            <div class="presence-item">
-                                <div class="presence-ring"
-                                     style="--progress: 100%;">
-                                </div>
-                                <span id="unanimity-value" class="presence-count">0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ROW 2: Upcoming speaker queue -->
-                    <div class="box speaker-queue">
-                        <h3 id="upcoming-speakers-label">Upcoming Speakers</h3>
-                        <div id="queue-list" class="listbox" role="listbox" aria-label="Upcoming Speakers"></div>
-                    </div>
-
-                    <!-- ROW 3: Available speakers -->
-                    <div class="box available-speakers">
-                        <div class="section-header">
-                            <h3 id="available-speakers-label">Available Speakers</h3>
-                            <div class="search-box">
-                                <span class="search-icon" aria-hidden="true">⌕</span>
-                                <input
-                                    type="search"
-                                    id="country-search"
-                                    placeholder="Search countries..."
-                                    aria-label="Search countries"
-                                >
-                            </div>
-                        </div>
-                        <div id="available-list" class="listbox" role="listbox" aria-label="Upcoming Speakers"></div>
-                    </div>
-                </section>
+                <p class="timer-status" id="timer-status" aria-live="polite">
+                  Ready to begin
+                </p>
+              </div>
             </div>
-        </main>
+            <div id="gsl-panel" class="speaker-timer" hidden>
+              <div class="timer-queue-heading">
+                <div id="topleft-heading" class="heading-top-left">
+                  <span>TOPLEFT</span>
+                </div>
+                <div id="topright-heading" class="heading-top-right">
+                  <span>TOPRIGHT</span>
+                </div>
+                <div id="bottomleft-heading" class="heading-bottom-left">
+                  <span>BOTTOMLEFT</span>
+                </div>
+                <div id="bottomright-heading" class="heading-bottom-right">
+                  <span>BOTTOMRIGHT</span>
+                </div>
+              </div>
+              <div id="centre-heading" class="heading-centre">
+                <h2>General Speakers' List</h2>
+              </div>
 
-        <footer class="footer">
-            <div>
-                <span id="language-icon">🕫</span>
-                <select id="language-select"></select>
-                <span id="theme-icon">☼</span>
-                <select id="theme-select"></select>
+              <div id="speaker-flag-main" class="timer-main">
+                <div id="speaker-flag-container" class="speaker-flag"></div>
+                <h1 id="speaker-name"></h1>
+                <div
+                  class="timer-display"
+                  id="gsl-timer-display"
+                  role="timer"
+                  aria-live="off"
+                >
+                  1:30
+                </div>
+              </div>
+
+              <div class="timer-bottom">
+                <div class="timer-progress-row">
+                  <div
+                    class="timer-track"
+                    role="progressbar"
+                    aria-label="Speaking time remaining"
+                    aria-valuemin="0"
+                    aria-valuemax="90"
+                    aria-valuenow="90"
+                    id="timer-progress"
+                  >
+                    <div class="timer-progress-fill" id="gsl-timer-fill"></div>
+                  </div>
+                </div>
+
+                <div class="timer-controls">
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="time-settings"
+                    title="Time settings"
+                  >
+                    🌣
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="add-time"
+                    title="Add 15 seconds"
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="reset-timer"
+                    title="Reset timer"
+                  >
+                    ⮎
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn start-btn"
+                    id="start-timer"
+                  >
+                    ▶ <span>START</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn stop-btn"
+                    id="stop-timer"
+                  >
+                    ⏸︎ <span>STOP</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn next-btn"
+                    id="next-speaker"
+                  >
+                    ⏭ <span>NEXT</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn yield-btn"
+                    id="yield-speaker"
+                    title="Yield speaking time"
+                  >
+                    ↪<small>Yield</small>
+                  </button>
+                </div>
+
+                <p class="timer-status" id="timer-status" aria-live="polite">
+                  Ready to begin
+                </p>
+              </div>
             </div>
-            <span hidden>
-                <a>Session Log: OPENED</a>
-            </span>
-            <span>
-                <a href="#about-dialog" id="about-link">About</a>
-                <a href="#contact-dialog" id="contact-link">Contact</a>
-                <a href="#privacy-dialog" id="privacy-link">Privacy</a>
-                <a href="#docs-dialog" id="docs-link">Docs</a>
-            </span>
-        </footer>
+            <div id="motions-panel" class="motions-container" hidden>
+              <div class="submit-motions-container">
+                <div id="motion-settings" class="box">
+                  <h2>Motion Information</h2>
+
+                  <div class="sidebar-divider"></div>
+                  <div id="submission-field" class="committee-field">
+                    <h2>Submitted By:</h2>
+                    <div
+                      id="template-motion-submitter"
+                      class="listbox-option"
+                      style="flex: 1"
+                    ></div>
+                  </div>
+                  <div class="committee-field">
+                    <h2>Motion Type:</h2>
+                    <select id="motion-type"></select>
+                  </div>
+                  <div class="committee-field">
+                    <h2>Topic:</h2>
+                    <input id="motion-name" placeholder="Discussion" />
+                  </div>
+                  <div class="sidebar-divider"></div>
+                  <div class="duration-group">
+                    <div class="duration-section">
+                      <div class="committee-field">
+                        <h2>Total Minutes:</h2>
+                        <input
+                          id="motion-total-duration-minutes"
+                          type="number"
+                          min="0"
+                          placeholder="10"
+                        />
+                      </div>
+                      <div class="committee-field">
+                        <h2>Total Seconds:</h2>
+                        <input
+                          id="motion-total-duration-seconds"
+                          type="number"
+                          min="0"
+                          max="59"
+                          step="5"
+                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+                    <div class="duration-section">
+                      <div class="committee-field">
+                        <h2>Speaker's Minutes:</h2>
+                        <input
+                          id="motion-speaker-duration-minutes"
+                          type="number"
+                          min="0"
+                          placeholder="1"
+                        />
+                      </div>
+                      <div class="committee-field">
+                        <h2>Speaker's Seconds:</h2>
+                        <input
+                          id="motion-speaker-duration-seconds"
+                          type="number"
+                          min="0"
+                          max="59"
+                          step="5"
+                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sidebar-divider"></div>
+                  <div class="committee-field">
+                    <button id="submit-motion" class="">Submit Motion</button>
+                  </div>
+                </div>
+                <div id="most-disruptive-container" class="box">
+                  <h2>Most Disruptive Motion</h2>
+                  <div
+                    id="template-motion-disruptive"
+                    class="motion-option"
+                    style="flex: 1"
+                  ></div>
+                </div>
+              </div>
+              <div class="history-motions-container">
+                <div class="box">
+                  <h2>Motion Tray</h2>
+                  <div id="motions-tray" class="listbox" role="listbox"></div>
+                </div>
+                <div class="box">
+                  <h2>Motion History</h2>
+                  <div
+                    id="motions-history"
+                    class="listbox"
+                    role="listbox"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div id="caucus-panel" class="speaker-timer" hidden>
+              <div class="timer-queue-heading">
+                <div id="topleft-heading" class="heading-top-left">
+                  <span>TOPLEFT</span>
+                </div>
+                <div id="topright-heading" class="heading-top-right">
+                  <span>TOPRIGHT</span>
+                </div>
+                <div id="bottomleft-heading" class="heading-bottom-left">
+                  <span>BOTTOMLEFT</span>
+                </div>
+                <div id="bottomright-heading" class="heading-bottom-right">
+                  <span>BOTTOMRIGHT</span>
+                </div>
+              </div>
+              <div id="caucus-heading" class="heading-centre">
+                <h2>Moderated Caucus</h2>
+              </div>
+
+              <div id="speaker-flag-main" class="timer-main">
+                <div id="speaker-flag-container" class="speaker-flag"></div>
+                <h1 id="speaker-name"></h1>
+                <div
+                  class="timer-display"
+                  id="gsl-timer-display"
+                  role="timer"
+                  aria-live="off"
+                >
+                  1:30
+                </div>
+              </div>
+
+              <div class="timer-bottom">
+                <div class="timer-progress-row">
+                  <div
+                    class="timer-track"
+                    role="progressbar"
+                    aria-label="Speaking time remaining"
+                    aria-valuemin="0"
+                    aria-valuemax="90"
+                    aria-valuenow="90"
+                    id="timer-progress"
+                  >
+                    <div class="timer-progress-fill" id="gsl-timer-fill"></div>
+                  </div>
+                </div>
+
+                <div class="timer-controls">
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="time-settings"
+                    title="Time settings"
+                  >
+                    🌣
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="add-time"
+                    title="Add 15 seconds"
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="reset-timer"
+                    title="Reset timer"
+                  >
+                    ⮎
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn start-btn"
+                    id="start-timer"
+                  >
+                    ▶ <span>START</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn stop-btn"
+                    id="stop-timer"
+                  >
+                    ⏸︎ <span>STOP</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn next-btn"
+                    id="next-speaker"
+                  >
+                    ⏭ <span>NEXT</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn yield-btn"
+                    id="yield-speaker"
+                    title="Yield speaking time"
+                  >
+                    ↪<small>Yield</small>
+                  </button>
+                </div>
+
+                <p class="timer-status" id="timer-status" aria-live="polite">
+                  Ready to begin
+                </p>
+              </div>
+            </div>
+            <div id="unmod-caucus-panel" class="speaker-timer" hidden>
+              <div class="timer-queue-heading">
+                <div id="topleft-heading" class="heading-top-left">
+                  <span>TOPLEFT</span>
+                </div>
+                <div id="topright-heading" class="heading-top-right">
+                  <span>TOPRIGHT</span>
+                </div>
+                <div id="bottomleft-heading" class="heading-bottom-left">
+                  <span>BOTTOMLEFT</span>
+                </div>
+                <div id="bottomright-heading" class="heading-bottom-right">
+                  <span>BOTTOMRIGHT</span>
+                </div>
+              </div>
+              <div id="centre-heading" class="heading-centre">
+                <h2>Unmoderated Caucus</h2>
+              </div>
+
+              <div id="timerMain" class="timer-main">
+                <div
+                  class="timer-display"
+                  id="single-speaker-timer-display"
+                  role="timer"
+                  aria-live="off"
+                >
+                  1:30
+                </div>
+              </div>
+
+              <div class="timer-bottom">
+                <div class="timer-progress-row">
+                  <div
+                    class="timer-track"
+                    role="progressbar"
+                    aria-label="Speaking time remaining"
+                    aria-valuemin="0"
+                    aria-valuemax="90"
+                    aria-valuenow="90"
+                    id="single-speaker-timer-progress"
+                  >
+                    <div
+                      class="timer-progress-fill"
+                      id="single-speaker-timer-fill"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="timer-controls">
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="time-settings"
+                    title="Time settings"
+                  >
+                    🌣
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="add-time"
+                    title="Add 15 seconds"
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-icon-btn"
+                    id="reset-timer"
+                    title="Reset timer"
+                  >
+                    ⮎
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn start-btn"
+                    id="start-timer"
+                  >
+                    ▶ <span>START</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="timer-btn stop-btn"
+                    id="stop-timer"
+                  >
+                    ⏸︎ <span>STOP</span>
+                  </button>
+                </div>
+
+                <p class="timer-status" id="timer-status" aria-live="polite">
+                  Ready to begin
+                </p>
+              </div>
+            </div>
+            <div id="settings-panel" class="box settings-attendance-panel">
+              <div class="settings-row">
+                <div class="settings-row-header">
+                  <h2>Missing Countries</h2>
+                  <span id="missing-country-count">0</span>
+                </div>
+
+                <div id="missing-country-list" class="listbox" role="listbox">
+                  <!-- Generated country elements -->
+                </div>
+                <div class="custom-country-input">
+                  <a>Custom Country</a>
+                  <input
+                    type="text"
+                    id="custom-country-name"
+                    placeholder="custom name..."
+                  />
+                  <input
+                    type="text"
+                    id="custom-country-img"
+                    placeholder="image link..."
+                  />
+                  <button type="button" id="add-custom-country">Add</button>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-header">
+                  <h2>Active Countries</h2>
+                  <div>
+                    <button type="button" id="remove-all-countries">
+                      Remove All
+                    </button>
+                    <span id="active-country-count">0</span>
+                  </div>
+                </div>
+
+                <div id="active-country-list" class="listbox" role="listbox">
+                  <!-- Generated country elements -->
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Right column option 1-->
+          <section id="session-settings" class="settings-panel">
+            <div class="box">
+              <div>
+                <div class="settings-row-header">
+                  <h2>Session Settings</h2>
+                </div>
+                <div class="sidebar-divider"></div>
+                <div class="committee-field">
+                  <h2>Name:</h2>
+                  <input id="committee-name" placeholder="Unnamed Session" />
+                </div>
+                <div class="committee-field">
+                  <h2>Committee:</h2>
+                  <select id="committee-selection"></select>
+                </div>
+                <div class="committee-field">
+                  <h2>Title:</h2>
+                  <input
+                    id="committee-title"
+                    placeholder="United Nations General Assembly"
+                  />
+                </div>
+                <div class="committee-field">
+                  <h2>Topic:</h2>
+                  <input id="committee-topic" placeholder="Unnamed Topic" />
+                </div>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div>
+                <div class="settings-row-header">
+                  <h2>Manage Session</h2>
+                </div>
+                <div class="sidebar-divider"></div>
+                <div class="committee-field">
+                  <h2 id="save-button">Save</h2>
+                  <button id="save-button-csv">CSV</button>
+                  <button id="save-button-json">JSON</button>
+                </div>
+                <div class="committee-field">
+                  <h2 id="load-button">Load</h2>
+                  <button id="load-button-csv">CSV</button>
+                  <input
+                    id="file-input-csv"
+                    type="file"
+                    accept=".csv,text/csv"
+                    hidden
+                  />
+                  <button id="load-button-json">JSON</button>
+                  <input
+                    id="file-input-json"
+                    type="file"
+                    accept=".json,application/json"
+                    hidden
+                  />
+                </div>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div class="committee-field">
+                <button id="create-session">Create Session</button>
+              </div>
+            </div>
+            <div class="box">
+              <div class="settings-row-header">
+                <h2>Committee Presets</h2>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div id="committee-preset-container"></div>
+            </div>
+          </section>
+
+          <!-- Right column option 2-->
+          <section id="motion-availability" class="motion-panel" hidden>
+            <div class="box available-speakers">
+              <div class="section-header">
+                <h3 id="motion-available-label">Available Countries</h3>
+                <div class="search-box">
+                  <span class="search-icon" aria-hidden="true">⌕</span>
+                  <input
+                    type="search"
+                    id="motion-country-search"
+                    placeholder="Search countries..."
+                    aria-label="Search countries"
+                  />
+                </div>
+              </div>
+              <div
+                id="motion-available-list"
+                class="listbox"
+                role="listbox"
+              ></div>
+            </div>
+          </section>
+
+          <!-- Right column option 3-->
+          <section
+            id="session-attendance"
+            class="session-panel"
+            style="filter: brightness(0.8)"
+            hidden
+          >
+            <!-- ROW 1: Presence indicators -->
+            <div class="box presence-section">
+              <div id="session-presence" class="presence-panel">
+                <div class="presence-item">
+                  <div class="presence-ring" style="--progress: 50%"></div>
+                  <span id="simple-majority-value" class="presence-count"
+                    >0</span
+                  >
+                </div>
+
+                <div class="presence-item">
+                  <div class="presence-ring" style="--progress: 66.67%"></div>
+                  <span id="super-majority-value" class="presence-count"
+                    >0</span
+                  >
+                </div>
+
+                <div class="presence-item">
+                  <div class="presence-ring" style="--progress: 100%"></div>
+                  <span id="unanimity-value" class="presence-count">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROW 2: Upcoming speaker queue -->
+            <div class="box speaker-queue">
+              <h3 id="upcoming-speakers-label">Upcoming Speakers</h3>
+              <div
+                id="queue-list"
+                class="listbox"
+                role="listbox"
+                aria-label="Upcoming Speakers"
+              ></div>
+            </div>
+
+            <!-- ROW 3: Available speakers -->
+            <div class="box available-speakers">
+              <div class="section-header">
+                <h3 id="available-speakers-label">Available Speakers</h3>
+                <div class="search-box">
+                  <span class="search-icon" aria-hidden="true">⌕</span>
+                  <input
+                    type="search"
+                    id="country-search"
+                    placeholder="Search countries..."
+                    aria-label="Search countries"
+                  />
+                </div>
+              </div>
+              <div
+                id="available-list"
+                class="listbox"
+                role="listbox"
+                aria-label="Upcoming Speakers"
+              ></div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <span id="language-icon">🕫</span>
+          <select id="language-select"></select>
+          <span id="theme-icon">☼</span>
+          <select id="theme-select"></select>
+        </div>
+        <span hidden>
+          <a>Session Log: OPENED</a>
+        </span>
+        <span>
+          <a href="#about-dialog" id="about-link">About</a>
+          <a href="#contact-dialog" id="contact-link">Contact</a>
+          <a href="#privacy-dialog" id="privacy-link">Privacy</a>
+          <a href="#docs-dialog" id="docs-link">Docs</a>
+        </span>
+      </footer>
     </div>
-    
+
     <!-- About dialog -->
     <dialog id="about-dialog" class="info-dialog">
-        <div class="dialog-header">
-            <h2>About</h2>
-            <button type="button" class="dialog-close" aria-label="Close About dialog">&times;</button>
-        </div>
-        <p>This application helps you manage speakers and organise the upcoming speaker queue.</p>
+      <div class="dialog-header">
+        <h2>About</h2>
+        <button
+          type="button"
+          class="dialog-close"
+          aria-label="Close About dialog"
+        >
+          &times;
+        </button>
+      </div>
+      <p>
+        This application helps you manage speakers and organise the upcoming
+        speaker queue.
+      </p>
     </dialog>
 
     <!-- Contact dialog -->
     <dialog id="contact-dialog" class="info-dialog">
-        <div class="dialog-header">
-            <h2>Contact</h2>
-            <button type="button" class="dialog-close" aria-label="Close Contact dialog">&times;</button>
-        </div>
-        <p>If you experience any technical issues, please contact the team at <a href="mailto:limunportal@limun.org.uk">limunportal@limun.org.uk</a> with a description of your problem and any supporting evidence that could inform any required fixes.</p>
+      <div class="dialog-header">
+        <h2>Contact</h2>
+        <button
+          type="button"
+          class="dialog-close"
+          aria-label="Close Contact dialog"
+        >
+          &times;
+        </button>
+      </div>
+      <p>
+        If you experience any technical issues, please contact the team at
+        <a href="mailto:limunportal@limun.org.uk">limunportal@limun.org.uk</a>
+        with a description of your problem and any supporting evidence that
+        could inform any required fixes.
+      </p>
     </dialog>
 
     <!-- Privacy dialog -->
     <dialog id="privacy-dialog" class="info-dialog">
-        <div class="dialog-header">
-            <h2>Privacy</h2>
-            <button type="button" class="dialog-close" aria-label="Close Privacy dialog">&times;</button>
-        </div>
-        <p>This section explains how information is collected, used, stored, and protected by the application.</p>
-        <p>Replace this placeholder with your actual privacy policy.</p>
+      <div class="dialog-header">
+        <h2>Privacy</h2>
+        <button
+          type="button"
+          class="dialog-close"
+          aria-label="Close Privacy dialog"
+        >
+          &times;
+        </button>
+      </div>
+      <p>
+        This section explains how information is collected, used, stored, and
+        protected by the application.
+      </p>
+      <p>Replace this placeholder with your actual privacy policy.</p>
     </dialog>
-    
+
     <!-- Documentation dialog -->
     <dialog id="docs-dialog" class="info-dialog">
-        <div class="dialog-header">
-            <h2>Docs</h2>
-            <button type="button" class="dialog-close" aria-label="Close Documentation dialog">&times;</button>
-        </div>
-        <p>Some kind of open-source documentation here.</p>
+      <div class="dialog-header">
+        <h2>Docs</h2>
+        <button
+          type="button"
+          class="dialog-close"
+          aria-label="Close Documentation dialog"
+        >
+          &times;
+        </button>
+      </div>
+      <p>Some kind of open-source documentation here.</p>
     </dialog>
-    
+
     <script type="module" src="static/js/main.js"></script>
     <script>
-        const root = document.documentElement;
-        const $ = id => document.getElementById(id);
+      const root = document.documentElement;
+      const $ = (id) => document.getElementById(id);
 
-        const infoLinks = {
-            "about-link": "about-dialog",
-            "contact-link": "contact-dialog",
-            "privacy-link": "privacy-dialog",
-            "docs-link": "docs-dialog"
-        };
-        Object.entries(infoLinks).forEach(([linkId, dialogId]) => {
-            const link = document.getElementById(linkId);
-            link?.addEventListener("click", event => {
-                event.preventDefault();
-                dialog.showModal();
-            });
-            
-            const dialog = document.getElementById(dialogId);
-            dialog?.querySelector(".dialog-close").addEventListener("click", () => {
-                dialog.close();
-            });
-
-            // Close when clicking the backdrop outside the dialog.
-            dialog?.addEventListener("click", event => {
-                if (event.target === dialog) {
-                    dialog.close();
-                }
-            });
+      const infoLinks = {
+        "about-link": "about-dialog",
+        "contact-link": "contact-dialog",
+        "privacy-link": "privacy-dialog",
+        "docs-link": "docs-dialog",
+      };
+      Object.entries(infoLinks).forEach(([linkId, dialogId]) => {
+        const link = document.getElementById(linkId);
+        link?.addEventListener("click", (event) => {
+          event.preventDefault();
+          dialog.showModal();
         });
+
+        const dialog = document.getElementById(dialogId);
+        dialog?.querySelector(".dialog-close").addEventListener("click", () => {
+          dialog.close();
+        });
+
+        // Close when clicking the backdrop outside the dialog.
+        dialog?.addEventListener("click", (event) => {
+          if (event.target === dialog) {
+            dialog.close();
+          }
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
